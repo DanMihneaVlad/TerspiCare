@@ -1,4 +1,4 @@
-package sample;
+package org.fis2021.terpsicare;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
