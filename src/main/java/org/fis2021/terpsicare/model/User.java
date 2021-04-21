@@ -1,6 +1,6 @@
 package org.fis2021.terpsicare.model;
 
-public class User {
+public abstract class User {
 
     private String username;
     private String password;

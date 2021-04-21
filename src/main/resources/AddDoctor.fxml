@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fis2021.terpsicare.controllers.AddDoctorController">
+   <children>
+      <Text layoutX="200.0" layoutY="99.94921875" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="121.33673095703125" AnchorPane.bottomAnchor="246.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="379.0" AnchorPane.topAnchor="87.0" />
+   </children>
+</AnchorPane>
