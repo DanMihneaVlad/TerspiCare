@@ -21,15 +21,15 @@ public class UserService {
     public static void initDatabase() {
         Nitrite database = Nitrite.builder().filePath(getPathToFile(".terpsicare-users.db").toFile()).openOrCreate("test", "test");
         userRepository = database.getRepository(User.class);
-    }
-
-    public static void addAdmin() {
-        Admin admin = Admin.getInstance();
+        int ok = 1;
         for (User user : userRepository.find()) {
-            if (Objects.equals(admin.getUsername(), user.getUsername()))
-                return;
+            if (Objects.equals("admin", user.getUsername()))
+                ok = 0;
         }
-        userRepository.insert(admin);
+        if (ok == 1) {
+            Admin admin = Admin.getInstance();
+            userRepository.insert(admin);
+        }
     }
 
     public static void addDoctor(String username, String password, String role, String name, String medicalSpecialty, String phoneNumber) throws UsernameAlreadyExistsException {

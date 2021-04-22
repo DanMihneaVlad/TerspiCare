@@ -17,7 +17,6 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         initDirectory();
         UserService.initDatabase();
-        //UserService.addAdmin();
         Parent root = FXMLLoader.load(getClass().getResource("/admin.fxml"));
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 300, 275));
