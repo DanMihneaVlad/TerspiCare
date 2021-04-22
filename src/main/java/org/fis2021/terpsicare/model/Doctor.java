@@ -6,8 +6,8 @@ public class Doctor extends User {
     private String medicalSpecialty;
     private String phoneNumber;
 
-    public Doctor(String username, String password, String role, String name, String medicalSpecialty, String phoneNumber) {
-        super(username, password, role);
+    public Doctor(String username, String password, String name, String medicalSpecialty, String phoneNumber) {
+        super(username, password, "Doctor");
         this.name = name;
         this.medicalSpecialty = medicalSpecialty;
         this.phoneNumber = phoneNumber;

@@ -12,7 +12,7 @@ public class Admin extends User {
 
     public static Admin getInstance() {
         if(admin == null)
-            admin = new Admin("admin", encodePassword("admin", "admin"), "admin");
+            admin = new Admin("admin", encodePassword("admin", "admin"), "Admin");
 
         return admin;
     }

@@ -2,7 +2,9 @@ package org.fis2021.terpsicare.services;
 
 import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.objects.ObjectRepository;
+import org.fis2021.terpsicare.exceptions.EmptyTextfieldsException;
 import org.fis2021.terpsicare.exceptions.UsernameAlreadyExistsException;
+import org.fis2021.terpsicare.exceptions.WrongPasswordConfirmationException;
 import org.fis2021.terpsicare.model.User;
 import org.fis2021.terpsicare.model.Doctor;
 import org.fis2021.terpsicare.model.Admin;
@@ -32,9 +34,11 @@ public class UserService {
         }
     }
 
-    public static void addDoctor(String username, String password, String role, String name, String medicalSpecialty, String phoneNumber) throws UsernameAlreadyExistsException {
+    public static void addDoctor(String username, String password, String confirmedPassword, String name, String medicalSpecialty, String phoneNumber) throws UsernameAlreadyExistsException, WrongPasswordConfirmationException, EmptyTextfieldsException {
         checkUserDoesNotAlreadyExist(username);
-        userRepository.insert(new Doctor(username, encodePassword(username, password), role, name, medicalSpecialty, phoneNumber));
+        checkPasswordSameAsConfirmedPassword(password, confirmedPassword);
+        checkEmptyTextFields(username, password, confirmedPassword, name, medicalSpecialty, phoneNumber);
+        userRepository.insert(new Doctor(username, encodePassword(username, password), name, medicalSpecialty, phoneNumber));
     }
 
     private static void checkUserDoesNotAlreadyExist(String username) throws UsernameAlreadyExistsException {
@@ -42,6 +46,27 @@ public class UserService {
             if (Objects.equals(username, user.getUsername()))
                 throw new UsernameAlreadyExistsException(username);
         }
+    }
+
+    private static void checkPasswordSameAsConfirmedPassword(String password, String confirmedPassword) throws WrongPasswordConfirmationException {
+        if(!Objects.equals(password, confirmedPassword)) {
+            throw new WrongPasswordConfirmationException();
+        }
+    }
+
+    private static void checkEmptyTextFields(String username, String password, String confirmedPassword, String name, String medicalSpecialty, String phoneNumber) throws EmptyTextfieldsException {
+        if (Objects.equals(username, ""))
+            throw new EmptyTextfieldsException();
+        else if (Objects.equals(password, ""))
+            throw new EmptyTextfieldsException();
+        else if (Objects.equals(confirmedPassword, ""))
+            throw new EmptyTextfieldsException();
+        else if (Objects.equals(name, ""))
+            throw new EmptyTextfieldsException();
+        else if (Objects.equals(medicalSpecialty, null))
+            throw new EmptyTextfieldsException();
+        else if (Objects.equals(phoneNumber, ""))
+            throw new EmptyTextfieldsException();
     }
 
     public static String encodePassword(String salt, String password) {

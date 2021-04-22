@@ -1,11 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<GridPane alignment="center" hgap="10" prefHeight="400" prefWidth="600" vgap="10" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fis2021.terpsicare.controllers.AddDoctorController">
+    <padding>
+        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+    </padding>
+    <Text id="title-text" text="Add Doctor Information:" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0">
+      <font>
+         <Font size="18.0" />
+      </font>
+    </Text>
+    <Label text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+    <TextField fx:id="usernameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+    <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+    <Label text="Confirm Password:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+    <PasswordField fx:id="passwordConfirmation" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+    <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+    <TextField fx:id="nameField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+    <Label text="Phone:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+    <TextField fx:id="phonenumberField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+    <Label text="Medical Specialty:" GridPane.rowIndex="6" />
+    <ChoiceBox fx:id="medicalSpecialty" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+    <Button fx:id="registerDoctor" mnemonicParsing="false" onAction="#handleRegisterAction" text="Register doctor" GridPane.columnIndex="1" GridPane.rowIndex="7" />
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fis2021.terpsicare.controllers.AddDoctorController">
-   <children>
-      <Text layoutX="200.0" layoutY="99.94921875" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="121.33673095703125" AnchorPane.bottomAnchor="246.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="379.0" AnchorPane.topAnchor="87.0" />
-   </children>
-</AnchorPane>
+</GridPane>
