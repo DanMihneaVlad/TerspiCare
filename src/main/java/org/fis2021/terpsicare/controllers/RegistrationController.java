@@ -5,6 +5,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import org.fis2021.terpsicare.AlertBox;
 import org.fis2021.terpsicare.exceptions.EmptyTextfieldsException;
 import org.fis2021.terpsicare.exceptions.UsernameAlreadyExistsException;
 import org.fis2021.terpsicare.exceptions.WrongPasswordConfirmationException;
@@ -32,11 +33,11 @@ public class RegistrationController {
             UserService.addPatient(usernameField.getText(), passwordField.getText(),nameField.getText(),phonenumberField.getText(), passwordField2.getText(), medicalrecordField.getText());
             registrationMessage.setText("Account created successfully!");
         } catch (UsernameAlreadyExistsException e) {
-            registrationMessage.setText(e.getMessage());
+            AlertBox.display("Error","Username already exists!");
         } catch (EmptyTextfieldsException e) {
-            e.printStackTrace();
+            AlertBox.display("Error","You cannot left empty test fields!");
         } catch (WrongPasswordConfirmationException e) {
-            e.printStackTrace();
+            AlertBox.display("Error","Wrong password confirmation!");
         }
     }
 }
