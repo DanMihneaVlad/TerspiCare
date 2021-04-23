@@ -56,7 +56,7 @@ public class LogInController {
                     if (role.equals("doctor")) {
                         Node node = (Node) event.getSource();
                         Stage CurrentStage = (Stage) node.getScene().getWindow();
-                        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("HomePage.fxml"));
+                        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("HomePageDoctor.fxml"));
                         CurrentStage.setTitle("HomePage");
                         CurrentStage.setScene(new Scene(root, 500, 500));
                         CurrentStage.show();
