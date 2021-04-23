@@ -10,7 +10,6 @@ public class AlertBox {
 
     public static void display(String title, String message){
         Stage window = new Stage();
-
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(title);
         window.setMinWidth(250);

@@ -5,7 +5,7 @@
     <description>This application aims to help both the patients and the doctors of a medical clinic by giving them the ability to make and manage appointments a lot easier, but also to find the information they are looking for through the app making the process a lot faster.</description>
     <groupId>org.aplicatie-cabinet-medical.students</groupId>
     <artifactId>TerpsiCare</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.1</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -35,6 +35,17 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.10.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.30</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.30</version>
         </dependency>
 
     </dependencies>
