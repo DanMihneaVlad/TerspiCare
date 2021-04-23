@@ -30,7 +30,7 @@ public class HomePageController {
     public void handleButtonActionLogIn(ActionEvent event) throws Exception{
         Node node = (Node) event.getSource();
         Stage CurrentStage = (Stage) node.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("LogIn.fxml"));
         CurrentStage.setTitle("LogIn");
         CurrentStage.setScene(new Scene(root, 500, 500));
         CurrentStage.show();
