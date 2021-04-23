@@ -2,6 +2,7 @@ package org.fis2021.terpsicare.services;
 
 import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.objects.ObjectRepository;
+
 import org.fis2021.terpsicare.exceptions.EmptyTextfieldsException;
 import org.fis2021.terpsicare.exceptions.UsernameAlreadyExistsException;
 import org.fis2021.terpsicare.exceptions.WrongPasswordConfirmationException;
@@ -10,6 +11,7 @@ import org.fis2021.terpsicare.model.Doctor;
 import org.fis2021.terpsicare.model.Admin;
 
 import java.nio.charset.StandardCharsets;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
@@ -37,8 +39,26 @@ public class UserService {
     public static void addDoctor(String username, String password, String confirmedPassword, String name, String medicalSpecialty, String phoneNumber) throws UsernameAlreadyExistsException, WrongPasswordConfirmationException, EmptyTextfieldsException {
         checkUserDoesNotAlreadyExist(username);
         checkPasswordSameAsConfirmedPassword(password, confirmedPassword);
-        checkEmptyTextFields(username, password, confirmedPassword, name, medicalSpecialty, phoneNumber);
+        checkEmptyTextFieldsDoctor(username, password, confirmedPassword, name, medicalSpecialty, phoneNumber);
         userRepository.insert(new Doctor(username, encodePassword(username, password), name, medicalSpecialty, phoneNumber));
+
+    public static void addPatient(String username, String password,String name, String phone, String password2, String medicalrecord) throws UsernameAlreadyExistsException, WrongPasswordConfirmationException, EmptyTextfieldsException {
+        checkEmptyTextfieldsPatient(username, password, name, phone, password2);
+        checkUserDoesNotAlreadyExist(username);
+        checkPasswordSameAsConfirmedPassword(password, password2);
+        userRepository.insert(new Patient(username, encodePassword(username, password), name, phone, medicalrecord));
+    }
+
+    private static void checkEmptyTextfieldsPatient(String username, String password, String name, String phone, String password2) throws EmptyTextfieldsException{
+        if( Objects.equals(username,""))
+            throw new EmptyTextfieldsException();
+        else if( Objects.equals(password,""))
+            throw new EmptyTextfieldsException();
+        else if( Objects.equals(name,""))
+            throw new EmptyTextfieldsException();
+        else if( Objects.equals(phone,""))
+            throw new EmptyTextfieldsException();
+
     }
 
     private static void checkUserDoesNotAlreadyExist(String username) throws UsernameAlreadyExistsException {
@@ -48,13 +68,14 @@ public class UserService {
         }
     }
 
+
     private static void checkPasswordSameAsConfirmedPassword(String password, String confirmedPassword) throws WrongPasswordConfirmationException {
         if(!Objects.equals(password, confirmedPassword)) {
             throw new WrongPasswordConfirmationException();
         }
     }
 
-    private static void checkEmptyTextFields(String username, String password, String confirmedPassword, String name, String medicalSpecialty, String phoneNumber) throws EmptyTextfieldsException {
+    private static void checkEmptyTextFieldsDoctor(String username, String password, String confirmedPassword, String name, String medicalSpecialty, String phoneNumber) throws EmptyTextfieldsException {
         if (Objects.equals(username, ""))
             throw new EmptyTextfieldsException();
         else if (Objects.equals(password, ""))
@@ -69,7 +90,25 @@ public class UserService {
             throw new EmptyTextfieldsException();
     }
 
-    public static String encodePassword(String salt, String password) {
+    public static void checkUserCredentials(String username,String password) throws UsernameDoesNotExistException, WrongPasswordException, WrongRoleException {
+        int oku=0,okp=0,okr=0;
+        for(User user : userRepository.find()){
+            if(Objects.equals(username,user.getUsername())) {
+                oku = 1;
+            }
+            if(Objects.equals(encodePassword(username,password),user.getPassword()))
+                okp = 1;
+        }
+        if( oku == 0 )
+            throw new UsernameDoesNotExistException(username);
+        if( okr == 0 )
+            throw new WrongRoleException();
+        if ( okp == 0 )
+            throw new WrongPasswordException();
+
+    }
+
+    private static String encodePassword(String salt, String password) {
         MessageDigest md = getMessageDigest();
         md.update(salt.getBytes(StandardCharsets.UTF_8));
 
@@ -89,4 +128,5 @@ public class UserService {
         }
         return md;
     }
+
 }
