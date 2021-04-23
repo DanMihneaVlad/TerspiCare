@@ -3,9 +3,8 @@ package org.fis2021.terpsicare.services;
 import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.objects.ObjectRepository;
 
-import org.fis2021.terpsicare.exceptions.EmptyTextfieldsException;
-import org.fis2021.terpsicare.exceptions.UsernameAlreadyExistsException;
-import org.fis2021.terpsicare.exceptions.WrongPasswordConfirmationException;
+import org.fis2021.terpsicare.exceptions.*;
+import org.fis2021.terpsicare.model.Patient;
 import org.fis2021.terpsicare.model.User;
 import org.fis2021.terpsicare.model.Doctor;
 import org.fis2021.terpsicare.model.Admin;
@@ -41,6 +40,7 @@ public class UserService {
         checkPasswordSameAsConfirmedPassword(password, confirmedPassword);
         checkEmptyTextFieldsDoctor(username, password, confirmedPassword, name, medicalSpecialty, phoneNumber);
         userRepository.insert(new Doctor(username, encodePassword(username, password), name, medicalSpecialty, phoneNumber));
+    }
 
     public static void addPatient(String username, String password,String name, String phone, String password2, String medicalrecord) throws UsernameAlreadyExistsException, WrongPasswordConfirmationException, EmptyTextfieldsException {
         checkEmptyTextfieldsPatient(username, password, name, phone, password2);
@@ -108,7 +108,7 @@ public class UserService {
 
     }
 
-    private static String encodePassword(String salt, String password) {
+    public static String encodePassword(String salt, String password) {
         MessageDigest md = getMessageDigest();
         md.update(salt.getBytes(StandardCharsets.UTF_8));
 
