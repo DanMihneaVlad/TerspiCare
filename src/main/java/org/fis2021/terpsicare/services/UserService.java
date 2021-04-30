@@ -9,8 +9,8 @@ import org.fis2021.terpsicare.model.User;
 import org.fis2021.terpsicare.model.Doctor;
 import org.fis2021.terpsicare.model.Admin;
 
-import java.nio.charset.StandardCharsets;
 
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
@@ -43,12 +43,12 @@ public class UserService {
     }
 
     public static void addPatient(String username, String password,String name, String phone, String password2, String medicalrecord) throws UsernameAlreadyExistsException, WrongPasswordConfirmationException, EmptyTextfieldsException {
+
         checkEmptyTextfieldsPatient(username, password, name, phone, password2);
         checkUserDoesNotAlreadyExist(username);
         checkPasswordSameAsConfirmedPassword(password, password2);
         userRepository.insert(new Patient(username, encodePassword(username, password), name, phone, medicalrecord));
     }
-
     private static void checkEmptyTextfieldsPatient(String username, String password, String name, String phone, String password2) throws EmptyTextfieldsException{
         if( Objects.equals(username,""))
             throw new EmptyTextfieldsException();
@@ -58,14 +58,39 @@ public class UserService {
             throw new EmptyTextfieldsException();
         else if( Objects.equals(phone,""))
             throw new EmptyTextfieldsException();
-
+        else if( Objects.equals(password2,""))
+            throw new EmptyTextfieldsException();
+        else if( Objects.equals(medicalrecord,""))
+            throw new EmptyTextfieldsException();
     }
 
-    private static void checkUserDoesNotAlreadyExist(String username) throws UsernameAlreadyExistsException {
+    public static void checkUserDoesNotAlreadyExist(String username) throws UsernameAlreadyExistsException {
         for (User user : userRepository.find()) {
             if (Objects.equals(username, user.getUsername()))
                 throw new UsernameAlreadyExistsException(username);
         }
+
+    }
+
+    public static String checkUserExist(String username) throws UsernameDoesNotExistException{
+        int ok = 0;
+        String role = null;
+        for (User user : userRepository.find()) {
+            if (Objects.equals(username, user.getUsername())){
+                ok = 1;
+                role = user.getRole();
+                break;
+            }
+        }
+        if(ok == 0){
+            throw new UsernameDoesNotExistException(username);
+        }else{
+            return role;
+        }
+    }
+    
+    public static ObjectRepository<User> getUserRepository() {
+        return userRepository;
     }
 
 
@@ -90,8 +115,8 @@ public class UserService {
             throw new EmptyTextfieldsException();
     }
 
-    public static void checkUserCredentials(String username,String password) throws UsernameDoesNotExistException, WrongPasswordException, WrongRoleException {
-        int oku=0,okp=0,okr=0;
+    public static int checkUserCredentials(String username, String password) throws UsernameDoesNotExistException, WrongPasswordException {
+        int oku=0,okp=0;
         for(User user : userRepository.find()){
             if(Objects.equals(username,user.getUsername())) {
                 oku = 1;
@@ -99,13 +124,14 @@ public class UserService {
             if(Objects.equals(encodePassword(username,password),user.getPassword()))
                 okp = 1;
         }
-        if( oku == 0 )
+        if( oku == 0 ){
             throw new UsernameDoesNotExistException(username);
-        if( okr == 0 )
-            throw new WrongRoleException();
-        if ( okp == 0 )
+        }
+        if ( okp == 0 ){
             throw new WrongPasswordException();
+        }
 
+        return 1;
     }
 
     public static String encodePassword(String salt, String password) {
@@ -128,5 +154,19 @@ public class UserService {
         }
         return md;
     }
+
+    public static String getUserRole(String username, String password) throws UsernameDoesNotExistException, WrongPasswordException {
+        for (User user : userRepository.find()) {
+            if (Objects.equals(username, user.getUsername()))
+            {
+                if (Objects.equals(encodePassword(username,password), user.getPassword()))
+                    return user.getRole();
+                else
+                    throw new WrongPasswordException();
+            }
+        }
+        throw new UsernameDoesNotExistException(username);
+    }
+
 
 }

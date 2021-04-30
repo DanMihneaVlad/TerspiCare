@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -10,41 +11,54 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml/1" alignment="center" hgap="10" prefHeight="400" prefWidth="600"
-          vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal"
-          fx:controller="org.fis2021.terpsicare.controllers.RegistrationController">
+<GridPane alignment="center" hgap="10" prefHeight="400" prefWidth="600" vgap="10" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fis2021.terpsicare.controllers.RegistrationController">
     <padding>
-        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0"/>
+        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
     </padding>
-    <Text id="title-text" text="Patient Registration" GridPane.columnIndex="0" GridPane.columnSpan="2"
-          GridPane.rowIndex="0"/>
+    <Text id="title-text" text="Patient Registration" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0" />
 
-    <Label text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+    <Label text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
 
-    <TextField fx:id="usernameField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+    <TextField fx:id="usernameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-    <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+    <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
 
-    <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+    <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-    <Label text="Phone:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+    <Label text="Phone:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
 
-    <TextField fx:id="phonenumberField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+    <TextField fx:id="phonenumberField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-    <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+    <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
 
-    <TextField fx:id="nameField" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+    <TextField fx:id="nameField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
-    <Label text="Confirm Password:" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+    <Label text="Confirm Password:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
 
-    <PasswordField fx:id="passwordField2" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+    <PasswordField fx:id="passwordField2" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 
-    <Label text="MedicalStatus:" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+    <Label text="MedicalStatus:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
 
-    <TextField fx:id="medicalrecordField" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+    <TextField fx:id="medicalrecordField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
 
-    <Text fx:id="registrationMessage" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+    <Text fx:id="registrationMessage" GridPane.columnIndex="1" GridPane.rowIndex="8" />
     <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="8">
-        <Button onAction="#handleRegisterAction" text="Register"/>
+        <Button onAction="#handleRegisterAction" text="Register" />
     </HBox>
+   <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleBackAction" text="Back" GridPane.rowIndex="8" />
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
 </GridPane>
