@@ -8,6 +8,9 @@ public class Patient extends User{
     private String phonenumber;
     private String medicalrecord;
 
+    public Patient() {
+    }
+
     public Patient(String username, String p, String name, String phonenumber, String medicalrecord) {
         super(username,p,"patient");
         this.name = name;

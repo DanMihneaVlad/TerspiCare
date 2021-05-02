@@ -9,6 +9,9 @@ public class Doctor extends User {
     private String phoneNumber;
     private ArrayList<Appointment> appointments = new ArrayList<Appointment>();
 
+    public Doctor(){
+    }
+
     public Doctor(String username, String password, String name, String medicalSpecialty, String phoneNumber) {
         super(username, password, "Doctor");
         this.name = name;
