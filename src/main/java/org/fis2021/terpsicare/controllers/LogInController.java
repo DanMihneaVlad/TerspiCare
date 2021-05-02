@@ -53,7 +53,7 @@ public class LogInController {
                     CurrentStage.show();
 
                 } else {
-                    if (role.equals("doctor")) {
+                    if (role.equals("doctor") || role.equals("Doctor")) {
                         Node node = (Node) event.getSource();
                         Stage CurrentStage = (Stage) node.getScene().getWindow();
                         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("HomePageDoctor.fxml"));

@@ -12,7 +12,7 @@
             <Image url="@welcome.jpg" />
          </image>
       </ImageView>
-      <Button layoutX="274.0" layoutY="46.0" mnemonicParsing="false" text="View Doctors" />
+      <Button fx:id="ViewDoctorsButton" layoutX="274.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleViewDoctors" text="View Doctors" />
       <Button fx:id="logoutButton" layoutX="467.0" layoutY="46.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleLogout" text="Log Out" />
       <Button layoutX="71.0" layoutY="46.0" mnemonicParsing="false" text="View Appointments" />
    </children>

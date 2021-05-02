@@ -13,6 +13,8 @@ import org.fis2021.terpsicare.model.Admin;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import static org.fis2021.terpsicare.services.FileSystemService.getPathToFile;
@@ -198,4 +200,11 @@ public class UserService {
         return md;
     }
 
+    public static List DoctorsList() {
+        List<Doctor> doctor = new ArrayList<>();
+        for (User doc : doctorRepository.find()) {
+                doctor.add((Doctor)doc);
+        }
+        return doctor;
+    }
 }

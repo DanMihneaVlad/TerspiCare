@@ -7,7 +7,7 @@ public class Doctor extends User {
     private String name;
     private String medicalSpecialty;
     private String phoneNumber;
-    private ArrayList<Appointment> appointments = new ArrayList<Appointment>();
+    //private ArrayList<Appointment> appointments = new ArrayList<Appointment>();
 
     public Doctor(){
     }
