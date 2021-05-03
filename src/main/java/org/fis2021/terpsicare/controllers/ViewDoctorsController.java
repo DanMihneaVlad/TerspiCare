@@ -38,13 +38,7 @@ public class ViewDoctorsController implements Initializable {
         TableColumn medicalspec = new TableColumn("MEDICAL SPECIALITY");
         myTable.getColumns().addAll(name, phone, medicalspec);
 
-        final ObservableList<Doctor> data = FXCollections.observableArrayList(UserService.DoctorsList());
-
-        name.setCellValueFactory(new PropertyValueFactory<Doctor,String>("name"));
-        phone.setCellValueFactory(new PropertyValueFactory<Doctor,String>("phoneNumber"));
-        medicalspec.setCellValueFactory(new PropertyValueFactory<Doctor,String>("medicalSpecialty"));
-
-        myTable.setItems(data);
+        
 
     }
     public void handleHome(ActionEvent event) throws Exception{
