@@ -15,13 +15,22 @@ public class AdminController {
     private Button addDoctor;
 
     @FXML
-    public void handleButtonAction(ActionEvent event) throws Exception {
+    public void handleAddDoctor(ActionEvent event) throws Exception {
         Node node = (Node) event.getSource();
         Stage currentStage = (Stage) node.getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("addDoctor.fxml"));
         currentStage.setTitle("Add Doctor");
         currentStage.setScene(new Scene(root, 500, 500));
         currentStage.show();
+    }
+
+    public void handleBackAction(ActionEvent event) throws Exception{
+        Node node = (Node) event.getSource();
+        Stage CurrentStage = (Stage) node.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("HomePage.fxml"));
+        CurrentStage.setTitle("HomePage");
+        CurrentStage.setScene(new Scene(root, 500, 500));
+        CurrentStage.show();
     }
 
 }
