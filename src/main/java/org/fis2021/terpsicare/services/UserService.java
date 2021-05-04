@@ -43,11 +43,11 @@ public class UserService {
         }
     }
 
-    public static void addDoctor(String username, String password, String confirmedPassword, String name, String medicalSpecialty, String phoneNumber) throws UsernameAlreadyExistsException, WrongPasswordConfirmationException, EmptyTextfieldsException {
+    public static void addDoctor(String username, String password, String confirmedPassword, String name, String medicalSpecialty, String phoneNumber, String description) throws UsernameAlreadyExistsException, WrongPasswordConfirmationException, EmptyTextfieldsException {
         checkUserDoesNotAlreadyExist(username);
         checkPasswordSameAsConfirmedPassword(password, confirmedPassword);
         checkEmptyTextFieldsDoctor(username, password, confirmedPassword, name, medicalSpecialty, phoneNumber);
-        doctorRepository.insert(new Doctor(username, encodePassword(username, password), name, medicalSpecialty, phoneNumber));
+        doctorRepository.insert(new Doctor(username, encodePassword(username, password), name, medicalSpecialty, phoneNumber, description));
     }
 
     public static void addPatient(String username, String password,String name, String phone, String password2, String medicalrecord) throws UsernameAlreadyExistsException, WrongPasswordConfirmationException, EmptyTextfieldsException {
@@ -204,6 +204,16 @@ public class UserService {
         List<Doctor> doctor = new ArrayList<>();
         for (User doc : doctorRepository.find()) {
                 doctor.add((Doctor)doc);
+        }
+        return doctor;
+    }
+
+    public static List DoctorsListSpec(String spec) {
+        List<Doctor> doctor = new ArrayList<>();
+        for (User doc : doctorRepository.find()) {
+            if (((Doctor) doc).getMedicalSpecialty().equals(spec)) {
+                doctor.add((Doctor) doc);
+            }
         }
         return doctor;
     }

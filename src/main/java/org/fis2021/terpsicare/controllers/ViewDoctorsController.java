@@ -25,21 +25,42 @@ import java.util.ResourceBundle;
 public class ViewDoctorsController implements Initializable {
 
     @FXML
-    private Label label;
+    private TableView myTable;
 
     @FXML
-    private TableView myTable;
+    private ChoiceBox medicalS;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+
         TableColumn name = new TableColumn("NAME");
         TableColumn phone = new TableColumn("PHONE");
         TableColumn medicalspec = new TableColumn("MEDICAL SPECIALITY");
-        myTable.getColumns().addAll(name, phone, medicalspec);
+        TableColumn description =  new TableColumn("DESCRIPTION");
+        myTable.getColumns().addAll(name, phone, medicalspec, description);
 
-        
+        medicalS.getItems().addAll("Cardiology", "Dermatology", "Family Medicine", "Gastroenterology", "Hematology", "Neurology", "Obstetrics and gynecology", "Ophthalmology", "Pediatrics", "Urology");
 
+        final ObservableList<Doctor> data = FXCollections.observableArrayList(UserService.DoctorsList());
+
+        name.setCellValueFactory(new PropertyValueFactory<Doctor,String>("name"));
+        phone.setCellValueFactory(new PropertyValueFactory<Doctor,String>("phoneNumber"));
+        medicalspec.setCellValueFactory(new PropertyValueFactory<Doctor,String>("medicalSpecialty"));
+        description.setCellValueFactory(new PropertyValueFactory<Doctor,String>("description"));
+
+        myTable.setItems(data);
+
+
+    }
+
+    public void handleChoise(ActionEvent event) throws Exception{
+
+        String choise= (String)medicalS.getValue();
+
+        final ObservableList<Doctor> data = FXCollections.observableArrayList(UserService.DoctorsListSpec(choise));
+
+        myTable.setItems(data);
     }
     public void handleHome(ActionEvent event) throws Exception{
         try {

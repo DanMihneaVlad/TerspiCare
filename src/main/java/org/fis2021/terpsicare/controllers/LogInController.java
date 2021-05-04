@@ -71,7 +71,7 @@ public class LogInController {
                 }
             }
         } catch (UsernameDoesNotExistException e) {
-            AlertBox.display("Error","Wrong password confirmation!");
+            AlertBox.display("Error","Username does not exist!");
         } catch (WrongPasswordException e) {
             AlertBox.display("Error","Wrong password!");
         }
