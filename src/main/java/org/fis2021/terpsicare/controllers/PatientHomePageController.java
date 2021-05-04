@@ -12,16 +12,34 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class PatientHomePageController {
+
     @FXML
     private Button logoutButton;
 
     @FXML
-    public void handleLogout(ActionEvent event) throws Exception{
+    private Button addAppointment;
+
+    @FXML
+    public void handleLogout(ActionEvent event) throws Exception {
         try {
             Node node = (Node) event.getSource();
             Stage CurrentStage = (Stage) node.getScene().getWindow();
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("HomePage.fxml"));
             CurrentStage.setTitle("HomePage");
+            CurrentStage.setScene(new Scene(root, 500, 500));
+            CurrentStage.show();
+        } catch (IOException e) {
+            System.out.println("Error");
+        }
+    }
+
+    @FXML
+    public void handleAddAppointment(ActionEvent event) throws Exception {
+        try {
+            Node node = (Node) event.getSource();
+            Stage CurrentStage = (Stage) node.getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("AddAppointment.fxml"));
+            CurrentStage.setTitle("Add Appointment");
             CurrentStage.setScene(new Scene(root, 500, 500));
             CurrentStage.show();
         } catch (IOException e) {

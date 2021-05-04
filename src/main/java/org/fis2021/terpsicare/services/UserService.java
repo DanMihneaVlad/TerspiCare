@@ -13,25 +13,32 @@ import org.fis2021.terpsicare.model.Admin;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import static org.fis2021.terpsicare.services.FileSystemService.getPathToFile;
 
 public class UserService {
 
-    private static ObjectRepository<User> userRepository;
-
+    private static ObjectRepository<Patient> patientRepository;
+    private static ObjectRepository<Doctor> doctorRepository;
+    private static ObjectRepository<Admin> adminRepository;
     public static void initDatabase() {
         Nitrite database = Nitrite.builder().filePath(getPathToFile(".terpsicare-users.db").toFile()).openOrCreate("test", "test");
-        userRepository = database.getRepository(User.class);
+        patientRepository = database.getRepository(Patient.class);
+        doctorRepository = database.getRepository(Doctor.class);
+        adminRepository = database.getRepository(Admin.class);
         int ok = 1;
-        for (User user : userRepository.find()) {
-            if (Objects.equals("admin", user.getUsername()))
+        for (User user : adminRepository.find()) {
+            if (Objects.equals("admin", user.getUsername())) {
                 ok = 0;
+                break;
+            }
         }
         if (ok == 1) {
-            Admin admin = Admin.getInstance();
-            userRepository.insert(admin);
+            Admin admin = new Admin("admin" , encodePassword("admin", "admin"), "Admin");
+            adminRepository.insert(admin);
         }
     }
 
@@ -39,16 +46,16 @@ public class UserService {
         checkUserDoesNotAlreadyExist(username);
         checkPasswordSameAsConfirmedPassword(password, confirmedPassword);
         checkEmptyTextFieldsDoctor(username, password, confirmedPassword, name, medicalSpecialty, phoneNumber);
-        userRepository.insert(new Doctor(username, encodePassword(username, password), name, medicalSpecialty, phoneNumber));
+        doctorRepository.insert(new Doctor(username, encodePassword(username, password), name, medicalSpecialty, phoneNumber));
     }
 
     public static void addPatient(String username, String password,String name, String phone, String password2, String medicalrecord) throws UsernameAlreadyExistsException, WrongPasswordConfirmationException, EmptyTextfieldsException {
-
         checkEmptyTextfieldsPatient(username, password, name, phone, password2);
         checkUserDoesNotAlreadyExist(username);
         checkPasswordSameAsConfirmedPassword(password, password2);
-        userRepository.insert(new Patient(username, encodePassword(username, password), name, phone, medicalrecord));
+        patientRepository.insert(new Patient(username, encodePassword(username, password), name, phone, medicalrecord));
     }
+
     private static void checkEmptyTextfieldsPatient(String username, String password, String name, String phone, String password2) throws EmptyTextfieldsException{
         if( Objects.equals(username,""))
             throw new EmptyTextfieldsException();
@@ -60,39 +67,50 @@ public class UserService {
             throw new EmptyTextfieldsException();
         else if( Objects.equals(password2,""))
             throw new EmptyTextfieldsException();
-        else if( Objects.equals(medicalrecord,""))
-            throw new EmptyTextfieldsException();
     }
 
     public static void checkUserDoesNotAlreadyExist(String username) throws UsernameAlreadyExistsException {
-        for (User user : userRepository.find()) {
+        for (User user : patientRepository.find()) {
             if (Objects.equals(username, user.getUsername()))
                 throw new UsernameAlreadyExistsException(username);
         }
-
+        for (User user : doctorRepository.find()) {
+            if (Objects.equals(username, user.getUsername()))
+                throw new UsernameAlreadyExistsException(username);
+        }
+        for (User user : adminRepository.find()) {
+            if (Objects.equals(username, user.getUsername()))
+                throw new UsernameAlreadyExistsException(username);
+        }
     }
 
     public static String checkUserExist(String username) throws UsernameDoesNotExistException{
         int ok = 0;
         String role = null;
-        for (User user : userRepository.find()) {
-            if (Objects.equals(username, user.getUsername())){
+        for (User user : patientRepository.find()) {
+            if (Objects.equals(username, user.getUsername())) {
                 ok = 1;
                 role = user.getRole();
                 break;
             }
         }
-        if(ok == 0){
+        for (User user : doctorRepository.find()) {
+            if (Objects.equals(username, user.getUsername())) {
+                ok = 1;
+                role = user.getRole();
+                break;
+            }
+        }
+        if (Objects.equals(username,"admin")) {
+            ok = 1;
+            role = "Admin";
+        }
+        if (ok == 0) {
             throw new UsernameDoesNotExistException(username);
-        }else{
+        } else {
             return role;
         }
     }
-    
-    public static ObjectRepository<User> getUserRepository() {
-        return userRepository;
-    }
-
 
     private static void checkPasswordSameAsConfirmedPassword(String password, String confirmedPassword) throws WrongPasswordConfirmationException {
         if(!Objects.equals(password, confirmedPassword)) {
@@ -116,21 +134,37 @@ public class UserService {
     }
 
     public static int checkUserCredentials(String username, String password) throws UsernameDoesNotExistException, WrongPasswordException {
-        int oku=0,okp=0;
-        for(User user : userRepository.find()){
-            if(Objects.equals(username,user.getUsername())) {
+        int oku=0, okp=0;
+        for(User user : patientRepository.find()) {
+            if(Objects.equals(username, user.getUsername())) {
                 oku = 1;
             }
-            if(Objects.equals(encodePassword(username,password),user.getPassword()))
+            if(Objects.equals(encodePassword(username, password), user.getPassword())) {
                 okp = 1;
+            }
         }
-        if( oku == 0 ){
+        for(User user : doctorRepository.find()) {
+            if(Objects.equals(username, user.getUsername())) {
+                oku = 1;
+            }
+            if(Objects.equals(encodePassword(username, password), user.getPassword())) {
+                okp = 1;
+            }
+        }
+        for(User user : adminRepository.find()) {
+            if(Objects.equals(username, user.getUsername())) {
+                oku = 1;
+            }
+            if(Objects.equals(encodePassword(username, password), user.getPassword())) {
+                okp = 1;
+            }
+        }
+        if ( oku == 0 ) {
             throw new UsernameDoesNotExistException(username);
         }
-        if ( okp == 0 ){
+        if ( okp == 0 ) {
             throw new WrongPasswordException();
         }
-
         return 1;
     }
 
@@ -155,18 +189,12 @@ public class UserService {
         return md;
     }
 
-    public static String getUserRole(String username, String password) throws UsernameDoesNotExistException, WrongPasswordException {
-        for (User user : userRepository.find()) {
-            if (Objects.equals(username, user.getUsername()))
-            {
-                if (Objects.equals(encodePassword(username,password), user.getPassword()))
-                    return user.getRole();
-                else
-                    throw new WrongPasswordException();
-            }
+    public static List doctorListName() {
+        List<String> doctor = new ArrayList<>();
+        for (User doc : doctorRepository.find()) {
+            doctor.add(((Doctor)doc).getName());
         }
-        throw new UsernameDoesNotExistException(username);
+        return doctor;
     }
-
 
 }

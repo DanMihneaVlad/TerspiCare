@@ -20,8 +20,6 @@ import org.fis2021.terpsicare.services.UserService;
 public class RegistrationController {
 
     @FXML
-    private Text registrationMessage;
-    @FXML
     private PasswordField passwordField;
     @FXML
     private TextField usernameField;
@@ -46,6 +44,7 @@ public class RegistrationController {
             AlertBox.display("Error","Wrong password confirmation!");
         }
     }
+
     public void handleBackAction(ActionEvent event) throws Exception{
         Node node = (Node) event.getSource();
         Stage CurrentStage = (Stage) node.getScene().getWindow();
@@ -54,4 +53,5 @@ public class RegistrationController {
         CurrentStage.setScene(new Scene(root, 500, 500));
         CurrentStage.show();
     }
+
 }
