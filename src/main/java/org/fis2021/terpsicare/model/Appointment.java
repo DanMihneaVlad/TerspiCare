@@ -1,5 +1,7 @@
 package org.fis2021.terpsicare.model;
 
+import java.time.LocalDate;
+
 public class Appointment {
 
     private String username;
@@ -7,8 +9,12 @@ public class Appointment {
     private int year;
     private int month;
     private int day;
+    private LocalDate date;
     private String dayOfTheWeek;
     private String hour;
+
+    public Appointment() {
+    }
 
     public Appointment(String username, String doctorName, int year, int month, int day, String dayOfTheWeek, String hour) {
         this.username = username;

@@ -4,15 +4,13 @@ import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.objects.ObjectRepository;
 
 import org.fis2021.terpsicare.exceptions.*;
-import org.fis2021.terpsicare.model.Patient;
-import org.fis2021.terpsicare.model.User;
-import org.fis2021.terpsicare.model.Doctor;
-import org.fis2021.terpsicare.model.Admin;
+import org.fis2021.terpsicare.model.*;
 
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -24,11 +22,13 @@ public class UserService {
     private static ObjectRepository<Patient> patientRepository;
     private static ObjectRepository<Doctor> doctorRepository;
     private static ObjectRepository<Admin> adminRepository;
+    private static ObjectRepository<Appointment> appointmentRepository;
     public static void initDatabase() {
         Nitrite database = Nitrite.builder().filePath(getPathToFile(".terpsicare-users.db").toFile()).openOrCreate("test", "test");
         patientRepository = database.getRepository(Patient.class);
         doctorRepository = database.getRepository(Doctor.class);
         adminRepository = database.getRepository(Admin.class);
+        appointmentRepository = database.getRepository(Appointment.class);
         int ok = 1;
         for (User user : adminRepository.find()) {
             if (Objects.equals("admin", user.getUsername())) {
@@ -56,7 +56,35 @@ public class UserService {
         patientRepository.insert(new Patient(username, encodePassword(username, password), name, phone, medicalrecord));
     }
 
-    private static void checkEmptyTextfieldsPatient(String username, String password, String name, String phone, String password2) throws EmptyTextfieldsException{
+    public static void addAppointment(String username, String doctorName, int year, int month, int day, String dayOfTheWeek, String hour) throws EmptyTextfieldsException, NotAvailableException, WeekendDayException {
+        checkEmptyTextfieldsAppointment(doctorName, year, hour);
+        checkAvailability(doctorName, year, month, day, dayOfTheWeek, hour);
+        appointmentRepository.insert(new Appointment(username, doctorName, year, month, day, dayOfTheWeek, hour));
+    }
+
+    private static void checkEmptyTextfieldsAppointment(String doctorName, int year, String hour) throws EmptyTextfieldsException {
+        if (Objects.equals(doctorName, null))
+            throw new EmptyTextfieldsException();
+        else if (Objects.equals(year, 0))
+            throw new EmptyTextfieldsException();
+        else if (Objects.equals(hour, null))
+            throw new EmptyTextfieldsException();
+    }
+
+    private static void checkAvailability(String doctorName, int year, int month, int day, String dayOfTheWeek, String hour) throws NotAvailableException, WeekendDayException {
+        if (Objects.equals(dayOfTheWeek, "Saturday") || Objects.equals(dayOfTheWeek, "Sunday")) {
+            throw new WeekendDayException();
+        } else {
+            for (Appointment app : appointmentRepository.find()) {
+                if (Objects.equals(app.getDoctorName(), doctorName) && Objects.equals(app.getHour(), hour)
+                && app.getYear() == year && app.getMonth() == month && app.getDay() == day) {
+                    throw new NotAvailableException(doctorName, hour, year, month, day);
+                }
+            }
+        }
+    }
+
+    private static void checkEmptyTextfieldsPatient(String username, String password, String name, String phone, String password2) throws EmptyTextfieldsException {
         if( Objects.equals(username,""))
             throw new EmptyTextfieldsException();
         else if( Objects.equals(password,""))
