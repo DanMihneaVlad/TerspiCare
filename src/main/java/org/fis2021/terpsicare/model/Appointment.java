@@ -11,6 +11,7 @@ public class Appointment {
     private String dayOfTheWeek;
     private String hour;
     private String message;
+    private String reply;
 
     public Appointment() {
     }
@@ -25,6 +26,7 @@ public class Appointment {
         this.dayOfTheWeek = dayOfTheWeek;
         this.hour = hour;
         this.message = message;
+        this.reply = null;
     }
 
     public int getYear() {
@@ -63,9 +65,7 @@ public class Appointment {
         return hour;
     }
 
-    public void setHour(String hour) {
-        this.hour = hour;
-    }
+    public void setHour(String hour) { this.hour = hour; }
 
     public String getUsername() {
         return username;
@@ -83,19 +83,15 @@ public class Appointment {
         this.doctorName = doctorName;
     }
 
-    public String getDoctorUsername() {
-        return doctorUsername;
-    }
+    public String getDoctorUsername() { return doctorUsername; }
 
-    public void setDoctorUsername(String doctorUsername) {
-        this.doctorUsername = doctorUsername;
-    }
+    public void setDoctorUsername(String doctorUsername) { this.doctorUsername = doctorUsername; }
 
-    public String getMessage() {
-        return message;
-    }
+    public String getMessage() { return message; }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+    public void setMessage(String message) { this.message = message; }
+
+    public String getReply() { return reply; }
+
+    public void setReply(String reply) { this.reply = reply; }
 }
