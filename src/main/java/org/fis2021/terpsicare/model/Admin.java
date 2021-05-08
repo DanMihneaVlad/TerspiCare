@@ -1,7 +1,5 @@
 package org.fis2021.terpsicare.model;
 
-import static org.fis2021.terpsicare.services.UserService.encodePassword;
-
 public class Admin extends User {
 
     public Admin() {

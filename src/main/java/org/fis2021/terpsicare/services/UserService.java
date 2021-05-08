@@ -4,10 +4,7 @@ import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.objects.ObjectRepository;
 
 import org.fis2021.terpsicare.exceptions.*;
-import org.fis2021.terpsicare.model.Patient;
-import org.fis2021.terpsicare.model.User;
-import org.fis2021.terpsicare.model.Doctor;
-import org.fis2021.terpsicare.model.Admin;
+import org.fis2021.terpsicare.model.*;
 
 
 import java.nio.charset.StandardCharsets;
@@ -24,12 +21,14 @@ public class UserService {
     private static ObjectRepository<Patient> patientRepository;
     private static ObjectRepository<Doctor> doctorRepository;
     private static ObjectRepository<Admin> adminRepository;
-
+    private static ObjectRepository<Appointment> appointmentRepository;
+    private static String loggedInUsername = new String();
     public static void initDatabase() {
         Nitrite database = Nitrite.builder().filePath(getPathToFile(".terpsicare-users.db").toFile()).openOrCreate("test", "test");
         patientRepository = database.getRepository(Patient.class);
         doctorRepository = database.getRepository(Doctor.class);
         adminRepository = database.getRepository(Admin.class);
+        appointmentRepository = database.getRepository(Appointment.class);
         int ok = 1;
         for (User user : adminRepository.find()) {
             if (Objects.equals("admin", user.getUsername())) {
@@ -57,7 +56,36 @@ public class UserService {
         patientRepository.insert(new Patient(username, encodePassword(username, password), name, phone, medicalrecord));
     }
 
-    private static void checkEmptyTextfieldsPatient(String username, String password, String name, String phone, String password2) throws EmptyTextfieldsException{
+    public static void addAppointment(String username, String doctorName, int year, int month, int day, String dayOfTheWeek, String hour, String message) throws EmptyTextfieldsException, NotAvailableException, WeekendDayException {
+        checkEmptyTextfieldsAppointment(doctorName, year, hour);
+        checkAvailability(doctorName, year, month, day, dayOfTheWeek, hour);
+        String doctorUsername = getDoctorUsername(doctorName);
+        appointmentRepository.insert(new Appointment(username, doctorName, doctorUsername, year, month, day, dayOfTheWeek, hour, message));
+    }
+
+    private static void checkEmptyTextfieldsAppointment(String doctorName, int year, String hour) throws EmptyTextfieldsException {
+        if (Objects.equals(doctorName, null))
+            throw new EmptyTextfieldsException();
+        else if (Objects.equals(year, 0))
+            throw new EmptyTextfieldsException();
+        else if (Objects.equals(hour, null))
+            throw new EmptyTextfieldsException();
+    }
+
+    private static void checkAvailability(String doctorName, int year, int month, int day, String dayOfTheWeek, String hour) throws NotAvailableException, WeekendDayException {
+        if (Objects.equals(dayOfTheWeek, "Saturday") || Objects.equals(dayOfTheWeek, "Sunday")) {
+            throw new WeekendDayException();
+        } else {
+            for (Appointment app : appointmentRepository.find()) {
+                if (Objects.equals(app.getDoctorName(), doctorName) && Objects.equals(app.getHour(), hour)
+                && app.getYear() == year && app.getMonth() == month && app.getDay() == day) {
+                    throw new NotAvailableException(doctorName, hour, year, month, day);
+                }
+            }
+        }
+    }
+
+    private static void checkEmptyTextfieldsPatient(String username, String password, String name, String phone, String password2) throws EmptyTextfieldsException {
         if( Objects.equals(username,""))
             throw new EmptyTextfieldsException();
         else if( Objects.equals(password,""))
@@ -85,7 +113,6 @@ public class UserService {
             if (Objects.equals(username, user.getUsername()))
                 throw new UsernameAlreadyExistsException(username);
         }
-
     }
 
     public static String checkUserExist(String username) throws UsernameDoesNotExistException{
@@ -98,7 +125,6 @@ public class UserService {
                 break;
             }
         }
-
         for (User user : doctorRepository.find()) {
             if (Objects.equals(username, user.getUsername())) {
                 ok = 1;
@@ -106,12 +132,10 @@ public class UserService {
                 break;
             }
         }
-
         if (Objects.equals(username,"admin")) {
             ok = 1;
             role = "Admin";
         }
-
         if (ok == 0) {
             throw new UsernameDoesNotExistException(username);
         } else {
@@ -142,41 +166,42 @@ public class UserService {
 
     public static int checkUserCredentials(String username, String password) throws UsernameDoesNotExistException, WrongPasswordException {
         int oku=0, okp=0;
-        for(User user : patientRepository.find()) {
-            if(Objects.equals(username, user.getUsername())) {
+        for (User user : patientRepository.find()) {
+            if (Objects.equals(username, user.getUsername())) {
                 oku = 1;
             }
-            if(Objects.equals(encodePassword(username, password), user.getPassword())) {
+            if (Objects.equals(encodePassword(username, password), user.getPassword())) {
                 okp = 1;
             }
         }
-
-        for(User user : doctorRepository.find()) {
-            if(Objects.equals(username, user.getUsername())) {
+        for (User user : doctorRepository.find()) {
+            if (Objects.equals(username, user.getUsername())) {
                 oku = 1;
             }
-            if(Objects.equals(encodePassword(username, password), user.getPassword())) {
+            if (Objects.equals(encodePassword(username, password), user.getPassword())) {
                 okp = 1;
             }
         }
-
-        for(User user : adminRepository.find()) {
-            if(Objects.equals(username, user.getUsername())) {
+        for (User user : adminRepository.find()) {
+            if (Objects.equals(username, user.getUsername())) {
                 oku = 1;
             }
-            if(Objects.equals(encodePassword(username, password), user.getPassword())) {
+            if (Objects.equals(encodePassword(username, password), user.getPassword())) {
                 okp = 1;
             }
         }
-
         if ( oku == 0 ) {
             throw new UsernameDoesNotExistException(username);
         }
         if ( okp == 0 ) {
             throw new WrongPasswordException();
         }
-
+        loggedInUsername = username;
         return 1;
+    }
+
+    public static String getLoggedInUsername() {
+        return loggedInUsername;
     }
 
     public static String encodePassword(String salt, String password) {
@@ -200,12 +225,28 @@ public class UserService {
         return md;
     }
 
+    public static List doctorListName() {
+        List<String> doctor = new ArrayList<>();
+        for (User doc : doctorRepository.find()) {
+            doctor.add(((Doctor)doc).getName());
+        }
+        return doctor;
+    }
+
     public static List DoctorsList() {
         List<Doctor> doctor = new ArrayList<>();
         for (User doc : doctorRepository.find()) {
                 doctor.add((Doctor)doc);
         }
         return doctor;
+    }
+
+    public static String getDoctorUsername(String doctorName) {
+        for (Doctor doc : doctorRepository.find()) {
+            if (Objects.equals(doctorName, doc.getName()))
+                return doc.getUsername();
+        }
+        return null;
     }
 
     public static List DoctorsListSpec(String spec) {
@@ -217,4 +258,5 @@ public class UserService {
         }
         return doctor;
     }
+
 }

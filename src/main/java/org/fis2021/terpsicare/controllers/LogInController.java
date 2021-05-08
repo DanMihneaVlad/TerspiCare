@@ -1,7 +1,6 @@
 package org.fis2021.terpsicare.controllers;
 
 
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,9 +24,9 @@ import static org.fis2021.terpsicare.services.UserService.checkUserExist;
 
 public class LogInController {
 
-
     @FXML
     private PasswordField passwordField;
+
     @FXML
     private TextField usernameField;
 
@@ -60,6 +59,7 @@ public class LogInController {
                         CurrentStage.setTitle("HomePage");
                         CurrentStage.setScene(new Scene(root, 500, 500));
                         CurrentStage.show();
+
                     } else {
                         Node node = (Node) event.getSource();
                         Stage CurrentStage = (Stage) node.getScene().getWindow();

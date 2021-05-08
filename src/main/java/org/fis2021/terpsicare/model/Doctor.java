@@ -1,7 +1,5 @@
 package org.fis2021.terpsicare.model;
 
-import java.util.ArrayList;
-
 public class Doctor extends User {
 
     private String name;
