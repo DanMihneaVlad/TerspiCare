@@ -7,7 +7,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fis2021.terpsicare.controllers.DoctorHomePageController">
     <children>
-        <ImageView fitHeight="213.0" fitWidth="361.0" layoutX="123.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="268.0" fitWidth="513.0" layoutX="50.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@welcome.jpg" />
             </image>
@@ -17,5 +17,3 @@
         <Button layoutX="50.0" layoutY="46.0" mnemonicParsing="false" text="View Appointments" />
     </children>
 </AnchorPane>
-
-
