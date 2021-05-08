@@ -59,4 +59,17 @@ public class PatientHomePageController {
             System.out.println("Error");
         }
     }
+
+    public void handleViewAppointments(ActionEvent event) throws Exception {
+        try {
+            Node node = (Node) event.getSource();
+            Stage CurrentStage = (Stage) node.getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("ViewAppointmentsPatient.fxml"));
+            CurrentStage.setTitle("View Appointments");
+            CurrentStage.setScene(new Scene(root, 500, 500));
+            CurrentStage.show();
+        } catch (IOException e) {
+            System.out.println("Error");
+        }
+    }
 }
