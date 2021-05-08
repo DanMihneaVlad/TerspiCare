@@ -57,7 +57,7 @@ public class AddAppointmentController {
                 day = date.getDayOfMonth();
             }
             UserService.addAppointment(UserService.getLoggedInUsername(), (String)doctor.getValue(), year, month, day, dayOfTheWeek, (String)hour.getValue(), message.getText());
-            AlertBox.display("Error", "Appointment was successfully created!");
+            AlertBox.display("Success", "Appointment was successfully created!");
         } catch (EmptyTextfieldsException e) {
             AlertBox.display("Error","You cannot leave empty text fields!");
         } catch (WeekendDayException e) {
