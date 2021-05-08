@@ -41,8 +41,8 @@ public class LogInController {
         try {
 
             String role = checkUserExist(usernameField.getText());
-            int check = checkUserCredentials(usernameField.getText(),passwordField.getText());
-            if(check == 1) {
+            int check = checkUserCredentials(usernameField.getText(), passwordField.getText());
+            if (check == 1) {
                 if (role.equals("patient")) {
                     Node node = (Node) event.getSource();
                     Stage CurrentStage = (Stage) node.getScene().getWindow();
@@ -70,14 +70,13 @@ public class LogInController {
                     }
                 }
             }
-        }catch (UsernameDoesNotExistException e) {
-            AlertBox.display("Error","Wrong password confirmation!");
-        }
-        catch (WrongPasswordException e) {
+        } catch (UsernameDoesNotExistException e) {
+            AlertBox.display("Error","Username does not exist!");
+        } catch (WrongPasswordException e) {
             AlertBox.display("Error","Wrong password!");
         }
     }
-    public void handleBackAction(ActionEvent event) throws Exception{
+    public void handleBackAction(ActionEvent event) throws Exception {
         Node node = (Node) event.getSource();
         Stage CurrentStage = (Stage) node.getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("HomePage.fxml"));

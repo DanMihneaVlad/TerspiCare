@@ -42,11 +42,11 @@ public class UserService {
         }
     }
 
-    public static void addDoctor(String username, String password, String confirmedPassword, String name, String medicalSpecialty, String phoneNumber) throws UsernameAlreadyExistsException, WrongPasswordConfirmationException, EmptyTextfieldsException {
+    public static void addDoctor(String username, String password, String confirmedPassword, String name, String medicalSpecialty, String phoneNumber, String description) throws UsernameAlreadyExistsException, WrongPasswordConfirmationException, EmptyTextfieldsException {
         checkUserDoesNotAlreadyExist(username);
         checkPasswordSameAsConfirmedPassword(password, confirmedPassword);
         checkEmptyTextFieldsDoctor(username, password, confirmedPassword, name, medicalSpecialty, phoneNumber);
-        doctorRepository.insert(new Doctor(username, encodePassword(username, password), name, medicalSpecialty, phoneNumber));
+        doctorRepository.insert(new Doctor(username, encodePassword(username, password), name, medicalSpecialty, phoneNumber, description));
     }
 
     public static void addPatient(String username, String password,String name, String phone, String password2, String medicalrecord) throws UsernameAlreadyExistsException, WrongPasswordConfirmationException, EmptyTextfieldsException {
@@ -103,10 +103,12 @@ public class UserService {
             if (Objects.equals(username, user.getUsername()))
                 throw new UsernameAlreadyExistsException(username);
         }
+
         for (User user : doctorRepository.find()) {
             if (Objects.equals(username, user.getUsername()))
                 throw new UsernameAlreadyExistsException(username);
         }
+
         for (User user : adminRepository.find()) {
             if (Objects.equals(username, user.getUsername()))
                 throw new UsernameAlreadyExistsException(username);
@@ -164,27 +166,27 @@ public class UserService {
 
     public static int checkUserCredentials(String username, String password) throws UsernameDoesNotExistException, WrongPasswordException {
         int oku=0, okp=0;
-        for(User user : patientRepository.find()) {
-            if(Objects.equals(username, user.getUsername())) {
+        for (User user : patientRepository.find()) {
+            if (Objects.equals(username, user.getUsername())) {
                 oku = 1;
             }
-            if(Objects.equals(encodePassword(username, password), user.getPassword())) {
+            if (Objects.equals(encodePassword(username, password), user.getPassword())) {
                 okp = 1;
             }
         }
-        for(User user : doctorRepository.find()) {
-            if(Objects.equals(username, user.getUsername())) {
+        for (User user : doctorRepository.find()) {
+            if (Objects.equals(username, user.getUsername())) {
                 oku = 1;
             }
-            if(Objects.equals(encodePassword(username, password), user.getPassword())) {
+            if (Objects.equals(encodePassword(username, password), user.getPassword())) {
                 okp = 1;
             }
         }
-        for(User user : adminRepository.find()) {
-            if(Objects.equals(username, user.getUsername())) {
+        for (User user : adminRepository.find()) {
+            if (Objects.equals(username, user.getUsername())) {
                 oku = 1;
             }
-            if(Objects.equals(encodePassword(username, password), user.getPassword())) {
+            if (Objects.equals(encodePassword(username, password), user.getPassword())) {
                 okp = 1;
             }
         }
@@ -231,12 +233,30 @@ public class UserService {
         return doctor;
     }
 
+    public static List DoctorsList() {
+        List<Doctor> doctor = new ArrayList<>();
+        for (User doc : doctorRepository.find()) {
+                doctor.add((Doctor)doc);
+        }
+        return doctor;
+    }
+
     public static String getDoctorUsername(String doctorName) {
         for (Doctor doc : doctorRepository.find()) {
             if (Objects.equals(doctorName, doc.getName()))
                 return doc.getUsername();
         }
         return null;
+    }
+
+    public static List DoctorsListSpec(String spec) {
+        List<Doctor> doctor = new ArrayList<>();
+        for (User doc : doctorRepository.find()) {
+            if (((Doctor) doc).getMedicalSpecialty().equals(spec)) {
+                doctor.add((Doctor) doc);
+            }
+        }
+        return doctor;
     }
 
 }

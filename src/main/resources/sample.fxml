@@ -43,9 +43,9 @@
 
     <Text fx:id="registrationMessage" GridPane.columnIndex="1" GridPane.rowIndex="8" />
     <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="8">
-        <Button onAction="#handleRegisterAction" text="Register" />
+        <Button onAction="#handleRegisterAction" prefHeight="25.0" prefWidth="87.0" text="Register" />
     </HBox>
-   <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleBackAction" text="Back" GridPane.rowIndex="8" />
+   <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleBackAction" prefHeight="25.0" prefWidth="61.0" text="Back" GridPane.rowIndex="8" />
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />

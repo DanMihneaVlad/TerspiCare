@@ -34,7 +34,7 @@ public class HomePageController {
         Node node = (Node) event.getSource();
         Stage CurrentStage = (Stage) node.getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("LogIn.fxml"));
-        CurrentStage.setTitle("LogIn");
+        CurrentStage.setTitle("Log In");
         CurrentStage.setScene(new Scene(root, 500, 500));
         CurrentStage.show();
     }

@@ -5,15 +5,17 @@ public class Doctor extends User {
     private String name;
     private String medicalSpecialty;
     private String phoneNumber;
+    private String description;
 
-    public Doctor() {
+    public Doctor(){
     }
 
-    public Doctor(String username, String password, String name, String medicalSpecialty, String phoneNumber) {
+    public Doctor(String username, String password, String name, String medicalSpecialty, String phoneNumber, String description) {
         super(username, password, "doctor");
         this.name = name;
         this.medicalSpecialty = medicalSpecialty;
         this.phoneNumber = phoneNumber;
+        this.description = description;
     }
 
     public String getName() {
@@ -38,6 +40,14 @@ public class Doctor extends User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
