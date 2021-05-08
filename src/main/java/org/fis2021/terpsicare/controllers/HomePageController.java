@@ -11,6 +11,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
+import org.fis2021.terpsicare.model.User;
+import org.fis2021.terpsicare.services.UserService;
+
 public class HomePageController {
     @FXML
     private Button Register;

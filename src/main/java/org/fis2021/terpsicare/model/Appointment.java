@@ -1,29 +1,30 @@
 package org.fis2021.terpsicare.model;
 
-import java.time.LocalDate;
-
 public class Appointment {
 
     private String username;
     private String doctorName;
+    private String doctorUsername;
     private int year;
     private int month;
     private int day;
-    private LocalDate date;
     private String dayOfTheWeek;
     private String hour;
+    private String message;
 
     public Appointment() {
     }
 
-    public Appointment(String username, String doctorName, int year, int month, int day, String dayOfTheWeek, String hour) {
+    public Appointment(String username, String doctorName, String doctorUsername, int year, int month, int day, String dayOfTheWeek, String hour, String message) {
         this.username = username;
         this.doctorName = doctorName;
+        this.doctorUsername = doctorUsername;
         this.year = year;
         this.month = month;
         this.day = day;
         this.dayOfTheWeek = dayOfTheWeek;
         this.hour = hour;
+        this.message = message;
     }
 
     public int getYear() {
@@ -80,5 +81,21 @@ public class Appointment {
 
     public void setDoctorName(String doctorName) {
         this.doctorName = doctorName;
+    }
+
+    public String getDoctorUsername() {
+        return doctorUsername;
+    }
+
+    public void setDoctorUsername(String doctorUsername) {
+        this.doctorUsername = doctorUsername;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

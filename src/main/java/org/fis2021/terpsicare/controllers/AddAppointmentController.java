@@ -6,9 +6,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.fis2021.terpsicare.AlertBox;
 import org.fis2021.terpsicare.exceptions.EmptyTextfieldsException;
@@ -24,12 +24,6 @@ import java.util.Objects;
 public class AddAppointmentController {
 
     @FXML
-    private Button submitAppointment;
-
-    @FXML
-    private Button backButton;
-
-    @FXML
     private ChoiceBox doctor;
 
     @FXML
@@ -37,6 +31,9 @@ public class AddAppointmentController {
 
     @FXML
     private DatePicker datePicker;
+
+    @FXML
+    private TextField message;
 
     @FXML
     public void initialize() {
@@ -59,7 +56,7 @@ public class AddAppointmentController {
                 month = date.getMonthValue();
                 day = date.getDayOfMonth();
             }
-            UserService.addAppointment("username", (String)doctor.getValue(), year, month, day, dayOfTheWeek, (String)hour.getValue());
+            UserService.addAppointment(UserService.getLoggedInUsername(), (String)doctor.getValue(), year, month, day, dayOfTheWeek, (String)hour.getValue(), message.getText());
             AlertBox.display("Error", "Appointment was successfully created!");
         } catch (EmptyTextfieldsException e) {
             AlertBox.display("Error","You cannot leave empty text fields!");

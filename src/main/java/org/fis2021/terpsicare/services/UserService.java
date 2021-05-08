@@ -10,7 +10,6 @@ import org.fis2021.terpsicare.model.*;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -23,6 +22,7 @@ public class UserService {
     private static ObjectRepository<Doctor> doctorRepository;
     private static ObjectRepository<Admin> adminRepository;
     private static ObjectRepository<Appointment> appointmentRepository;
+    private static String loggedInUsername = new String();
     public static void initDatabase() {
         Nitrite database = Nitrite.builder().filePath(getPathToFile(".terpsicare-users.db").toFile()).openOrCreate("test", "test");
         patientRepository = database.getRepository(Patient.class);
@@ -56,10 +56,11 @@ public class UserService {
         patientRepository.insert(new Patient(username, encodePassword(username, password), name, phone, medicalrecord));
     }
 
-    public static void addAppointment(String username, String doctorName, int year, int month, int day, String dayOfTheWeek, String hour) throws EmptyTextfieldsException, NotAvailableException, WeekendDayException {
+    public static void addAppointment(String username, String doctorName, int year, int month, int day, String dayOfTheWeek, String hour, String message) throws EmptyTextfieldsException, NotAvailableException, WeekendDayException {
         checkEmptyTextfieldsAppointment(doctorName, year, hour);
         checkAvailability(doctorName, year, month, day, dayOfTheWeek, hour);
-        appointmentRepository.insert(new Appointment(username, doctorName, year, month, day, dayOfTheWeek, hour));
+        String doctorUsername = getDoctorUsername(doctorName);
+        appointmentRepository.insert(new Appointment(username, doctorName, doctorUsername, year, month, day, dayOfTheWeek, hour, message));
     }
 
     private static void checkEmptyTextfieldsAppointment(String doctorName, int year, String hour) throws EmptyTextfieldsException {
@@ -193,7 +194,12 @@ public class UserService {
         if ( okp == 0 ) {
             throw new WrongPasswordException();
         }
+        loggedInUsername = username;
         return 1;
+    }
+
+    public static String getLoggedInUsername() {
+        return loggedInUsername;
     }
 
     public static String encodePassword(String salt, String password) {
@@ -223,6 +229,14 @@ public class UserService {
             doctor.add(((Doctor)doc).getName());
         }
         return doctor;
+    }
+
+    public static String getDoctorUsername(String doctorName) {
+        for (Doctor doc : doctorRepository.find()) {
+            if (Objects.equals(doctorName, doc.getName()))
+                return doc.getUsername();
+        }
+        return null;
     }
 
 }
