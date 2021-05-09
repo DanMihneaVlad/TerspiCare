@@ -269,6 +269,17 @@ public class UserService {
         return doctor;
     }
 
+
+    public static List AppointmentsList() {
+        List<Appointment> appointments = new ArrayList<>();
+        for (Appointment appo : appointmentRepository.find()) {
+            if(appo.getUsername().equals(loggedInUsername)) {
+               appointments.add(appo);
+            }
+        }
+        return appointments;
+    }
+
     public static List getAppointments() {
         List<Appointment> appointments = new ArrayList<>();
         for (Appointment appo : appointmentRepository.find()) {
@@ -278,5 +289,4 @@ public class UserService {
         }
         return appointments;
     }
-
 }
