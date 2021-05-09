@@ -3,6 +3,7 @@ package org.fis2021.terpsicare.model;
 public class Appointment {
 
     private String username;
+    private String patientName;
     private String doctorName;
     private String doctorUsername;
     private int year;
@@ -16,8 +17,9 @@ public class Appointment {
     public Appointment() {
     }
 
-    public Appointment(String username, String doctorName, String doctorUsername, int year, int month, int day, String dayOfTheWeek, String hour, String message) {
+    public Appointment(String username, String patientName, String doctorName, String doctorUsername, int year, int month, int day, String dayOfTheWeek, String hour, String message) {
         this.username = username;
+        this.patientName = patientName;
         this.doctorName = doctorName;
         this.doctorUsername = doctorUsername;
         this.year = year;
@@ -65,7 +67,9 @@ public class Appointment {
         return hour;
     }
 
-    public void setHour(String hour) { this.hour = hour; }
+    public void setHour(String hour) {
+        this.hour = hour;
+    }
 
     public String getUsername() {
         return username;
@@ -83,15 +87,36 @@ public class Appointment {
         this.doctorName = doctorName;
     }
 
-    public String getDoctorUsername() { return doctorUsername; }
+    public String getDoctorUsername() {
+        return doctorUsername;
+    }
 
-    public void setDoctorUsername(String doctorUsername) { this.doctorUsername = doctorUsername; }
+    public void setDoctorUsername(String doctorUsername) {
+        this.doctorUsername = doctorUsername;
+    }
 
-    public String getMessage() { return message; }
+    public String getMessage() {
+        return message;
+    }
 
-    public void setMessage(String message) { this.message = message; }
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
-    public String getReply() { return reply; }
+    public String getReply() {
+        return reply;
+    }
 
-    public void setReply(String reply) { this.reply = reply; }
+    public void setReply(String reply) {
+        this.reply = reply;
+    }
+
+    public String getPatientName() {
+        return patientName;
+    }
+
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
+    }
+
 }

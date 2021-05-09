@@ -14,6 +14,6 @@
         </ImageView>
         <Button fx:id="logoutButton" layoutX="436.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleLogout" text="Log Out" />
         <Button layoutX="257.0" layoutY="46.0" mnemonicParsing="false" text="View Patients" />
-        <Button layoutX="50.0" layoutY="46.0" mnemonicParsing="false" text="View Appointments" />
+        <Button layoutX="50.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleViewAppointments" text="View Appointments" />
     </children>
 </AnchorPane>

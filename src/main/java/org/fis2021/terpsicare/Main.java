@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.fis2021.terpsicare.controllers.LogInController;
 import org.fis2021.terpsicare.services.FileSystemService;
 import org.fis2021.terpsicare.services.UserService;
 
