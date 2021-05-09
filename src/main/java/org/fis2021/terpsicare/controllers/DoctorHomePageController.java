@@ -32,7 +32,7 @@ public class DoctorHomePageController {
             Node node = (Node) event.getSource();
             Stage CurrentStage = (Stage) node.getScene().getWindow();
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("ViewAppointmentsDoctor.fxml"));
-            CurrentStage.setTitle("HomePage");
+            CurrentStage.setTitle("Appointments");
             CurrentStage.setScene(new Scene(root, 500, 500));
             CurrentStage.show();
         } catch (IOException e) {

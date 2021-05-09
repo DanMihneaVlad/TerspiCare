@@ -40,19 +40,19 @@ public class ViewAppointmentsDoctorController implements Initializable {
 
         final ObservableList<Appointment> data = FXCollections.observableArrayList(UserService.getAppointments());
 
-        name.setCellValueFactory(new PropertyValueFactory<Appointment,String>("patientName"));
-        day.setCellValueFactory(new PropertyValueFactory<Appointment,Integer>("day"));
-        month.setCellValueFactory(new PropertyValueFactory<Appointment,Integer>("month"));
-        year.setCellValueFactory(new PropertyValueFactory<Appointment,Integer>("year"));
-        dayOfTheWeek.setCellValueFactory(new PropertyValueFactory<Appointment,String>("dayOfTheWeek"));
-        hour.setCellValueFactory(new PropertyValueFactory<Appointment,String>("hour"));
-        message.setCellValueFactory(new PropertyValueFactory<Appointment,String>("message"));
+        name.setCellValueFactory(new PropertyValueFactory<Appointment, String>("patientName"));
+        day.setCellValueFactory(new PropertyValueFactory<Appointment, Integer>("day"));
+        month.setCellValueFactory(new PropertyValueFactory<Appointment, Integer>("month"));
+        year.setCellValueFactory(new PropertyValueFactory<Appointment, Integer>("year"));
+        dayOfTheWeek.setCellValueFactory(new PropertyValueFactory<Appointment, String>("dayOfTheWeek"));
+        hour.setCellValueFactory(new PropertyValueFactory<Appointment, String>("hour"));
+        message.setCellValueFactory(new PropertyValueFactory<Appointment, String>("message"));
         reply.setCellValueFactory(new PropertyValueFactory<Appointment,String>("reply"));
 
         myTable.setItems(data);
     }
 
-    public void handleHome(ActionEvent event) throws Exception{
+    public void handleHome(ActionEvent event) throws Exception {
         try {
             Node node = (Node) event.getSource();
             Stage CurrentStage = (Stage) node.getScene().getWindow();

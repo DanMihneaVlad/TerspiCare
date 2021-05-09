@@ -67,7 +67,9 @@ public class Appointment {
         return hour;
     }
 
-    public void setHour(String hour) { this.hour = hour; }
+    public void setHour(String hour) {
+        this.hour = hour;
+    }
 
     public String getUsername() {
         return username;
@@ -85,19 +87,36 @@ public class Appointment {
         this.doctorName = doctorName;
     }
 
-    public String getDoctorUsername() { return doctorUsername; }
+    public String getDoctorUsername() {
+        return doctorUsername;
+    }
 
-    public void setDoctorUsername(String doctorUsername) { this.doctorUsername = doctorUsername; }
+    public void setDoctorUsername(String doctorUsername) {
+        this.doctorUsername = doctorUsername;
+    }
 
-    public String getMessage() { return message; }
+    public String getMessage() {
+        return message;
+    }
 
-    public void setMessage(String message) { this.message = message; }
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
-    public String getReply() { return reply; }
+    public String getReply() {
+        return reply;
+    }
 
-    public void setReply(String reply) { this.reply = reply; }
+    public void setReply(String reply) {
+        this.reply = reply;
+    }
 
-    public String getPatientName() { return patientName; }
+    public String getPatientName() {
+        return patientName;
+    }
 
-    public void setPatientName(String patientName) { this.patientName = patientName; }
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
+    }
+
 }
