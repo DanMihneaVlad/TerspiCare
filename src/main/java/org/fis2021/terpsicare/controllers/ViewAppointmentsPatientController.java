@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -43,7 +44,7 @@ public class ViewAppointmentsPatientController implements Initializable {
 
         myTable.getColumns().addAll(docName, day,month,year,dayWeek,hour,message,reply);
 
-        final ObservableList<Doctor> data = FXCollections.observableArrayList(UserService.AppointmentsList());
+        final ObservableList<Appointment> data = FXCollections.observableArrayList(UserService.AppointmentsList());
 
         docName.setCellValueFactory(new PropertyValueFactory<Appointment,String>("doctorName"));
         day.setCellValueFactory(new PropertyValueFactory<Appointment, Integer>("day"));

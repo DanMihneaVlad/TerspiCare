@@ -21,5 +21,6 @@
             <Font size="25.0" />
          </font>
       </Label>
+      <Button layoutX="280.0" layoutY="59.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Edit" />
    </children>
 </AnchorPane>
