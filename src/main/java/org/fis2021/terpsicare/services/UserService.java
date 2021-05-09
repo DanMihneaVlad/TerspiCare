@@ -60,7 +60,8 @@ public class UserService {
         checkEmptyTextfieldsAppointment(doctorName, year, hour);
         checkAvailability(doctorName, year, month, day, dayOfTheWeek, hour);
         String doctorUsername = getDoctorUsername(doctorName);
-        appointmentRepository.insert(new Appointment(username, doctorName, doctorUsername, year, month, day, dayOfTheWeek, hour, message));
+        String patientName = getPatientName();
+        appointmentRepository.insert(new Appointment(username, patientName, doctorName, doctorUsername, year, month, day, dayOfTheWeek, hour, message));
     }
 
     private static void checkEmptyTextfieldsAppointment(String doctorName, int year, String hour) throws EmptyTextfieldsException {
@@ -249,6 +250,15 @@ public class UserService {
         return null;
     }
 
+    public static String getPatientName() {
+        for (Patient patient : patientRepository.find()) {
+            if (Objects.equals(loggedInUsername, patient.getUsername())) {
+                return patient.getName();
+            }
+        }
+        return null;
+    }
+
     public static List DoctorsListSpec(String spec) {
         List<Doctor> doctor = new ArrayList<>();
         for (User doc : doctorRepository.find()) {
@@ -259,10 +269,21 @@ public class UserService {
         return doctor;
     }
 
+
     public static List AppointmentsList() {
         List<Appointment> appointments = new ArrayList<>();
         for (Appointment appo : appointmentRepository.find()) {
-            if(appo.getUsername().equals(loggedInUsername)){
+            if(appo.getUsername().equals(loggedInUsername)) {
+               appointments.add(appo);
+            }
+        }
+        return appointments;
+    }
+
+    public static List getAppointments() {
+        List<Appointment> appointments = new ArrayList<>();
+        for (Appointment appo : appointmentRepository.find()) {
+            if (Objects.equals(appo.getDoctorUsername(), loggedInUsername)) {
                 appointments.add(appo);
             }
         }

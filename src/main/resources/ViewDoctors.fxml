@@ -21,7 +21,7 @@
             </children>
         </VBox>
         <Button fx:id="homeButton" layoutX="146.0" layoutY="32.0" mnemonicParsing="false" onAction="#handleHome" text="Home" />
-        <Button layoutX="211.0" layoutY="32.0" mnemonicParsing="false" text="Make Appointment" />
+        <Button layoutX="211.0" layoutY="32.0" mnemonicParsing="false" onAction="#handleAddAppointment" text="Make Appointment" />
       <ChoiceBox fx:id="medicalS" layoutX="346.0" layoutY="32.0" onAction="#handleChoise" prefWidth="150.0" />
     </children>
 </AnchorPane>

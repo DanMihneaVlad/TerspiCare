@@ -33,7 +33,6 @@ public class ViewDoctorsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-
         TableColumn name = new TableColumn("NAME");
         TableColumn phone = new TableColumn("PHONE");
         TableColumn medicalspec = new TableColumn("MEDICAL SPECIALITY");
@@ -62,6 +61,7 @@ public class ViewDoctorsController implements Initializable {
 
         myTable.setItems(data);
     }
+
     public void handleHome(ActionEvent event) throws Exception{
         try {
             Node node = (Node) event.getSource();
@@ -75,5 +75,17 @@ public class ViewDoctorsController implements Initializable {
         }
     }
 
-}
+    public void handleAddAppointment(ActionEvent event) throws Exception {
+        try {
+            Node node = (Node) event.getSource();
+            Stage CurrentStage = (Stage) node.getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("AddAppointment.fxml"));
+            CurrentStage.setTitle("Add Appointment");
+            CurrentStage.setScene(new Scene(root, 500, 500));
+            CurrentStage.show();
+        } catch (IOException e) {
+            System.out.println("Error");
+        }
+    }
 
+}
