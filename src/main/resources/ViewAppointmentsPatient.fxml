@@ -8,12 +8,12 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="646.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fis2021.terpsicare.controllers.ViewAppointmentsPatientController">
-   <children>
+
       <VBox layoutX="41.0" layoutY="103.0" prefHeight="260.0" prefWidth="530.0">
-         <children>
+
             <TableView fx:id="myTable" prefHeight="259.0" prefWidth="506.0">
             </TableView>
-         </children>
+
       </VBox>
       <Button layoutX="457.0" layoutY="59.0" mnemonicParsing="false" onAction="#handleHome" prefHeight="25.0" prefWidth="105.0" text="Home" />
       <Label layoutX="41.0" layoutY="54.0" prefHeight="36.0" prefWidth="207.0" text="Appointments:" textFill="#253dc6">
@@ -22,5 +22,5 @@
          </font>
       </Label>
       <Button layoutX="280.0" layoutY="59.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Edit" />
-   </children>
+
 </AnchorPane>
