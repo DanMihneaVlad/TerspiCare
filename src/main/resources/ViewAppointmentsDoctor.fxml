@@ -11,16 +11,16 @@
 
 <StackPane maxHeight="1000.0" maxWidth="1000.0" minHeight="390.0" minWidth="590.0" prefHeight="390.0" prefWidth="590.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fis2021.terpsicare.controllers.ViewAppointmentsDoctorController">
    <children>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="370.0" prefWidth="574.0">
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="413.0" prefWidth="574.0">
 
-            <VBox layoutX="51.0" layoutY="100.0" prefHeight="240.0" prefWidth="493.0">
+            <VBox layoutX="40.0" layoutY="103.0" prefHeight="240.0" prefWidth="505.0">
 
                   <TableView fx:id="myTable" prefHeight="240.0" prefWidth="492.0" />
 
             </VBox>
-            <Text fill="#2b00ff" layoutX="64.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointments:" wrappingWidth="148.7099609375">
+            <Text fill="#2b00ff" layoutX="40.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointments:" wrappingWidth="148.7099609375">
                <font>
-                  <Font size="20.0" />
+                  <Font size="22.0" />
                </font>
             </Text>
             <Button layoutX="444.0" layoutY="48.0" mnemonicParsing="false" onAction="#handleHome" prefHeight="25.0" prefWidth="99.0" text="Home" />
@@ -28,6 +28,7 @@
 
           <Button layoutX="316.0" layoutY="49.0" mnemonicParsing="false" onAction="#editAppointment" text="Edit appointment" />
 
+          <Button fx:id="submit" layoutX="450.0" layoutY="363.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Submit" visible="false" />
       </AnchorPane>
    </children>
 </StackPane>
