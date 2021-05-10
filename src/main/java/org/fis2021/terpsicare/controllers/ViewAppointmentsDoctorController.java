@@ -16,6 +16,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.fis2021.terpsicare.AlertBox;
+import org.fis2021.terpsicare.exceptions.EmptyTextfieldsException;
+import org.fis2021.terpsicare.exceptions.NotAvailableException;
+import org.fis2021.terpsicare.exceptions.WeekendDayException;
 import org.fis2021.terpsicare.model.Appointment;
 import org.fis2021.terpsicare.services.UserService;
 
@@ -77,7 +80,22 @@ public class ViewAppointmentsDoctorController implements Initializable {
 
         }
     }
-
+    public void submitEdit() {
+        try {
+            Appointment selected = (Appointment) myTable.getSelectionModel().getSelectedItem();
+            String hour = (String) hourBox.getValue();
+            UserService.editAppointment(selected, hour);
+            AlertBox.display("Success", "Appointment was successfully edited!");
+            final ObservableList<Appointment> data = FXCollections.observableArrayList(UserService.getAppointments());
+            myTable.setItems(data);
+        } catch (EmptyTextfieldsException e) {
+            AlertBox.display("Error", "Please select an hour!");
+        } catch (WeekendDayException e) {
+            AlertBox.display("Error", "Doctors don't work on a weekend!");
+        } catch (NotAvailableException e) {
+            AlertBox.display("Error", "The doctor is not available at the hour you selected");
+        }
+    }
     public void handleHome(ActionEvent event) throws Exception {
         try {
             Node node = (Node) event.getSource();

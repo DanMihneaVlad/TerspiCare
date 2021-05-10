@@ -289,4 +289,12 @@ public class UserService {
         }
         return appointments;
     }
+    public static void editAppointment(Appointment appo, String hour) throws EmptyTextfieldsException, NotAvailableException, WeekendDayException {
+        if (Objects.equals(hour, null))
+            throw new EmptyTextfieldsException();
+        checkAvailability(appo.getDoctorName(), appo.getYear(), appo.getMonth(), appo.getDay(), appo.getDayOfTheWeek(), hour);
+        appo.setHour(hour);
+        appointmentRepository.update(appo);
+    }
+
 }

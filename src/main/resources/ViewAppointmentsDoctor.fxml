@@ -28,7 +28,7 @@
 
           <Button layoutX="316.0" layoutY="49.0" mnemonicParsing="false" onAction="#editAppointment" text="Edit appointment" />
 
-          <Button fx:id="submit" layoutX="450.0" layoutY="363.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Submit" visible="false" />
+          <Button fx:id="submit" layoutX="450.0" layoutY="363.0" mnemonicParsing="false" onAction="#submitEdit" prefHeight="25.0" prefWidth="99.0" text="Submit" visible="false" />
       </AnchorPane>
    </children>
 </StackPane>
