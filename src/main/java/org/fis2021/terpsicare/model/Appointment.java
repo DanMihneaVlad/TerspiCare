@@ -119,4 +119,20 @@ public class Appointment {
         this.patientName = patientName;
     }
 
+    @Override
+    public String toString() {
+        return "Appointment{" +
+                "username='" + username + '\'' +
+                ", patientName='" + patientName + '\'' +
+                ", doctorName='" + doctorName + '\'' +
+                ", doctorUsername='" + doctorUsername + '\'' +
+                ", year=" + year +
+                ", month=" + month +
+                ", day=" + day +
+                ", dayOfTheWeek='" + dayOfTheWeek + '\'' +
+                ", hour='" + hour + '\'' +
+                ", message='" + message + '\'' +
+                ", reply='" + reply + '\'' +
+                '}';
+    }
 }
