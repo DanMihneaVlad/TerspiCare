@@ -9,12 +9,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.fis2021.terpsicare.AlertBox;
+import org.fis2021.terpsicare.exceptions.EmptyTextfieldsException;
+import org.fis2021.terpsicare.exceptions.NotAvailableException;
+import org.fis2021.terpsicare.exceptions.WeekendDayException;
 import org.fis2021.terpsicare.model.Appointment;
 import org.fis2021.terpsicare.services.UserService;
 
@@ -29,6 +33,9 @@ public class ViewAppointmentsPatientController implements Initializable {
 
     @FXML
     private ChoiceBox hourBox;
+
+    @FXML
+    private Button submit;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -58,7 +65,7 @@ public class ViewAppointmentsPatientController implements Initializable {
         myTable.setItems(data);
     }
 
-    public void editAppointment() {
+    public void initializeEdit() {
         Appointment selected = (Appointment) myTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
             AlertBox.display("Error", "Please select an entry to edit!");
@@ -68,7 +75,22 @@ public class ViewAppointmentsPatientController implements Initializable {
             hourBox.getItems().addAll("8:00", "8:20", "8:40", "9:00", "9:20", "9:40", "10:00", "10:20", "10:40",
                     "11:00", "11:20", "11:40", "12:00", "12:20", "12:40","13:00", "13:20", "13:40", "14:00", "14:20", "14:40",
                     "15:00", "15:20", "15:40");
+            submit.setVisible(true);
+        }
+    }
 
+    public void submitEdit() {
+        try {
+            Appointment selected = (Appointment) myTable.getSelectionModel().getSelectedItem();
+            String hour = (String) hourBox.getValue();
+            UserService.editAppointment(selected, hour);
+            AlertBox.display("Success", "Appointment was successfully edited!");
+        } catch (EmptyTextfieldsException e) {
+            AlertBox.display("Error", "Please select an hour!");
+        } catch (WeekendDayException e) {
+            AlertBox.display("Error", "Doctors don't work on a weekend!");
+        } catch (NotAvailableException e) {
+            AlertBox.display("Error", "The doctor is not available at the hour you selected");
         }
     }
 
