@@ -67,11 +67,9 @@ public class UserService {
     public static void editAppointment(Appointment appo, String hour) throws EmptyTextfieldsException, NotAvailableException, WeekendDayException {
         if (Objects.equals(hour, null))
             throw new EmptyTextfieldsException();
-        Appointment newAppo = new Appointment(appo.getUsername(), appo.getPatientName(), appo.getDoctorName(), appo.getDoctorUsername(), appo.getYear(), appo.getMonth(), appo.getDay(), appo.getDayOfTheWeek(), hour, appo.getMessage());
-        newAppo.setReply(appo.getReply());
-        checkAvailability(newAppo.getDoctorName(), newAppo.getYear(), newAppo.getMonth(), newAppo.getDay(), newAppo.getDayOfTheWeek(), newAppo.getHour());
-        //appointmentRepository.remove(appo);
-        appointmentRepository.insert(newAppo);
+        checkAvailability(appo.getDoctorName(), appo.getYear(), appo.getMonth(), appo.getDay(), appo.getDayOfTheWeek(), hour);
+        appo.setHour(hour);
+        appointmentRepository.update(appo);
     }
 
     private static void checkEmptyTextfieldsAppointment(String doctorName, int year, String hour) throws EmptyTextfieldsException {

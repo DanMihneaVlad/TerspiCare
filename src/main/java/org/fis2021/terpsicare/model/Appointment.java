@@ -1,7 +1,13 @@
 package org.fis2021.terpsicare.model;
 
+import org.dizitart.no2.objects.Id;
+
+import java.util.UUID;
+
 public class Appointment {
 
+    @Id
+    private String id;
     private String username;
     private String patientName;
     private String doctorName;
@@ -18,6 +24,8 @@ public class Appointment {
     }
 
     public Appointment(String username, String patientName, String doctorName, String doctorUsername, int year, int month, int day, String dayOfTheWeek, String hour, String message) {
+        UUID uniqueId = UUID.randomUUID();
+        this.id = uniqueId.toString();
         this.username = username;
         this.patientName = patientName;
         this.doctorName = doctorName;
@@ -122,7 +130,8 @@ public class Appointment {
     @Override
     public String toString() {
         return "Appointment{" +
-                "username='" + username + '\'' +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
                 ", patientName='" + patientName + '\'' +
                 ", doctorName='" + doctorName + '\'' +
                 ", doctorUsername='" + doctorUsername + '\'' +

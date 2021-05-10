@@ -62,6 +62,10 @@ public class ViewAppointmentsPatientController implements Initializable {
         message.setCellValueFactory(new PropertyValueFactory<Appointment, String>("message"));
         reply.setCellValueFactory(new PropertyValueFactory<Appointment, String>("reply"));
 
+        hourBox.getItems().addAll("8:00", "8:20", "8:40", "9:00", "9:20", "9:40", "10:00", "10:20", "10:40",
+                "11:00", "11:20", "11:40", "12:00", "12:20", "12:40","13:00", "13:20", "13:40", "14:00", "14:20", "14:40",
+                "15:00", "15:20", "15:40");
+
         myTable.setItems(data);
     }
 
@@ -70,11 +74,7 @@ public class ViewAppointmentsPatientController implements Initializable {
         if (selected == null) {
             AlertBox.display("Error", "Please select an entry to edit!");
         } else {
-            System.out.println(selected);
             hourBox.setVisible(true);
-            hourBox.getItems().addAll("8:00", "8:20", "8:40", "9:00", "9:20", "9:40", "10:00", "10:20", "10:40",
-                    "11:00", "11:20", "11:40", "12:00", "12:20", "12:40","13:00", "13:20", "13:40", "14:00", "14:20", "14:40",
-                    "15:00", "15:20", "15:40");
             submit.setVisible(true);
         }
     }
@@ -85,6 +85,8 @@ public class ViewAppointmentsPatientController implements Initializable {
             String hour = (String) hourBox.getValue();
             UserService.editAppointment(selected, hour);
             AlertBox.display("Success", "Appointment was successfully edited!");
+            final ObservableList<Appointment> data = FXCollections.observableArrayList(UserService.AppointmentsList());
+            myTable.setItems(data);
         } catch (EmptyTextfieldsException e) {
             AlertBox.display("Error", "Please select an hour!");
         } catch (WeekendDayException e) {
