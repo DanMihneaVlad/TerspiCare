@@ -7,10 +7,12 @@ import org.fis2021.terpsicare.exceptions.*;
 import org.fis2021.terpsicare.model.*;
 
 
+import javax.print.Doc;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -62,6 +64,28 @@ public class UserService {
         String doctorUsername = getDoctorUsername(doctorName);
         String patientName = getPatientName();
         appointmentRepository.insert(new Appointment(username, patientName, doctorName, doctorUsername, year, month, day, dayOfTheWeek, hour, message));
+    }
+
+    public static void editAppointment(Appointment appo, String hour) throws EmptyTextfieldsException, NotAvailableException, WeekendDayException {
+        String oldHour;
+        if (Objects.equals(hour, null))
+            throw new EmptyTextfieldsException();
+        checkAvailability(appo.getDoctorName(), appo.getYear(), appo.getMonth(), appo.getDay(), appo.getDayOfTheWeek(), hour);
+        oldHour = appo.getHour();
+        appo.setHour(hour);
+        Notification notification = new Notification(appo.getPatientName(), appo.getDay(), appo.getMonth(), appo.getYear(), appo.getDayOfTheWeek(), appo.getHour(), oldHour);
+        addDoctorNotification(appo.getDoctorUsername(), notification);
+        appointmentRepository.update(appo);
+    }
+
+    public static void deleteNotification(Notification notification) {
+        for (Doctor doc : doctorRepository.find()) {
+            if (Objects.equals(doc.getUsername(), loggedInUsername)) {
+                doc.getNotifications().remove(notification);
+                doctorRepository.update(doc);
+                break;
+            }
+        }
     }
 
     private static void checkEmptyTextfieldsAppointment(String doctorName, int year, String hour) throws EmptyTextfieldsException {
@@ -288,5 +312,26 @@ public class UserService {
             }
         }
         return appointments;
+    }
+
+    public static void addDoctorNotification(String username, Notification notification) {
+        for (Doctor doc : doctorRepository.find()) {
+            if (Objects.equals(username, doc.getUsername())) {
+                doc.addNotification(notification);
+                doctorRepository.update(doc);
+                break;
+            }
+        }
+    }
+
+    public static List getDoctorNotifications() {
+        List<Notification> notifications = new ArrayList<>();
+        for (Doctor doc : doctorRepository.find()) {
+            if (Objects.equals(doc.getUsername(), loggedInUsername)) {
+                notifications = doc.getNotifications();
+                break;
+            }
+        }
+        return notifications;
     }
 }

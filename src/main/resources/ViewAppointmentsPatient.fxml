@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="646.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fis2021.terpsicare.controllers.ViewAppointmentsPatientController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fis2021.terpsicare.controllers.ViewAppointmentsPatientController">
 
-      <VBox layoutX="41.0" layoutY="103.0" prefHeight="260.0" prefWidth="530.0">
+      <VBox layoutX="41.0" layoutY="103.0" prefHeight="260.0" prefWidth="514.0">
 
-            <TableView fx:id="myTable" prefHeight="259.0" prefWidth="506.0">
+            <TableView fx:id="myTable" prefHeight="259.0" prefWidth="534.0">
             </TableView>
 
       </VBox>
-      <Button layoutX="457.0" layoutY="59.0" mnemonicParsing="false" onAction="#handleHome" prefHeight="25.0" prefWidth="105.0" text="Home" />
+      <Button layoutX="449.0" layoutY="59.0" mnemonicParsing="false" onAction="#handleHome" prefHeight="25.0" prefWidth="105.0" text="Home" />
       <Label layoutX="41.0" layoutY="54.0" prefHeight="36.0" prefWidth="207.0" text="Appointments:" textFill="#253dc6">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <Button layoutX="280.0" layoutY="59.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Edit" />
+      <Button layoutX="326.0" layoutY="59.0" mnemonicParsing="false" onAction="#initializeEdit" prefHeight="25.0" prefWidth="105.0" text="Edit" />
+   <ChoiceBox fx:id="hourBox" layoutX="240.0" layoutY="58.0" prefHeight="26.0" prefWidth="65.0" visible="false" />
+   <Button fx:id="submit" layoutX="502.0" layoutY="363.0" mnemonicParsing="false" onAction="#submitEdit" text="Submit" visible="false" />
 
 </AnchorPane>

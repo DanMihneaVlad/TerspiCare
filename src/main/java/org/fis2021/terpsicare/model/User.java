@@ -1,10 +1,17 @@
 package org.fis2021.terpsicare.model;
 
+import org.dizitart.no2.objects.Id;
+
+import java.util.ArrayList;
+import java.util.Objects;
+
 public class User {
 
+    @Id
     private String username;
     private String password;
     private String role;
+    private ArrayList<Notification> notifications = new ArrayList<>();
 
     public User() {
     }
@@ -39,6 +46,22 @@ public class User {
         this.role = role;
     }
 
+    public ArrayList<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(ArrayList<Notification> notifications) {
+        this.notifications = notifications;
+    }
+
+    public void addNotification(Notification notification) {
+        notifications.add(notification);
+    }
+
+    public void removeNotification(Notification notification) {
+        notifications.remove(notification);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -53,18 +76,6 @@ public class User {
 
     @Override
     public int hashCode() {
-        int result = username.hashCode();
-        result = 31 * result + password.hashCode();
-        result = 31 * result + role.hashCode();
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "UserDTO{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", role='" + role + '\'' +
-                '}';
+        return Objects.hash(username, password, role, notifications);
     }
 }
