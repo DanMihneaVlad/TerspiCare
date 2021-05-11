@@ -57,7 +57,7 @@ public class PatientNotificationsController implements Initializable {
         if (selected == null) {
             AlertBox.display("Error", "Please select a notification!");
         } else {
-            UserService.deleteNotification(selected);
+            UserService.deleteNotificationPatient(selected);
             AlertBox.display("Success", "Notification was successfully marked as viewed!");
             final ObservableList<Notification> data = FXCollections.observableArrayList(UserService.getPatientNotifications());
             notificationsTable.setItems(data);
