@@ -88,7 +88,7 @@ public class ViewAppointmentsDoctorController implements Initializable {
         try {
             Appointment selected = (Appointment) myTable.getSelectionModel().getSelectedItem();
             String hour = (String) hourBox.getValue();
-            UserService.editAppointment(selected, hour);
+            UserService.editAppointmentPatient(selected, hour);
             AlertBox.display("Success", "Appointment was successfully edited!");
             final ObservableList<Appointment> data = FXCollections.observableArrayList(UserService.getAppointments());
             myTable.setItems(data);
