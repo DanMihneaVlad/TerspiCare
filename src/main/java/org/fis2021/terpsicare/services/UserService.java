@@ -12,6 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -72,9 +73,19 @@ public class UserService {
         checkAvailability(appo.getDoctorName(), appo.getYear(), appo.getMonth(), appo.getDay(), appo.getDayOfTheWeek(), hour);
         oldHour = appo.getHour();
         appo.setHour(hour);
-        Notification notification = new Notification(appo, oldHour);
+        Notification notification = new Notification(appo.getPatientName(), appo.getDay(), appo.getMonth(), appo.getYear(), appo.getDayOfTheWeek(), appo.getHour(), oldHour);
         addDoctorNotification(appo.getDoctorUsername(), notification);
         appointmentRepository.update(appo);
+    }
+
+    public static void deleteNotification(Notification notification) {
+        for (Doctor doc : doctorRepository.find()) {
+            if (Objects.equals(doc.getUsername(), loggedInUsername)) {
+                doc.getNotifications().remove(notification);
+                doctorRepository.update(doc);
+                break;
+            }
+        }
     }
 
     private static void checkEmptyTextfieldsAppointment(String doctorName, int year, String hour) throws EmptyTextfieldsException {
@@ -311,5 +322,16 @@ public class UserService {
                 break;
             }
         }
+    }
+
+    public static List getDoctorNotifications() {
+        List<Notification> notifications = new ArrayList<>();
+        for (Doctor doc : doctorRepository.find()) {
+            if (Objects.equals(doc.getUsername(), loggedInUsername)) {
+                notifications = doc.getNotifications();
+                break;
+            }
+        }
+        return notifications;
     }
 }

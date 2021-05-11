@@ -82,16 +82,20 @@ public class ViewAppointmentsPatientController implements Initializable {
     public void submitEdit() {
         try {
             Appointment selected = (Appointment) myTable.getSelectionModel().getSelectedItem();
-            String hour = (String) hourBox.getValue();
-            UserService.editAppointment(selected, hour);
-            AlertBox.display("Success", "Appointment was successfully edited!");
-            final ObservableList<Appointment> data = FXCollections.observableArrayList(UserService.AppointmentsList());
-            myTable.setItems(data);
-        } catch (EmptyTextfieldsException e) {
+            if (selected == null) {
+                AlertBox.display("Error", "Please select an entry to edit!");
+            } else {
+                String hour = (String) hourBox.getValue();
+                UserService.editAppointment(selected, hour);
+                AlertBox.display("Success", "Appointment was successfully edited!");
+                final ObservableList<Appointment> data = FXCollections.observableArrayList(UserService.AppointmentsList());
+                myTable.setItems(data);
+            }
+        } catch(EmptyTextfieldsException e){
             AlertBox.display("Error", "Please select an hour!");
-        } catch (WeekendDayException e) {
+        } catch(WeekendDayException e){
             AlertBox.display("Error", "Doctors don't work on a weekend!");
-        } catch (NotAvailableException e) {
+        } catch(NotAvailableException e){
             AlertBox.display("Error", "The doctor is not available at the hour you selected");
         }
     }
