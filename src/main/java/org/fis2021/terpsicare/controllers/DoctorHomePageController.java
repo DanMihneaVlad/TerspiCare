@@ -40,6 +40,19 @@ public class DoctorHomePageController {
         }
     }
 
+    public void handleViewPatients(ActionEvent event) throws Exception {
+        try {
+            Node node = (Node) event.getSource();
+            Stage CurrentStage = (Stage) node.getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("ViewPatients.fxml"));
+            CurrentStage.setTitle("Patients");
+            CurrentStage.setScene(new Scene(root, 600, 340));
+            CurrentStage.show();
+        } catch (IOException e) {
+            System.out.println("Error");
+        }
+    }
+
     public void handleNotifications(ActionEvent event) throws Exception {
         try {
             Node node = (Node) event.getSource();
