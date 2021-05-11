@@ -50,10 +50,9 @@ public class ViewDoctorsController implements Initializable {
 
         myTable.setItems(data);
 
-
     }
 
-    public void handleChoise(ActionEvent event) throws Exception{
+    public void handleChoise(ActionEvent event) throws Exception {
 
         String choise= (String)medicalS.getValue();
 
@@ -62,7 +61,7 @@ public class ViewDoctorsController implements Initializable {
         myTable.setItems(data);
     }
 
-    public void handleHome(ActionEvent event) throws Exception{
+    public void handleHome(ActionEvent event) throws Exception {
         try {
             Node node = (Node) event.getSource();
             Stage CurrentStage = (Stage) node.getScene().getWindow();

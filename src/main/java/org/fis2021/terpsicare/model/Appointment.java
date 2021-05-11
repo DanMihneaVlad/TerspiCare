@@ -1,7 +1,11 @@
 package org.fis2021.terpsicare.model;
+
 import org.dizitart.no2.objects.Id;
+
 import java.util.UUID;
+
 public class Appointment {
+
     @Id
     private String id;
     private String username;
@@ -98,6 +102,7 @@ public class Appointment {
     public void setPatientName(String patientName) {
         this.patientName = patientName;
     }
+
     @Override
     public String toString() {
         return "Appointment{" +
@@ -115,4 +120,6 @@ public class Appointment {
                 ", reply='" + reply + '\'' +
                 '}';
     }
+
 }
+

@@ -16,7 +16,7 @@ public class Notification {
     public Notification() {
     }
 
-    public Notification(String patientName,String doctorName, int day, int month, int year, String dayOfTheWeek, String newHour, String oldHour) {
+    public Notification(String patientName, String doctorName, int day, int month, int year, String dayOfTheWeek, String newHour, String oldHour) {
         this.patientName = patientName;
         this.doctorName = doctorName;
         this.day = day;
@@ -83,6 +83,7 @@ public class Notification {
         this.oldHour = oldHour;
     }
 
+
     public String getDoctorName() {
         return doctorName;
     }
@@ -96,11 +97,12 @@ public class Notification {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Notification that = (Notification) o;
-        return day == that.day && month == that.month && year == that.year && Objects.equals(patientName, that.patientName) && Objects.equals(dayOfTheWeek, that.dayOfTheWeek) && Objects.equals(newHour, that.newHour) && Objects.equals(oldHour, that.oldHour);
+        return day == that.day && month == that.month && year == that.year && Objects.equals(patientName, that.patientName) && Objects.equals(doctorName, that.doctorName) && Objects.equals(dayOfTheWeek, that.dayOfTheWeek) && Objects.equals(newHour, that.newHour) && Objects.equals(oldHour, that.oldHour);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(patientName, day, month, year, dayOfTheWeek, newHour, oldHour);
+        return Objects.hash(patientName, doctorName, day, month, year, dayOfTheWeek, newHour, oldHour);
     }
 }
+
