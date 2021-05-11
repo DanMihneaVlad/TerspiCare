@@ -33,10 +33,10 @@ public class ViewDoctorsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        TableColumn name = new TableColumn("NAME");
-        TableColumn phone = new TableColumn("PHONE");
-        TableColumn medicalspec = new TableColumn("MEDICAL SPECIALITY");
-        TableColumn description =  new TableColumn("DESCRIPTION");
+        TableColumn name = new TableColumn("Name");
+        TableColumn phone = new TableColumn("Phone");
+        TableColumn medicalspec = new TableColumn("Medical Specialty");
+        TableColumn description =  new TableColumn("Description");
         myTable.getColumns().addAll(name, phone, medicalspec, description);
 
         medicalS.getItems().addAll("Cardiology", "Dermatology", "Family Medicine", "Gastroenterology", "Hematology", "Neurology", "Obstetrics and gynecology", "Ophthalmology", "Pediatrics", "Urology");
