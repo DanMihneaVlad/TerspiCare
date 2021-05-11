@@ -53,7 +53,7 @@ public class PatientHomePageController {
             Stage CurrentStage = (Stage) node.getScene().getWindow();
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("ViewDoctors.fxml"));
             CurrentStage.setTitle("View Doctors");
-            CurrentStage.setScene(new Scene(root, 500, 500));
+            CurrentStage.setScene(new Scene(root, 600, 400));
             CurrentStage.show();
         } catch (IOException e) {
             System.out.println("Error");

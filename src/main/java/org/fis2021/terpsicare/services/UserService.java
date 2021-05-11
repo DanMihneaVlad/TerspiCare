@@ -73,7 +73,7 @@ public class UserService {
         checkAvailability(appo.getDoctorName(), appo.getYear(), appo.getMonth(), appo.getDay(), appo.getDayOfTheWeek(), hour);
         oldHour = appo.getHour();
         appo.setHour(hour);
-        Notification notification = new Notification(appo.getPatientName(), appo.getDay(), appo.getMonth(), appo.getYear(), appo.getDayOfTheWeek(), appo.getHour(), oldHour);
+        Notification notification = new Notification(appo.getPatientName(), appo.getDoctorName(), appo.getDay(), appo.getMonth(), appo.getYear(), appo.getDayOfTheWeek(), appo.getHour(), oldHour);
         addDoctorNotification(appo.getDoctorUsername(), notification);
         appointmentRepository.update(appo);
     }
@@ -332,11 +332,16 @@ public class UserService {
         appo.setReply(reply);
         appointmentRepository.update(appo);
     }
+
     public static void addPatientNotification(String username, Notification notification) {
         for (Patient pat : patientRepository.find()) {
             if (Objects.equals(username, pat.getUsername())) {
                 pat.addNotification(notification);
                 patientRepository.update(pat);
+                break;
+            }
+        }
+    }
 
     public static void addDoctorNotification(String username, Notification notification) {
         for (Doctor doc : doctorRepository.find()) {
@@ -353,6 +358,11 @@ public class UserService {
         for (Patient pat : patientRepository.find()) {
             if (Objects.equals(pat.getUsername(), loggedInUsername)) {
                 notifications = pat.getNotifications();
+                break;
+            }
+        }
+        return notifications;
+    }
 
     public static List getDoctorNotifications() {
         List<Notification> notifications = new ArrayList<>();

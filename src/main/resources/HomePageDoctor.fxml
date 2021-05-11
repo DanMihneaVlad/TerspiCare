@@ -13,10 +13,10 @@
             </image>
         </ImageView>
 
-        <Button fx:id="logoutButton" layoutX="435.0" layoutY="362.0" mnemonicParsing="false" onAction="#handleLogout" text="Log Out" />
-        <Button layoutX="229.0" layoutY="46.0" mnemonicParsing="false" text="View Patients" />
-        <Button layoutX="50.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleViewAppointments" text="View Appointments" />
-      <Button layoutX="411.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleNotifications" text="Notifications" />
+        <Button fx:id="logoutButton" layoutX="463.0" layoutY="373.0" mnemonicParsing="false" onAction="#handleLogout" text="Log Out" />
+        <Button layoutX="256.0" layoutY="46.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="View Patients" />
+        <Button layoutX="71.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleViewAppointments" text="View Appointments" />
+      <Button layoutX="440.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleNotifications" text="Notifications" />
 
     </children>
 </AnchorPane>
