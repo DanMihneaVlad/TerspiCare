@@ -9,10 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.fis2021.terpsicare.AlertBox;
@@ -34,9 +31,14 @@ public class ViewAppointmentsDoctorController implements Initializable {
     @FXML
     private ChoiceBox hourBox;
 
+    @FXML
+    private TextField replyField;
 
     @FXML
     private Button submit;
+
+    @FXML
+    private Button submitreply;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -77,6 +79,8 @@ public class ViewAppointmentsDoctorController implements Initializable {
 
             hourBox.setVisible(true);
             submit.setVisible(true);
+            replyField.setVisible(false);
+            submitreply.setVisible(false);
 
         }
     }
@@ -94,6 +98,30 @@ public class ViewAppointmentsDoctorController implements Initializable {
             AlertBox.display("Error", "Doctors don't work on a weekend!");
         } catch (NotAvailableException e) {
             AlertBox.display("Error", "The doctor is not available at the hour you selected");
+        }
+    }
+    public void replyAppointment() {
+        Appointment selected = (Appointment) myTable.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            AlertBox.display("Error", "Please select an entry to edit!");
+        } else {
+            replyField.setVisible(true);
+            submitreply.setVisible(true);
+            hourBox.setVisible(false);
+            submit.setVisible(false);
+
+        }
+    }
+    public void replySubmit(){
+        try {
+            Appointment selected = (Appointment) myTable.getSelectionModel().getSelectedItem();
+            String reply = replyField.getText();
+            UserService.replyAppointment(selected, reply);
+            AlertBox.display("Success", "Appointment's reply was successfully edited!");
+            final ObservableList<Appointment> data = FXCollections.observableArrayList(UserService.getAppointments());
+            myTable.setItems(data);
+        } catch (EmptyTextfieldsException e) {
+            AlertBox.display("Error", "Please enter a reply!");
         }
     }
     public void handleHome(ActionEvent event) throws Exception {

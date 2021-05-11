@@ -297,4 +297,10 @@ public class UserService {
         appointmentRepository.update(appo);
     }
 
+    public static void replyAppointment(Appointment appo, String reply) throws EmptyTextfieldsException{
+        if (Objects.equals(reply, ""))
+            throw new EmptyTextfieldsException();
+        appo.setReply(reply);
+        appointmentRepository.update(appo);
+    }
 }
