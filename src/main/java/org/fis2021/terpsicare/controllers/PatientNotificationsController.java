@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class DoctorNotificationsController implements Initializable {
+public class PatientNotificationsController implements Initializable {
 
     @FXML
     private TableView notificationsTable;
@@ -39,9 +39,9 @@ public class DoctorNotificationsController implements Initializable {
         TableColumn newHour = new TableColumn("New Hour");
         notificationsTable.getColumns().addAll(name, day, month, year, dayOfTheWeek, oldHour, newHour);
 
-        final ObservableList<Notification> data = FXCollections.observableArrayList(UserService.getDoctorNotifications());
+        final ObservableList<Notification> data = FXCollections.observableArrayList(UserService.getPatientNotifications());
 
-        name.setCellValueFactory(new PropertyValueFactory<Notification, String>("patientName"));
+        name.setCellValueFactory(new PropertyValueFactory<Notification, String>("doctorName"));
         day.setCellValueFactory(new PropertyValueFactory<Notification, Integer>("day"));
         month.setCellValueFactory(new PropertyValueFactory<Notification, Integer>("month"));
         year.setCellValueFactory(new PropertyValueFactory<Notification, Integer>("year"));
@@ -57,9 +57,9 @@ public class DoctorNotificationsController implements Initializable {
         if (selected == null) {
             AlertBox.display("Error", "Please select a notification!");
         } else {
-            UserService.deleteNotification(selected);
+            UserService.deleteNotificationPatient(selected);
             AlertBox.display("Success", "Notification was successfully marked as viewed!");
-            final ObservableList<Notification> data = FXCollections.observableArrayList(UserService.getDoctorNotifications());
+            final ObservableList<Notification> data = FXCollections.observableArrayList(UserService.getPatientNotifications());
             notificationsTable.setItems(data);
         }
     }
@@ -68,7 +68,7 @@ public class DoctorNotificationsController implements Initializable {
         try {
             Node node = (Node) event.getSource();
             Stage CurrentStage = (Stage) node.getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("HomePageDoctor.fxml"));
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("HomePagePatient.fxml"));
             CurrentStage.setTitle("HomePage");
             CurrentStage.setScene(new Scene(root, 600, 450));
             CurrentStage.show();

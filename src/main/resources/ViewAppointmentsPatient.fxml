@@ -24,6 +24,6 @@
       </Label>
       <Button layoutX="326.0" layoutY="59.0" mnemonicParsing="false" onAction="#initializeEdit" prefHeight="25.0" prefWidth="105.0" text="Edit" />
    <ChoiceBox fx:id="hourBox" layoutX="240.0" layoutY="58.0" prefHeight="26.0" prefWidth="65.0" visible="false" />
-   <Button fx:id="submit" layoutX="502.0" layoutY="363.0" mnemonicParsing="false" onAction="#submitEdit" text="Submit" visible="false" />
+   <Button fx:id="submit" layoutX="502.0" layoutY="380.0" mnemonicParsing="false" onAction="#submitEdit" text="Submit" visible="false" />
 
 </AnchorPane>

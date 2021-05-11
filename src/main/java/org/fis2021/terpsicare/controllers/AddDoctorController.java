@@ -69,7 +69,7 @@ public class AddDoctorController {
         Stage CurrentStage = (Stage) node.getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("admin.fxml"));
         CurrentStage.setTitle("HomePage");
-        CurrentStage.setScene(new Scene(root, 500, 500));
+        CurrentStage.setScene(new Scene(root, 600, 450));
         CurrentStage.show();
     }
 }

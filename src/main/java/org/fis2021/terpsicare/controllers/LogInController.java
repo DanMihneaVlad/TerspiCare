@@ -48,7 +48,7 @@ public class LogInController {
                     Stage CurrentStage = (Stage) node.getScene().getWindow();
                     Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("HomePagePatient.fxml"));
                     CurrentStage.setTitle("HomePage");
-                    CurrentStage.setScene(new Scene(root, 500, 500));
+                    CurrentStage.setScene(new Scene(root, 600, 450));
                     CurrentStage.show();
 
                 } else {
@@ -57,7 +57,7 @@ public class LogInController {
                         Stage CurrentStage = (Stage) node.getScene().getWindow();
                         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("HomePageDoctor.fxml"));
                         CurrentStage.setTitle("HomePage");
-                        CurrentStage.setScene(new Scene(root, 500, 500));
+                        CurrentStage.setScene(new Scene(root, 600, 450));
                         CurrentStage.show();
 
                     } else {
@@ -65,7 +65,7 @@ public class LogInController {
                         Stage CurrentStage = (Stage) node.getScene().getWindow();
                         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("admin.fxml"));
                         CurrentStage.setTitle("HomePage");
-                        CurrentStage.setScene(new Scene(root, 500, 500));
+                        CurrentStage.setScene(new Scene(root, 590, 450));
                         CurrentStage.show();
                     }
                 }
@@ -81,7 +81,7 @@ public class LogInController {
         Stage CurrentStage = (Stage) node.getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("HomePage.fxml"));
         CurrentStage.setTitle("HomePage");
-        CurrentStage.setScene(new Scene(root, 500, 500));
+        CurrentStage.setScene(new Scene(root, 300, 245));
         CurrentStage.show();
     }
 
