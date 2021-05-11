@@ -7,6 +7,7 @@ import org.fis2021.terpsicare.exceptions.*;
 import org.fis2021.terpsicare.model.*;
 
 
+import javax.print.Doc;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -65,10 +66,14 @@ public class UserService {
     }
 
     public static void editAppointment(Appointment appo, String hour) throws EmptyTextfieldsException, NotAvailableException, WeekendDayException {
+        String oldHour;
         if (Objects.equals(hour, null))
             throw new EmptyTextfieldsException();
         checkAvailability(appo.getDoctorName(), appo.getYear(), appo.getMonth(), appo.getDay(), appo.getDayOfTheWeek(), hour);
+        oldHour = appo.getHour();
         appo.setHour(hour);
+        Notification notification = new Notification(appo, oldHour);
+        addDoctorNotification(appo.getDoctorUsername(), notification);
         appointmentRepository.update(appo);
     }
 
@@ -296,5 +301,15 @@ public class UserService {
             }
         }
         return appointments;
+    }
+
+    public static void addDoctorNotification(String username, Notification notification) {
+        for (Doctor doc : doctorRepository.find()) {
+            if (Objects.equals(username, doc.getUsername())) {
+                doc.addNotification(notification);
+                doctorRepository.update(doc);
+                break;
+            }
+        }
     }
 }

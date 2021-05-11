@@ -1,5 +1,8 @@
 package org.fis2021.terpsicare.model;
 
+import org.dizitart.no2.objects.InheritIndices;
+
+@InheritIndices
 public class Admin extends User {
 
     public Admin() {
