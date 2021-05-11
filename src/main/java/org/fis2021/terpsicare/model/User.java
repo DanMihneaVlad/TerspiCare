@@ -3,7 +3,9 @@ package org.fis2021.terpsicare.model;
 import org.dizitart.no2.objects.Id;
 
 import java.util.ArrayList;
+
 import java.util.Objects;
+
 
 public class User {
 

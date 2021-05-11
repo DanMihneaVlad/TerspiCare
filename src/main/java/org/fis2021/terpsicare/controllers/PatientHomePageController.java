@@ -26,7 +26,7 @@ public class PatientHomePageController {
             Stage CurrentStage = (Stage) node.getScene().getWindow();
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("HomePage.fxml"));
             CurrentStage.setTitle("HomePage");
-            CurrentStage.setScene(new Scene(root, 500, 500));
+            CurrentStage.setScene(new Scene(root, 300, 245));
             CurrentStage.show();
         } catch (IOException e) {
             System.out.println("Error");
@@ -66,7 +66,20 @@ public class PatientHomePageController {
             Stage CurrentStage = (Stage) node.getScene().getWindow();
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("ViewAppointmentsPatient.fxml"));
             CurrentStage.setTitle("View Appointments");
-            CurrentStage.setScene(new Scene(root, 600, 400));
+
+            CurrentStage.setScene(new Scene(root, 600, 450));
+            CurrentStage.show();
+        } catch (IOException e) {
+            System.out.println("Error");
+        }
+    }
+    public void handleNotifications(ActionEvent event) throws Exception {
+        try {
+            Node node = (Node) event.getSource();
+            Stage CurrentStage = (Stage) node.getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("PatientNotifications.fxml"));
+            CurrentStage.setTitle("Notifications");
+            CurrentStage.setScene(new Scene(root, 600, 340));
             CurrentStage.show();
         } catch (IOException e) {
             System.out.println("Error");

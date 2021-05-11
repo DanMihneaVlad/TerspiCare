@@ -314,6 +314,30 @@ public class UserService {
         return appointments;
     }
 
+    public static void editAppointmentPatient(Appointment appo, String hour) throws EmptyTextfieldsException, NotAvailableException, WeekendDayException {
+        String oldHour;
+        if (Objects.equals(hour, null))
+            throw new EmptyTextfieldsException();
+        checkAvailability(appo.getDoctorName(), appo.getYear(), appo.getMonth(), appo.getDay(), appo.getDayOfTheWeek(), hour);
+        oldHour = appo.getHour();
+        appo.setHour(hour);
+        Notification notification = new Notification(appo.getPatientName(), appo.getDoctorName(),appo.getDay(), appo.getMonth(), appo.getYear(), appo.getDayOfTheWeek(), appo.getHour(), oldHour);
+        addPatientNotification(appo.getUsername(), notification);
+        appointmentRepository.update(appo);
+    }
+
+    public static void replyAppointment(Appointment appo, String reply) throws EmptyTextfieldsException{
+        if (Objects.equals(reply, ""))
+            throw new EmptyTextfieldsException();
+        appo.setReply(reply);
+        appointmentRepository.update(appo);
+    }
+    public static void addPatientNotification(String username, Notification notification) {
+        for (Patient pat : patientRepository.find()) {
+            if (Objects.equals(username, pat.getUsername())) {
+                pat.addNotification(notification);
+                patientRepository.update(pat);
+
     public static void addDoctorNotification(String username, Notification notification) {
         for (Doctor doc : doctorRepository.find()) {
             if (Objects.equals(username, doc.getUsername())) {
@@ -324,6 +348,12 @@ public class UserService {
         }
     }
 
+    public static List getPatientNotifications() {
+        List<Notification> notifications = new ArrayList<>();
+        for (Patient pat : patientRepository.find()) {
+            if (Objects.equals(pat.getUsername(), loggedInUsername)) {
+                notifications = pat.getNotifications();
+
     public static List getDoctorNotifications() {
         List<Notification> notifications = new ArrayList<>();
         for (Doctor doc : doctorRepository.find()) {
@@ -333,5 +363,15 @@ public class UserService {
             }
         }
         return notifications;
+    }
+
+    public static void deleteNotificationPatient(Notification notification) {
+        for (Patient pat : patientRepository.find()) {
+            if (Objects.equals(pat.getUsername(), loggedInUsername)) {
+                pat.getNotifications().remove(notification);
+                patientRepository.update(pat);
+                break;
+            }
+        }
     }
 }

@@ -50,7 +50,7 @@ public class RegistrationController {
         Stage CurrentStage = (Stage) node.getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("HomePage.fxml"));
         CurrentStage.setTitle("HomePage");
-        CurrentStage.setScene(new Scene(root, 500, 500));
+        CurrentStage.setScene(new Scene(root, 300, 275));
         CurrentStage.show();
     }
 

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -10,21 +12,27 @@
 
 <StackPane maxHeight="1000.0" maxWidth="1000.0" minHeight="390.0" minWidth="590.0" prefHeight="390.0" prefWidth="590.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fis2021.terpsicare.controllers.ViewAppointmentsDoctorController">
    <children>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="370.0" prefWidth="574.0">
-         <children>
-            <VBox layoutX="51.0" layoutY="100.0" prefHeight="240.0" prefWidth="468.0">
-               <children>
-                  <TableView fx:id="myTable" prefHeight="240.0" prefWidth="582.0" />
-               </children>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="413.0" prefWidth="574.0">
+
+            <VBox layoutX="40.0" layoutY="103.0" prefHeight="240.0" prefWidth="505.0">
+
+                  <TableView fx:id="myTable" prefHeight="240.0" prefWidth="492.0" />
+
             </VBox>
-            <Text fill="#2b00ff" layoutX="51.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointments:">
+            <Text fill="#2b00ff" layoutX="40.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointments:" wrappingWidth="148.7099609375">
                <font>
-                  <Font size="18.0" />
+                  <Font size="22.0" />
                </font>
             </Text>
-            <Button layoutX="470.0" layoutY="49.0" mnemonicParsing="false" onAction="#handleHome" text="Home" />
-            <Button layoutX="338.0" layoutY="49.0" mnemonicParsing="false" text="Edit appointment" />
-         </children>
+            <Button layoutX="444.0" layoutY="48.0" mnemonicParsing="false" onAction="#handleHome" prefHeight="25.0" prefWidth="99.0" text="Home" />
+          <ChoiceBox fx:id="hourBox" layoutX="331.0" layoutY="363.0" prefHeight="26.0" prefWidth="99.0" visible="false" />
+
+          <Button layoutX="317.0" layoutY="49.0" mnemonicParsing="false" onAction="#editAppointment" prefHeight="25.0" prefWidth="113.0" text="Edit appointment" />
+
+          <Button fx:id="submit" layoutX="450.0" layoutY="363.0" mnemonicParsing="false" onAction="#submitEdit" prefHeight="25.0" prefWidth="99.0" text="Submit" visible="false" />
+         <Button layoutX="205.0" layoutY="49.0" mnemonicParsing="false" onAction="#replyAppointment" prefHeight="25.0" prefWidth="99.0" text="Reply" />
+         <TextField fx:id="replyField" layoutX="114.0" layoutY="363.0" visible="false" />
+         <Button fx:id="submitreply" layoutX="448.0" layoutY="363.0" mnemonicParsing="false" onAction="#replySubmit" prefHeight="25.0" prefWidth="99.0" text="Submit" visible="false" />
       </AnchorPane>
    </children>
 </StackPane>
