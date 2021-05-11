@@ -1,11 +1,17 @@
 package org.fis2021.terpsicare.model;
 
+import org.dizitart.no2.objects.Id;
+
+import java.util.ArrayList;
+
+
 public class User {
 
+    @Id
     private String username;
     private String password;
     private String role;
-
+    private ArrayList<Notification> notifications = new ArrayList<>();
     public User() {
     }
 
@@ -37,6 +43,22 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public ArrayList<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(ArrayList<Notification> notifications) {
+        this.notifications = notifications;
+    }
+
+    public void addNotification(Notification notification) {
+        notifications.add(notification);
+    }
+
+    public void removeNotification(Notification notification) {
+        notifications.remove(notification);
     }
 
     @Override

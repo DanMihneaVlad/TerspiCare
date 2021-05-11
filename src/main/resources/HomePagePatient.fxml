@@ -13,8 +13,9 @@
          </image>
       </ImageView>
       <Button fx:id="ViewDoctorsButton" layoutX="240.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleViewDoctors" prefHeight="25.0" prefWidth="120.0" text="View Doctors" />
-      <Button fx:id="logoutButton" layoutX="464.0" layoutY="378.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleLogout" text="Log Out" />
+      <Button fx:id="logoutButton" layoutX="444.0" layoutY="378.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleLogout" prefHeight="25.0" prefWidth="79.0" text="Log Out" />
       <Button fx:id="ViewAppointment" layoutX="71.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleViewAppointments" text="View Appointments" />
       <Button fx:id="addAppointment" layoutX="404.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleAddAppointment" prefHeight="26.0" prefWidth="120.0" text="Make Appointment" />
+      <Button layoutX="71.0" layoutY="378.0" mnemonicParsing="false" onAction="#handleNotifications" text="Notification" />
    </children>
 </AnchorPane>

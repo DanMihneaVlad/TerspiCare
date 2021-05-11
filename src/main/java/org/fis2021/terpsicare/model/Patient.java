@@ -1,7 +1,11 @@
 package org.fis2021.terpsicare.model;
 
+import org.dizitart.no2.objects.Id;
+import org.dizitart.no2.objects.InheritIndices;
+
 import java.util.Objects;
 
+@InheritIndices
 public class Patient extends User{
 
     private String name;
