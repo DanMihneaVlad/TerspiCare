@@ -7,19 +7,19 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="340.0" prefWidth="572.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fis2021.terpsicare.controllers.DoctorNotificationsController">
+<AnchorPane prefHeight="340.0" prefWidth="572.0" styleClass="body" stylesheets="@Notifications.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fis2021.terpsicare.controllers.DoctorNotificationsController">
    <children>
       <VBox layoutX="59.0" layoutY="82.0" prefHeight="234.0" prefWidth="458.0">
          <children>
             <TableView fx:id="notificationsTable" prefHeight="235.0" prefWidth="482.0" />
          </children>
       </VBox>
-      <Text fill="#2b00ff" layoutX="59.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Notifications:">
+      <Text fill="#02718f" layoutX="59.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Notifications:">
          <font>
-            <Font size="18.0" />
+            <Font size="21.0" />
          </font>
       </Text>
-      <Button layoutX="468.0" layoutY="44.0" mnemonicParsing="false" onAction="#handleHome" text="Home" />
+      <Button layoutX="449.0" layoutY="44.0" mnemonicParsing="false" onAction="#handleHome" prefHeight="27.0" prefWidth="67.0" text="Home" />
       <Button layoutX="331.0" layoutY="44.0" mnemonicParsing="false" onAction="#markAsViewed" text="Mark as viewed" />
    </children>
 </AnchorPane>

@@ -1,0 +1,10 @@
+.body{ -fx-background-image: url('PatientHomePage.jpg') ; -fx-background-size: cover ; }
+
+.button {
+    -fx-background-color: #008B8B;
+    -fx-alignment: center;
+    -fx-background-radius: 8;
+    -fx-font: 13 Roboto, bold;
+    -fx-text-fill: white;
+
+}
