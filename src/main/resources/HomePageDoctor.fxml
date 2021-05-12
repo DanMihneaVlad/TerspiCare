@@ -1,22 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fis2021.terpsicare.controllers.DoctorHomePageController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="body" stylesheets="@DoctorHomePage.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fis2021.terpsicare.controllers.DoctorHomePageController">
     <children>
-        <ImageView fitHeight="273.0" fitWidth="526.0" layoutX="71.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@welcome.jpg" />
-            </image>
-        </ImageView>
-
         <Button fx:id="logoutButton" layoutX="463.0" layoutY="373.0" mnemonicParsing="false" onAction="#handleLogout" text="Log Out" />
-        <Button layoutX="256.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleViewPatients" prefHeight="25.0" prefWidth="120.0" text="View Patients" />
-        <Button layoutX="71.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleViewAppointments" text="View Appointments" />
-        <Button layoutX="440.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleNotifications" text="Notifications" />
+        <Button layoutX="256.0" layoutY="32.0" mnemonicParsing="false" onAction="#handleViewPatients" prefHeight="25.0" prefWidth="120.0" text="View Patients" />
+        <Button layoutX="72.0" layoutY="32.0" mnemonicParsing="false" onAction="#handleViewAppointments" text="View Appointments" />
+        <Button layoutX="436.0" layoutY="32.0" mnemonicParsing="false" onAction="#handleNotifications" text="Notifications" />
 
     </children>
 </AnchorPane>

@@ -9,35 +9,57 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane alignment="center" hgap="10" prefHeight="400" prefWidth="600" vgap="10" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fis2021.terpsicare.controllers.RegistrationController">
+<GridPane alignment="center" hgap="10" prefHeight="400" prefWidth="600" styleClass="body" stylesheets="@RegisterPatient.css" vgap="10" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fis2021.terpsicare.controllers.RegistrationController">
     <padding>
         <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
     </padding>
-    <Text id="title-text" text="Patient Registration" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0" />
+    <Text id="title-text" fill="WHITE" text="Patient Registration" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0">
+      <font>
+         <Font size="20.0" />
+      </font></Text>
 
-    <Label text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+    <Label text="Username:" textFill="WHITE" GridPane.columnIndex="0" GridPane.rowIndex="1">
+      <font>
+         <Font size="14.0" />
+      </font></Label>
 
     <TextField fx:id="usernameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-    <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+    <Label text="Password:" textFill="WHITE" GridPane.columnIndex="0" GridPane.rowIndex="2">
+      <font>
+         <Font size="14.0" />
+      </font></Label>
 
     <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-    <Label text="Phone:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+    <Label text="Phone:" textFill="WHITE" GridPane.columnIndex="0" GridPane.rowIndex="3">
+      <font>
+         <Font size="14.0" />
+      </font></Label>
 
     <TextField fx:id="phonenumberField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-    <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+    <Label text="Name:" textFill="WHITE" GridPane.columnIndex="0" GridPane.rowIndex="4">
+      <font>
+         <Font size="14.0" />
+      </font></Label>
 
     <TextField fx:id="nameField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
-    <Label text="Confirm Password:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+    <Label text="Confirm Password:" textFill="WHITE" GridPane.columnIndex="0" GridPane.rowIndex="5">
+      <font>
+         <Font size="14.0" />
+      </font></Label>
 
     <PasswordField fx:id="passwordField2" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 
-    <Label text="MedicalStatus:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+    <Label text="Medical Status:" textFill="WHITE" GridPane.columnIndex="0" GridPane.rowIndex="6">
+      <font>
+         <Font size="14.0" />
+      </font></Label>
 
     <TextField fx:id="medicalrecordField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
 
@@ -45,7 +67,7 @@
     <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="8">
         <Button onAction="#handleRegisterAction" prefHeight="25.0" prefWidth="87.0" text="Register" />
     </HBox>
-   <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleBackAction" prefHeight="25.0" prefWidth="61.0" text="Back" GridPane.rowIndex="8" />
+   <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleBackAction" prefHeight="27.0" prefWidth="80.0" text="Back" GridPane.rowIndex="8" />
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
