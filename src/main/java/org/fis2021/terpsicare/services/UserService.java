@@ -265,7 +265,7 @@ public class UserService {
         }
         return doctor;
     }
-
+/*
     public static List patientsList() {
         List<String> patientUsernames = new ArrayList<>();
         for (Appointment appointment : appointmentRepository.find()) {
@@ -280,13 +280,31 @@ public class UserService {
                 String username = it.next();
                 if (Objects.equals(username, patient.getUsername())) {
                     patients.add(patient);
-                    break;
+                    //break;
                 }
             }
         }
         return patients;
     }
-
+*/
+    public static List patientsList() {
+        List<String> patientUsernames = new ArrayList<>();
+        for (Appointment appointment : appointmentRepository.find()) {
+            if (Objects.equals(loggedInUsername, appointment.getDoctorUsername())) {
+                patientUsernames.add(appointment.getUsername());
+            }
+        }
+        List<Patient> patients = new ArrayList<>();
+        for (Patient patient : patientRepository.find()) {
+            for (String patientUser : patientUsernames) {
+                    if (Objects.equals(patientUser, patient.getUsername())) {
+                        patients.add(patient);
+                        //break;
+                    }
+                }
+        }
+        return patients;
+    }
     public static String getDoctorUsername(String doctorName) {
         for (Doctor doc : doctorRepository.find()) {
             if (Objects.equals(doctorName, doc.getName()))
@@ -404,5 +422,14 @@ public class UserService {
                 break;
             }
         }
+    }
+    public static void editMedicalReport(Patient pat, String med) throws EmptyTextfieldsException{
+        if (Objects.equals(med, ""))
+            throw new EmptyTextfieldsException();
+        String aux="";
+        //aux=aux+pat.getMedicalrecord();
+        aux=aux+" "+med;
+        pat.setMedicalrecord(aux);
+        patientRepository.update(pat);
     }
 }
