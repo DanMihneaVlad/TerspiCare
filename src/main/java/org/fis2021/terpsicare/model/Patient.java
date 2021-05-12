@@ -36,6 +36,18 @@ public class Patient extends User{
         return medicalrecord;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
+    }
+
+    public void setMedicalrecord(String medicalrecord) {
+        this.medicalrecord = medicalrecord;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
