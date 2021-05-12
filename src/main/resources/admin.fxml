@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fis2021.terpsicare.controllers.AdminController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="584.0" prefWidth="1300.0" styleClass="body" stylesheets="@admin.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fis2021.terpsicare.controllers.AdminController">
 <children>
     <ImageView fitHeight="273.0" fitWidth="526.0" layoutX="71.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
-        <image>
-            <Image url="@welcome.jpg" />
-        </image>
     </ImageView>
-    <Button fx:id="AddDoctorsButton" layoutX="71.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleAddDoctor" prefHeight="25.0" prefWidth="99.0" text="Add Doctors" />
-    <Button fx:id="logoutButton" layoutX="427.0" layoutY="46.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleBackAction" prefHeight="25.0" prefWidth="99.0" text="Log Out" />
+    <Button fx:id="AddDoctorsButton" layoutX="71.0" layoutY="109.0" mnemonicParsing="false" onAction="#handleAddDoctor" prefHeight="25.0" prefWidth="99.0" text="Add Doctors" />
+    <Button fx:id="logoutButton" layoutX="71.0" layoutY="323.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleBackAction" prefHeight="27.0" prefWidth="99.0" text="Log Out" />
 </children>
 </AnchorPane>
