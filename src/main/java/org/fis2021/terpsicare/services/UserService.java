@@ -265,28 +265,6 @@ public class UserService {
         }
         return doctor;
     }
-/*
-    public static List patientsList() {
-        List<String> patientUsernames = new ArrayList<>();
-        for (Appointment appointment : appointmentRepository.find()) {
-            if (Objects.equals(loggedInUsername, appointment.getDoctorUsername())) {
-                patientUsernames.add(appointment.getUsername());
-            }
-        }
-        List<Patient> patients = new ArrayList<>();
-        for (Patient patient : patientRepository.find()) {
-            Iterator<String> it = patientUsernames.iterator();
-            while (it.hasNext()) {
-                String username = it.next();
-                if (Objects.equals(username, patient.getUsername())) {
-                    patients.add(patient);
-                    //break;
-                }
-            }
-        }
-        return patients;
-    }
-*/
     public static List patientsList() {
         List<String> patientUsernames = new ArrayList<>();
         for (Appointment appointment : appointmentRepository.find()) {
