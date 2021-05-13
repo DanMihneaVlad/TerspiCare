@@ -6,13 +6,10 @@ import org.dizitart.no2.objects.ObjectRepository;
 import org.fis2021.terpsicare.exceptions.*;
 import org.fis2021.terpsicare.model.*;
 
-
-import javax.print.Doc;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,6 +23,7 @@ public class UserService {
     private static ObjectRepository<Appointment> appointmentRepository;
     private static String loggedInUsername = new String();
     public static void initDatabase() {
+        FileSystemService.initDirectory();
         Nitrite database = Nitrite.builder().filePath(getPathToFile(".terpsicare-users.db").toFile()).openOrCreate("test", "test");
         patientRepository = database.getRepository(Patient.class);
         doctorRepository = database.getRepository(Doctor.class);
@@ -258,13 +256,26 @@ public class UserService {
         return doctor;
     }
 
-    public static List DoctorsList() {
+    public static List<Doctor> DoctorsList() {
         List<Doctor> doctor = new ArrayList<>();
         for (User doc : doctorRepository.find()) {
                 doctor.add((Doctor)doc);
         }
         return doctor;
     }
+
+    public static List<Patient> getAllPatients() {
+        return patientRepository.find().toList();
+    }
+
+    public static List<Appointment> getAllAppointments() {
+        return appointmentRepository.find().toList();
+    }
+
+    public static List<Admin> getAdmins() {
+        return adminRepository.find().toList();
+    }
+
     public static List patientsList() {
         List<String> patientUsernames = new ArrayList<>();
         for (Appointment appointment : appointmentRepository.find()) {
@@ -309,7 +320,6 @@ public class UserService {
         }
         return doctor;
     }
-
 
     public static List AppointmentsList() {
         List<Appointment> appointments = new ArrayList<>();

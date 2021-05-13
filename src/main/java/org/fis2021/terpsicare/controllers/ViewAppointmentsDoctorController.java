@@ -84,14 +84,19 @@ public class ViewAppointmentsDoctorController implements Initializable {
 
         }
     }
+
     public void submitEdit() {
         try {
             Appointment selected = (Appointment) myTable.getSelectionModel().getSelectedItem();
-            String hour = (String) hourBox.getValue();
-            UserService.editAppointmentPatient(selected, hour);
-            AlertBox.display("Success", "Appointment was successfully edited!");
-            final ObservableList<Appointment> data = FXCollections.observableArrayList(UserService.getAppointments());
-            myTable.setItems(data);
+            if (selected == null) {
+                AlertBox.display("Error", "Please select an entry to edit!");
+            } else {
+                String hour = (String) hourBox.getValue();
+                UserService.editAppointmentPatient(selected, hour);
+                AlertBox.display("Success", "Appointment was successfully edited!");
+                final ObservableList<Appointment> data = FXCollections.observableArrayList(UserService.getAppointments());
+                myTable.setItems(data);
+            }
         } catch (EmptyTextfieldsException e) {
             AlertBox.display("Error", "Please select an hour!");
         } catch (WeekendDayException e) {
@@ -100,10 +105,11 @@ public class ViewAppointmentsDoctorController implements Initializable {
             AlertBox.display("Error", "The doctor is not available at the hour you selected");
         }
     }
+
     public void replyAppointment() {
         Appointment selected = (Appointment) myTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            AlertBox.display("Error", "Please select an entry to edit!");
+            AlertBox.display("Error", "Please select an entry to reply to!");
         } else {
             replyField.setVisible(true);
             submitreply.setVisible(true);
@@ -112,18 +118,24 @@ public class ViewAppointmentsDoctorController implements Initializable {
 
         }
     }
+
     public void replySubmit(){
         try {
             Appointment selected = (Appointment) myTable.getSelectionModel().getSelectedItem();
-            String reply = replyField.getText();
-            UserService.replyAppointment(selected, reply);
-            AlertBox.display("Success", "Appointment's reply was successfully edited!");
-            final ObservableList<Appointment> data = FXCollections.observableArrayList(UserService.getAppointments());
-            myTable.setItems(data);
+            if (selected == null) {
+                AlertBox.display("Error", "Please select an entry to reply to!");
+            } else {
+                String reply = replyField.getText();
+                UserService.replyAppointment(selected, reply);
+                AlertBox.display("Success", "Appointment's reply was successfully edited!");
+                final ObservableList<Appointment> data = FXCollections.observableArrayList(UserService.getAppointments());
+                myTable.setItems(data);
+            }
         } catch (EmptyTextfieldsException e) {
             AlertBox.display("Error", "Please enter a reply!");
         }
     }
+
     public void handleHome(ActionEvent event) throws Exception {
         try {
             Node node = (Node) event.getSource();
