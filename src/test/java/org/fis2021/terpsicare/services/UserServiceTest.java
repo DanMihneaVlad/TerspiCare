@@ -1,26 +1,32 @@
 package org.fis2021.terpsicare.services;
 
+import com.sun.marlin.DPathConsumer2D;
 import org.apache.commons.io.FileUtils;
-import org.fis2021.terpsicare.exceptions.EmptyTextfieldsException;
-import org.fis2021.terpsicare.exceptions.UsernameAlreadyExistsException;
-import org.fis2021.terpsicare.exceptions.WrongPasswordConfirmationException;
+import org.fis2021.terpsicare.exceptions.*;
 import org.fis2021.terpsicare.model.Admin;
+import org.fis2021.terpsicare.model.Appointment;
 import org.fis2021.terpsicare.model.Doctor;
 import org.fis2021.terpsicare.model.Patient;
 import org.junit.jupiter.api.*;
 
-import java.io.IOException;
-
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.testfx.assertions.api.Assertions.assertThat;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class UserServiceTest {
 
     public static final String ADMIN = "admin";
     public static final String PATIENT = "PATIENT";
     public static final String DOCTOR = "DOCTOR";
+    public static final String DOCTOR1 = "DOCTOR1";
     public static final String PHONENUMBER = "0123456789";
+    public static final int DATE = 1;
+    public static final String DAY = "MONDAY";
+    public static final String HOUR = "12:00";
+    public static final String NEWHOUR = "13:00";
+    public static final String MESSAGE = "MESSAGE";
+    public static final String NEWREPORT = "REPORT";
+    public static final String REPLY = "REPLY";
+    public static final String WRONGPASWWORD = "WRONGPASSWORD";
 
     @BeforeAll
     static void beforeAll() {
@@ -65,7 +71,7 @@ class UserServiceTest {
     }
 
     @Test
-    @DisplayName("Patient is added to the database")
+    @DisplayName("Patient is successfully added to the database")
     void testPatientIsAddedToDatabase() throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException {
         UserService.addPatient(PATIENT, PATIENT, PATIENT, PHONENUMBER, PATIENT, PATIENT);
         assertThat(UserService.getAllPatients()).isNotEmpty();
@@ -81,7 +87,7 @@ class UserServiceTest {
     }
 
     @Test
-    @DisplayName("Doctor is added to the database")
+    @DisplayName("Doctor is successfully added to the database")
     void testDoctorIsAddedToDatabase() throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException {
         UserService.addDoctor(DOCTOR, DOCTOR, DOCTOR, DOCTOR, DOCTOR, PHONENUMBER, DOCTOR);
         assertThat(UserService.DoctorsList()).isNotEmpty();
@@ -97,4 +103,168 @@ class UserServiceTest {
         assertThat(doctor.getPhoneNumber()).isEqualTo(PHONENUMBER);
     }
 
+    @Test
+    @DisplayName("Appointment is successfully added to the database")
+    void testAppointmentIsAddedToDatabase() throws EmptyTextfieldsException, NotAvailableException, WeekendDayException {
+        UserService.addAppointment(PATIENT, DOCTOR, DATE, DATE, DATE, DAY, HOUR, MESSAGE);
+        assertThat(UserService.getAllAppointments()).isNotEmpty();
+        assertThat(UserService.getAllAppointments()).size().isEqualTo(1);
+        Appointment appointment = UserService.getAllAppointments().get(0);
+        assertThat(appointment).isNotNull();
+        assertThat(appointment.getUsername()).isEqualTo(PATIENT);
+        assertThat(appointment.getDoctorName()).isEqualTo(DOCTOR);
+        assertThat(appointment.getYear()).isEqualTo(DATE);
+        assertThat(appointment.getMonth()).isEqualTo(DATE);
+        assertThat(appointment.getDay()).isEqualTo(DATE);
+        assertThat(appointment.getHour()).isEqualTo(HOUR);
+        assertThat(appointment.getMessage()).isEqualTo(MESSAGE);
+        assertThat(appointment.getReply()).isEqualTo(null);
+    }
+
+    @Test
+    @DisplayName("Appointment is successfully edited and saved in the database")
+    void testAppointmentIsEditedAndSaved() throws EmptyTextfieldsException, NotAvailableException, WeekendDayException {
+        UserService.addAppointment(PATIENT, DOCTOR, DATE, DATE, DATE, DAY, HOUR, MESSAGE);
+        UserService.editAppointment(UserService.getAllAppointments().get(0), NEWHOUR);
+        Appointment appointment = UserService.getAllAppointments().get(0);
+        assertThat(appointment.getHour()).isEqualTo(NEWHOUR);
+    }
+
+    @Test
+    @DisplayName("Medical record is successfully edited")
+    void testPatientMedicalRecordIsEditedAndSaved() throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException {
+        UserService.addPatient(PATIENT, PATIENT, PATIENT, PHONENUMBER, PATIENT, PATIENT);
+        UserService.editMedicalReport(UserService.getAllPatients().get(0), NEWREPORT);
+        Patient patient = UserService.getAllPatients().get(0);
+        assertThat(patient.getMedicalrecord()).isEqualTo(NEWREPORT);
+    }
+
+    @Test
+    @DisplayName("Reply is successfully added to the appointment")
+    void testReplyIsAddedToTheAppointment() throws EmptyTextfieldsException, NotAvailableException, WeekendDayException {
+        UserService.addAppointment(PATIENT, DOCTOR, DATE, DATE, DATE, DAY, HOUR, MESSAGE);
+        UserService.replyAppointment(UserService.getAllAppointments().get(0), REPLY);
+        Appointment appointment = UserService.getAllAppointments().get(0);
+        assertThat(appointment.getReply()).isEqualTo(REPLY);
+    }
+
+    @Test
+    @DisplayName("Password is encoded")
+    void testPasswordIsEncoded() {
+        String encodedPassword = UserService.encodePassword(PATIENT, PATIENT);
+        assertThat(PATIENT).isNotEqualTo(encodedPassword);
+        assertThat(UserService.encodePassword(PATIENT, PATIENT)).isEqualTo(encodedPassword);
+    }
+
+    @Test
+    @DisplayName("The correct doctor username is returned for a doctor name")
+    void testDoctorUsernameForDoctorName() throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException {
+        UserService.addDoctor(DOCTOR, DOCTOR, DOCTOR, DOCTOR, DOCTOR, PHONENUMBER, DOCTOR);
+        UserService.addDoctor(DOCTOR1, DOCTOR1, DOCTOR1, DOCTOR1, DOCTOR1, PHONENUMBER, DOCTOR1);
+        assertThat(UserService.getDoctorUsername(DOCTOR)).isEqualTo(DOCTOR);
+        assertThat(UserService.getDoctorUsername(DOCTOR)).isNotEqualTo(DOCTOR1);
+        assertThat(UserService.getDoctorUsername(DOCTOR1)).isNotEqualTo(DOCTOR);
+        assertThat(UserService.getDoctorUsername(DOCTOR1)).isEqualTo(DOCTOR1);
+    }
+
+    @Test
+    @DisplayName("Username exists in database")
+    void testUsernameExists() throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException, UsernameDoesNotExistException {
+        UserService.addDoctor(DOCTOR, DOCTOR, DOCTOR, DOCTOR, DOCTOR, PHONENUMBER, DOCTOR);
+        UserService.addPatient(PATIENT, PATIENT, PATIENT, PHONENUMBER, PATIENT, PATIENT);
+        assertThat(UserService.checkUserExist(PATIENT)).isEqualTo("patient");
+        assertThat(UserService.checkUserExist(DOCTOR)).isEqualTo("doctor");
+        assertThat(UserService.checkUserExist(ADMIN)).isEqualTo("Admin");
+    }
+
+    @Test
+    @DisplayName("Check user credentials")
+    void testUserCredentials() throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException, UsernameDoesNotExistException, WrongPasswordException {
+        UserService.addPatient(PATIENT, PATIENT, PATIENT, PHONENUMBER, PATIENT, PATIENT);
+        assertThat(UserService.checkUserCredentials(PATIENT, PATIENT)).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("Username does not exist")
+    void testUsernameDoesNotExist() {
+        assertThrows(UsernameDoesNotExistException.class, () -> {
+            UserService.checkUserExist("Doctor");
+        });
+        assertThrows(UsernameDoesNotExistException.class, () -> {
+            UserService.checkUserExist("");
+        });
+        assertThrows(UsernameDoesNotExistException.class, () -> {
+            UserService.checkUserExist(null);
+        });
+    }
+
+    @Test
+    @DisplayName("User can not be added twice")
+    void testUserCanNotBeAddedTwice() {
+        assertThrows(UsernameAlreadyExistsException.class, () -> {
+            UserService.addPatient(PATIENT, PATIENT, PATIENT, PHONENUMBER, PATIENT, PATIENT);
+            UserService.checkUserDoesNotAlreadyExist(PATIENT);
+        });
+        assertThrows(UsernameAlreadyExistsException.class, () -> {
+            UserService.addDoctor(DOCTOR, DOCTOR, DOCTOR, DOCTOR, DOCTOR, PHONENUMBER, DOCTOR);
+            UserService.checkUserDoesNotAlreadyExist(DOCTOR);
+        });
+        assertThrows(UsernameAlreadyExistsException.class, () -> {
+            UserService.checkUserDoesNotAlreadyExist("admin");
+        });
+    }
+
+    @Test
+    @DisplayName("Password confirmation must be the same as the password")
+    void testPasswordSameAsConfirmedPassword() {
+        assertThrows(WrongPasswordConfirmationException.class, () -> {
+            UserService.addPatient(PATIENT, PATIENT, PATIENT, PHONENUMBER, WRONGPASWWORD, PATIENT);
+        });
+        assertThrows(WrongPasswordConfirmationException.class, () -> {
+           UserService.addPatient(PATIENT, PATIENT, PATIENT, PHONENUMBER, null, PATIENT);
+        });
+    }
+
+    @Test
+    @DisplayName("The user cannot leave empty text fields")
+    void testEmptyTextFieldsUser() {
+        assertThrows(EmptyTextfieldsException.class, () -> {
+            UserService.checkEmptyTextfieldsPatient("", PATIENT, PATIENT, PHONENUMBER, PATIENT);
+        });
+        assertThrows(EmptyTextfieldsException.class, () -> {
+            UserService.checkEmptyTextfieldsPatient(PATIENT, "", PATIENT, PHONENUMBER, PATIENT);
+        });
+        assertThrows(EmptyTextfieldsException.class, () -> {
+            UserService.checkEmptyTextfieldsPatient(PATIENT, PATIENT, "", PHONENUMBER, PATIENT);
+        });
+        assertThrows(EmptyTextfieldsException.class, () -> {
+            UserService.checkEmptyTextfieldsPatient(PATIENT, PATIENT, PATIENT, "", PATIENT);
+        });
+        assertThrows(EmptyTextfieldsException.class, () -> {
+            UserService.checkEmptyTextfieldsPatient(PATIENT, PATIENT, PATIENT, PHONENUMBER, "");
+        });
+    }
+
+    @Test
+    @DisplayName("The admin cannot leave empty text fields when adding a doctor")
+    void testEmptyTextFieldsDoctor() {
+        assertThrows(EmptyTextfieldsException.class, () -> {
+            UserService.checkEmptyTextFieldsDoctor("", DOCTOR, DOCTOR, DOCTOR, DOCTOR, PHONENUMBER);
+        });
+        assertThrows(EmptyTextfieldsException.class, () -> {
+            UserService.checkEmptyTextFieldsDoctor(DOCTOR, "", DOCTOR, DOCTOR, DOCTOR, PHONENUMBER);
+        });
+        assertThrows(EmptyTextfieldsException.class, () -> {
+            UserService.checkEmptyTextFieldsDoctor(DOCTOR, DOCTOR, "", DOCTOR, DOCTOR, PHONENUMBER);
+        });
+        assertThrows(EmptyTextfieldsException.class, () -> {
+            UserService.checkEmptyTextFieldsDoctor(DOCTOR, DOCTOR, DOCTOR, "", DOCTOR, PHONENUMBER);
+        });
+        assertThrows(EmptyTextfieldsException.class, () -> {
+            UserService.checkEmptyTextFieldsDoctor(DOCTOR, DOCTOR, DOCTOR, DOCTOR, null, PHONENUMBER);
+        });
+        assertThrows(EmptyTextfieldsException.class, () -> {
+            UserService.checkEmptyTextFieldsDoctor(DOCTOR, DOCTOR, DOCTOR, DOCTOR, DOCTOR, "");
+        });
+    }
 }

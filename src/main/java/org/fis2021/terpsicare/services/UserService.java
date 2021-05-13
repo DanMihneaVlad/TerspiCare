@@ -50,7 +50,7 @@ public class UserService {
         doctorRepository.insert(new Doctor(username, encodePassword(username, password), name, medicalSpecialty, phoneNumber, description));
     }
 
-    public static void addPatient(String username, String password,String name, String phone, String password2, String medicalrecord) throws UsernameAlreadyExistsException, WrongPasswordConfirmationException, EmptyTextfieldsException {
+    public static void addPatient(String username, String password, String name, String phone, String password2, String medicalrecord) throws UsernameAlreadyExistsException, WrongPasswordConfirmationException, EmptyTextfieldsException {
         checkEmptyTextfieldsPatient(username, password, name, phone, password2);
         checkUserDoesNotAlreadyExist(username);
         checkPasswordSameAsConfirmedPassword(password, password2);
@@ -109,7 +109,7 @@ public class UserService {
         }
     }
 
-    private static void checkEmptyTextfieldsPatient(String username, String password, String name, String phone, String password2) throws EmptyTextfieldsException {
+    public static void checkEmptyTextfieldsPatient(String username, String password, String name, String phone, String password2) throws EmptyTextfieldsException {
         if( Objects.equals(username,""))
             throw new EmptyTextfieldsException();
         else if( Objects.equals(password,""))
@@ -139,7 +139,7 @@ public class UserService {
         }
     }
 
-    public static String checkUserExist(String username) throws UsernameDoesNotExistException{
+    public static String checkUserExist(String username) throws UsernameDoesNotExistException {
         int ok = 0;
         String role = null;
         for (User user : patientRepository.find()) {
@@ -173,7 +173,7 @@ public class UserService {
         }
     }
 
-    private static void checkEmptyTextFieldsDoctor(String username, String password, String confirmedPassword, String name, String medicalSpecialty, String phoneNumber) throws EmptyTextfieldsException {
+    public static void checkEmptyTextFieldsDoctor(String username, String password, String confirmedPassword, String name, String medicalSpecialty, String phoneNumber) throws EmptyTextfieldsException {
         if (Objects.equals(username, ""))
             throw new EmptyTextfieldsException();
         else if (Objects.equals(password, ""))
@@ -295,6 +295,7 @@ public class UserService {
         }
         return patients;
     }
+
     public static String getDoctorUsername(String doctorName) {
         for (Doctor doc : doctorRepository.find()) {
             if (Objects.equals(doctorName, doc.getName()))
@@ -354,7 +355,7 @@ public class UserService {
         appointmentRepository.update(appo);
     }
 
-    public static void replyAppointment(Appointment appo, String reply) throws EmptyTextfieldsException{
+    public static void replyAppointment(Appointment appo, String reply) throws EmptyTextfieldsException {
         if (Objects.equals(reply, ""))
             throw new EmptyTextfieldsException();
         appo.setReply(reply);
@@ -412,14 +413,14 @@ public class UserService {
             }
         }
     }
+
     public static void editMedicalReport(Patient pat, String med) throws EmptyTextfieldsException{
         if (Objects.equals(med, ""))
             throw new EmptyTextfieldsException();
-        String aux="";
-        aux=aux+" "+med;
-        pat.setMedicalrecord(aux);
+        pat.setMedicalrecord(med);
         patientRepository.update(pat);
     }
+
     public static Nitrite getDatabase() {
         return database;
     }
