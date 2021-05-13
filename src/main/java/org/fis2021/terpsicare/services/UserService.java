@@ -22,9 +22,10 @@ public class UserService {
     private static ObjectRepository<Admin> adminRepository;
     private static ObjectRepository<Appointment> appointmentRepository;
     private static String loggedInUsername = new String();
+    private static Nitrite database;
     public static void initDatabase() {
         FileSystemService.initDirectory();
-        Nitrite database = Nitrite.builder().filePath(getPathToFile(".terpsicare-users.db").toFile()).openOrCreate("test", "test");
+        database = Nitrite.builder().filePath(getPathToFile(".terpsicare-users.db").toFile()).openOrCreate("test", "test");
         patientRepository = database.getRepository(Patient.class);
         doctorRepository = database.getRepository(Doctor.class);
         adminRepository = database.getRepository(Admin.class);
@@ -415,9 +416,12 @@ public class UserService {
         if (Objects.equals(med, ""))
             throw new EmptyTextfieldsException();
         String aux="";
-        //aux=aux+pat.getMedicalrecord();
         aux=aux+" "+med;
         pat.setMedicalrecord(aux);
         patientRepository.update(pat);
     }
+    public static Nitrite getDatabase() {
+        return database;
+    }
+
 }

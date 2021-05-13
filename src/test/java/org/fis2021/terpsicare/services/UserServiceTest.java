@@ -42,6 +42,7 @@ class UserServiceTest {
 
     @AfterEach
     void tearDown() {
+        UserService.getDatabase().close();
         System.out.println("After Each");
     }
 
