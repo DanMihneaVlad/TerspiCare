@@ -45,8 +45,8 @@ public class UserService {
 
     public static void addDoctor(String username, String password, String confirmedPassword, String name, String medicalSpecialty, String phoneNumber, String description) throws UsernameAlreadyExistsException, WrongPasswordConfirmationException, EmptyTextfieldsException {
         checkUserDoesNotAlreadyExist(username);
-        checkPasswordSameAsConfirmedPassword(password, confirmedPassword);
         checkEmptyTextFieldsDoctor(username, password, confirmedPassword, name, medicalSpecialty, phoneNumber);
+        checkPasswordSameAsConfirmedPassword(password, confirmedPassword);
         doctorRepository.insert(new Doctor(username, encodePassword(username, password), name, medicalSpecialty, phoneNumber, description));
     }
 

@@ -3,6 +3,7 @@ package org.fis2021.terpsicare;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.*;
 import javafx.scene.control.*;
 
@@ -14,9 +15,11 @@ public class AlertBox {
         window.setTitle(title);
         window.setMinWidth(250);
 
-        Label label =new Label();
+        Text label = new Text("text");
+        label.setId("text");
         label.setText(message);
         Button closeButton = new Button ("OK");
+        closeButton.setId("OK");
         closeButton.setOnAction(e -> window.close());
 
         VBox layout =  new VBox(10);
