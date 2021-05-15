@@ -8,7 +8,7 @@
       <Button fx:id="ViewDoctorsButton" layoutX="234.0" layoutY="333.0" mnemonicParsing="false" onAction="#handleViewDoctors" prefHeight="27.0" prefWidth="130.0" text="View Doctors" />
       <Button fx:id="logoutButton" layoutX="259.0" layoutY="369.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleLogout" prefHeight="27.0" prefWidth="79.0" text="Log Out" />
       <Button fx:id="ViewAppointment" layoutX="234.0" layoutY="257.0" mnemonicParsing="false" onAction="#handleViewAppointments" text="View Appointments" />
-      <Button fx:id="addAppointment" layoutX="234.0" layoutY="293.0" mnemonicParsing="false" onAction="#handleAddAppointment" prefHeight="27.0" prefWidth="130.0" text="Make Appointment" />
+      <Button fx:id="addAppointment" id="addAppointment" layoutX="234.0" layoutY="293.0" mnemonicParsing="false" onAction="#handleAddAppointment" prefHeight="27.0" prefWidth="130.0" text="Make Appointment" />
       <Button layoutX="257.0" layoutY="219.0" mnemonicParsing="false" onAction="#handleNotifications" text="Notification" />
    </children>
 </AnchorPane>

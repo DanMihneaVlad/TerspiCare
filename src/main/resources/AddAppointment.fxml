@@ -37,12 +37,12 @@
       <font>
          <Font size="14.0" />
       </font></Label>
-    <TextField fx:id="message" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-    <Button fx:id="submitAppointment" mnemonicParsing="false" onAction="#handleAddAppointmentAction" prefHeight="26.0" prefWidth="174.0" text="Submit appointment" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-    <DatePicker fx:id="datePicker" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+    <TextField fx:id="message" id="message" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+    <Button fx:id="submitAppointment" id="submitAppointment" mnemonicParsing="false" onAction="#handleAddAppointmentAction" prefHeight="26.0" prefWidth="174.0" text="Submit appointment" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+    <DatePicker fx:id="datePicker" id="datePicker" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
     <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleBackAction" prefHeight="27.0" prefWidth="58.0" text="Home" GridPane.rowIndex="7" />
-   <ChoiceBox fx:id="doctor" prefHeight="25.0" prefWidth="167.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-   <ChoiceBox fx:id="hour" prefHeight="26.0" prefWidth="168.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+   <ChoiceBox fx:id="doctor" id="doctorChoice" prefHeight="25.0" prefWidth="167.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+   <ChoiceBox fx:id="hour" id="hourChoice" prefHeight="26.0" prefWidth="168.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
     <columnConstraints>
         <ColumnConstraints maxWidth="69.60001220703126" minWidth="35.199987792968756" prefWidth="59.199987792968756" />
         <ColumnConstraints maxWidth="190.40001220703124" minWidth="155.99998779296874" prefWidth="166.40001220703124" />
