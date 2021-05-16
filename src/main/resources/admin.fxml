@@ -8,7 +8,7 @@
 <children>
     <ImageView fitHeight="273.0" fitWidth="526.0" layoutX="71.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
     </ImageView>
-    <Button fx:id="AddDoctorsButton" layoutX="71.0" layoutY="109.0" mnemonicParsing="false" onAction="#handleAddDoctor" prefHeight="25.0" prefWidth="99.0" text="Add Doctors" />
+    <Button fx:id="AddDoctorsButton" id="addDoctors" layoutX="71.0" layoutY="109.0" mnemonicParsing="false" onAction="#handleAddDoctor" prefHeight="25.0" prefWidth="99.0" text="Add Doctors" />
     <Button fx:id="logoutButton" layoutX="71.0" layoutY="323.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleBackAction" prefHeight="27.0" prefWidth="99.0" text="Log Out" />
 </children>
 </AnchorPane>

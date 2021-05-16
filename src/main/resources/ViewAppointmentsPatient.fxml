@@ -16,14 +16,14 @@
             </TableView>
 
       </VBox>
-      <Button layoutX="463.0" layoutY="45.0" mnemonicParsing="false" onAction="#handleHome" prefHeight="25.0" prefWidth="105.0" text="Home" />
+      <Button id="homePatient" layoutX="463.0" layoutY="45.0" mnemonicParsing="false" onAction="#handleHome" prefHeight="25.0" prefWidth="105.0" text="Home" />
       <Label layoutX="55.0" layoutY="41.0" prefHeight="36.0" prefWidth="207.0" text="Appointments:" textFill="#008cba">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <Button layoutX="334.0" layoutY="45.0" mnemonicParsing="false" onAction="#initializeEdit" prefHeight="25.0" prefWidth="105.0" text="Edit" />
-   <ChoiceBox fx:id="hourBox" layoutX="240.0" layoutY="58.0" prefHeight="26.0" prefWidth="65.0" visible="false" />
-   <Button fx:id="submit" layoutX="502.0" layoutY="380.0" mnemonicParsing="false" onAction="#submitEdit" text="Submit" visible="false" />
+    <Button id="editAppointment" layoutX="334.0" layoutY="45.0" mnemonicParsing="false" onAction="#initializeEdit" prefHeight="25.0" prefWidth="105.0" text="Edit" />
+   <ChoiceBox fx:id="hourBox" id="hourBox" layoutX="246.0" layoutY="45.0" prefHeight="26.0" prefWidth="65.0" visible="false" />
+   <Button fx:id="submit" id="submitEdit" layoutX="502.0" layoutY="380.0" mnemonicParsing="false" onAction="#submitEdit" text="Submit" visible="false" />
 
 </AnchorPane>

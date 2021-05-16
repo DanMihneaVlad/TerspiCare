@@ -5,10 +5,10 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="body" stylesheets="@DoctorHomePage.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fis2021.terpsicare.controllers.DoctorHomePageController">
     <children>
-        <Button fx:id="logoutButton" layoutX="463.0" layoutY="373.0" mnemonicParsing="false" onAction="#handleLogout" text="Log Out" />
-        <Button layoutX="256.0" layoutY="32.0" mnemonicParsing="false" onAction="#handleViewPatients" prefHeight="25.0" prefWidth="120.0" text="View Patients" />
-        <Button layoutX="72.0" layoutY="32.0" mnemonicParsing="false" onAction="#handleViewAppointments" text="View Appointments" />
-        <Button layoutX="436.0" layoutY="32.0" mnemonicParsing="false" onAction="#handleNotifications" text="Notifications" />
+        <Button fx:id="logoutButton" id="logoutDoctor" layoutX="463.0" layoutY="373.0" mnemonicParsing="false" onAction="#handleLogout" text="Log Out" />
+        <Button layoutX="256.0" layoutY="32.0" mnemonicParsing="false" onAction="#handleViewPatients" prefHeight="25.0" prefWidth="120.0" text="View Patients" id="viewPatients"/>
+        <Button layoutX="72.0" layoutY="32.0" mnemonicParsing="false" onAction="#handleViewAppointments" id="viewAppointments" text="View Appointments" />
+        <Button id="viewNotifications" layoutX="436.0" layoutY="32.0" mnemonicParsing="false" onAction="#handleNotifications" text="Notifications" />
 
     </children>
 </AnchorPane>

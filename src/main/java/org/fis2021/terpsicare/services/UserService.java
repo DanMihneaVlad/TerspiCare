@@ -6,13 +6,11 @@ import org.dizitart.no2.objects.ObjectRepository;
 import org.fis2021.terpsicare.exceptions.*;
 import org.fis2021.terpsicare.model.*;
 
-
-import javax.print.Doc;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,8 +23,16 @@ public class UserService {
     private static ObjectRepository<Admin> adminRepository;
     private static ObjectRepository<Appointment> appointmentRepository;
     private static String loggedInUsername = new String();
+    private static Nitrite database;
+
+    private static LocalDate currentDate = LocalDate.now();
+    private static int currentDay = currentDate.getDayOfMonth();
+    private static int currentMonth = currentDate.getMonthValue();
+    private static int currentYear = currentDate.getYear();
+
     public static void initDatabase() {
-        Nitrite database = Nitrite.builder().filePath(getPathToFile(".terpsicare-users.db").toFile()).openOrCreate("test", "test");
+        FileSystemService.initDirectory();
+        database = Nitrite.builder().filePath(getPathToFile(".terpsicare-users.db").toFile()).openOrCreate("test", "test");
         patientRepository = database.getRepository(Patient.class);
         doctorRepository = database.getRepository(Doctor.class);
         adminRepository = database.getRepository(Admin.class);
@@ -44,23 +50,26 @@ public class UserService {
         }
     }
 
-    public static void addDoctor(String username, String password, String confirmedPassword, String name, String medicalSpecialty, String phoneNumber, String description) throws UsernameAlreadyExistsException, WrongPasswordConfirmationException, EmptyTextfieldsException {
+    public static void addDoctor(String username, String password, String confirmedPassword, String name, String medicalSpecialty, String phoneNumber, String description) throws UsernameAlreadyExistsException, WrongPasswordConfirmationException, EmptyTextfieldsException, InvalidPhoneNumberException {
         checkUserDoesNotAlreadyExist(username);
-        checkPasswordSameAsConfirmedPassword(password, confirmedPassword);
         checkEmptyTextFieldsDoctor(username, password, confirmedPassword, name, medicalSpecialty, phoneNumber);
+        checkPasswordSameAsConfirmedPassword(password, confirmedPassword);
+        checkValidPhoneNumber(phoneNumber);
         doctorRepository.insert(new Doctor(username, encodePassword(username, password), name, medicalSpecialty, phoneNumber, description));
     }
 
-    public static void addPatient(String username, String password,String name, String phone, String password2, String medicalrecord) throws UsernameAlreadyExistsException, WrongPasswordConfirmationException, EmptyTextfieldsException {
+    public static void addPatient(String username, String password, String name, String phone, String password2, String medicalrecord) throws UsernameAlreadyExistsException, WrongPasswordConfirmationException, EmptyTextfieldsException, InvalidPhoneNumberException {
         checkEmptyTextfieldsPatient(username, password, name, phone, password2);
         checkUserDoesNotAlreadyExist(username);
         checkPasswordSameAsConfirmedPassword(password, password2);
+        checkValidPhoneNumber(phone);
         patientRepository.insert(new Patient(username, encodePassword(username, password), name, phone, medicalrecord));
     }
 
-    public static void addAppointment(String username, String doctorName, int year, int month, int day, String dayOfTheWeek, String hour, String message) throws EmptyTextfieldsException, NotAvailableException, WeekendDayException {
+    public static void addAppointment(String username, String doctorName, int year, int month, int day, String dayOfTheWeek, String hour, String message) throws EmptyTextfieldsException, NotAvailableException, WeekendDayException, InvalidDateException {
         checkEmptyTextfieldsAppointment(doctorName, year, hour);
         checkAvailability(doctorName, year, month, day, dayOfTheWeek, hour);
+        checkDateValid(day,month,year);
         String doctorUsername = getDoctorUsername(doctorName);
         String patientName = getPatientName();
         appointmentRepository.insert(new Appointment(username, patientName, doctorName, doctorUsername, year, month, day, dayOfTheWeek, hour, message));
@@ -110,7 +119,7 @@ public class UserService {
         }
     }
 
-    private static void checkEmptyTextfieldsPatient(String username, String password, String name, String phone, String password2) throws EmptyTextfieldsException {
+    public static void checkEmptyTextfieldsPatient(String username, String password, String name, String phone, String password2) throws EmptyTextfieldsException {
         if( Objects.equals(username,""))
             throw new EmptyTextfieldsException();
         else if( Objects.equals(password,""))
@@ -121,6 +130,15 @@ public class UserService {
             throw new EmptyTextfieldsException();
         else if( Objects.equals(password2,""))
             throw new EmptyTextfieldsException();
+    }
+
+    public static void checkValidPhoneNumber(String phoneNumber) throws InvalidPhoneNumberException {
+        if (phoneNumber.length() != 10) {
+            throw new InvalidPhoneNumberException();
+        }
+        if (!phoneNumber.matches("[0-9]+")) {
+            throw new InvalidPhoneNumberException();
+        }
     }
 
     public static void checkUserDoesNotAlreadyExist(String username) throws UsernameAlreadyExistsException {
@@ -140,7 +158,7 @@ public class UserService {
         }
     }
 
-    public static String checkUserExist(String username) throws UsernameDoesNotExistException{
+    public static String checkUserExist(String username) throws UsernameDoesNotExistException {
         int ok = 0;
         String role = null;
         for (User user : patientRepository.find()) {
@@ -174,7 +192,7 @@ public class UserService {
         }
     }
 
-    private static void checkEmptyTextFieldsDoctor(String username, String password, String confirmedPassword, String name, String medicalSpecialty, String phoneNumber) throws EmptyTextfieldsException {
+    public static void checkEmptyTextFieldsDoctor(String username, String password, String confirmedPassword, String name, String medicalSpecialty, String phoneNumber) throws EmptyTextfieldsException {
         if (Objects.equals(username, ""))
             throw new EmptyTextfieldsException();
         else if (Objects.equals(password, ""))
@@ -258,13 +276,26 @@ public class UserService {
         return doctor;
     }
 
-    public static List DoctorsList() {
+    public static List<Doctor> DoctorsList() {
         List<Doctor> doctor = new ArrayList<>();
         for (User doc : doctorRepository.find()) {
                 doctor.add((Doctor)doc);
         }
         return doctor;
     }
+
+    public static List<Patient> getAllPatients() {
+        return patientRepository.find().toList();
+    }
+
+    public static List<Appointment> getAllAppointments() {
+        return appointmentRepository.find().toList();
+    }
+
+    public static List<Admin> getAdmins() {
+        return adminRepository.find().toList();
+    }
+
     public static List patientsList() {
         List<String> patientUsernames = new ArrayList<>();
         for (Appointment appointment : appointmentRepository.find()) {
@@ -283,6 +314,7 @@ public class UserService {
         }
         return patients;
     }
+
     public static String getDoctorUsername(String doctorName) {
         for (Doctor doc : doctorRepository.find()) {
             if (Objects.equals(doctorName, doc.getName()))
@@ -309,7 +341,6 @@ public class UserService {
         }
         return doctor;
     }
-
 
     public static List AppointmentsList() {
         List<Appointment> appointments = new ArrayList<>();
@@ -343,7 +374,7 @@ public class UserService {
         appointmentRepository.update(appo);
     }
 
-    public static void replyAppointment(Appointment appo, String reply) throws EmptyTextfieldsException{
+    public static void replyAppointment(Appointment appo, String reply) throws EmptyTextfieldsException {
         if (Objects.equals(reply, ""))
             throw new EmptyTextfieldsException();
         appo.setReply(reply);
@@ -401,13 +432,22 @@ public class UserService {
             }
         }
     }
+
     public static void editMedicalReport(Patient pat, String med) throws EmptyTextfieldsException{
         if (Objects.equals(med, ""))
             throw new EmptyTextfieldsException();
-        String aux="";
-        //aux=aux+pat.getMedicalrecord();
-        aux=aux+" "+med;
-        pat.setMedicalrecord(aux);
+        pat.setMedicalrecord(med);
         patientRepository.update(pat);
     }
+
+    public static Nitrite getDatabase() {
+        return database;
+    }
+
+    public static void checkDateValid(int day, int month,int year) throws InvalidDateException {
+        if (year < currentYear)  throw new InvalidDateException();
+        else if (year == currentYear && month < currentMonth) throw new InvalidDateException();
+        else if (year == currentYear && month == currentMonth && day < currentDay) throw new InvalidDateException();
+    }
+
 }
