@@ -17,7 +17,7 @@
         </VBox>
         <Button fx:id="homeButton" layoutX="83.0" layoutY="32.0" mnemonicParsing="false" onAction="#handleHome" text="Home" />
         <Button layoutX="155.0" layoutY="32.0" mnemonicParsing="false" onAction="#handleAddAppointment" text="Make Appointment" />
-      <ChoiceBox fx:id="medicalS" layoutX="388.0" layoutY="32.0" onAction="#handleChoise" prefWidth="150.0" />
+      <ChoiceBox fx:id="medicalS" id="medicalS" layoutX="388.0" layoutY="32.0" onAction="#handleChoise" prefWidth="150.0" />
       <Label layoutX="312.0" layoutY="32.0" prefHeight="21.0" prefWidth="66.0" text="Sort By:" textFill="#008cba">
          <font>
             <Font size="18.0" />
