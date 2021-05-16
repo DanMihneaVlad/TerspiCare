@@ -9,7 +9,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <main.class.name>org.fis2021.terpsicare.Main</main.class.name>
+        <main.class.name>org.fis2021.terpsicare.SuperMain</main.class.name>
         <final.jar.name>Terpsicare</final.jar.name>
     </properties>
 
@@ -98,7 +98,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>org.fis2021.terpsicare.Main</mainClass>
+                            <mainClass>org.fis2021.terpsicare.SuperMain</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
