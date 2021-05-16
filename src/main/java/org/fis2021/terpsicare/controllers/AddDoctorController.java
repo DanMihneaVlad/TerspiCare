@@ -13,6 +13,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.fis2021.terpsicare.exceptions.EmptyTextfieldsException;
+import org.fis2021.terpsicare.exceptions.InvalidPhoneNumberException;
 import org.fis2021.terpsicare.exceptions.UsernameAlreadyExistsException;
 import org.fis2021.terpsicare.exceptions.WrongPasswordConfirmationException;
 import org.fis2021.terpsicare.services.UserService;
@@ -61,6 +62,8 @@ public class AddDoctorController {
             AlertBox.display("Error","You cannot leave empty text fields!");
         } catch (WrongPasswordConfirmationException e) {
             AlertBox.display("Error","Wrong password confirmation!");
+        } catch (InvalidPhoneNumberException e) {
+            AlertBox.display("Error", "You entered an invalid phone number!");
         }
     }
 

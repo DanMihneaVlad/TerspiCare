@@ -71,7 +71,7 @@ class UserServiceTest {
 
     @Test
     @DisplayName("Patient is successfully added to the database")
-    void testPatientIsAddedToDatabase() throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException {
+    void testPatientIsAddedToDatabase() throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException, InvalidPhoneNumberException {
         UserService.addPatient(PATIENT, PATIENT, PATIENT, PHONENUMBER, PATIENT, PATIENT);
         assertThat(UserService.getAllPatients()).isNotEmpty();
         assertThat(UserService.getAllPatients()).size().isEqualTo(1);
@@ -87,7 +87,7 @@ class UserServiceTest {
 
     @Test
     @DisplayName("Doctor is successfully added to the database")
-    void testDoctorIsAddedToDatabase() throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException {
+    void testDoctorIsAddedToDatabase() throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException, InvalidPhoneNumberException {
         UserService.addDoctor(DOCTOR, DOCTOR, DOCTOR, DOCTOR, DOCTOR, PHONENUMBER, DOCTOR);
         assertThat(UserService.DoctorsList()).isNotEmpty();
         assertThat(UserService.DoctorsList()).size().isEqualTo(1);
@@ -131,7 +131,7 @@ class UserServiceTest {
 
     @Test
     @DisplayName("Medical record is successfully edited")
-    void testPatientMedicalRecordIsEditedAndSaved() throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException {
+    void testPatientMedicalRecordIsEditedAndSaved() throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException, InvalidPhoneNumberException {
         UserService.addPatient(PATIENT, PATIENT, PATIENT, PHONENUMBER, PATIENT, PATIENT);
         UserService.editMedicalReport(UserService.getAllPatients().get(0), NEWREPORT);
         Patient patient = UserService.getAllPatients().get(0);
@@ -157,7 +157,7 @@ class UserServiceTest {
 
     @Test
     @DisplayName("The correct doctor username is returned for a doctor name")
-    void testDoctorUsernameForDoctorName() throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException {
+    void testDoctorUsernameForDoctorName() throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException, InvalidPhoneNumberException {
         UserService.addDoctor(DOCTOR, DOCTOR, DOCTOR, DOCTOR, DOCTOR, PHONENUMBER, DOCTOR);
         UserService.addDoctor(DOCTOR1, DOCTOR1, DOCTOR1, DOCTOR1, DOCTOR1, PHONENUMBER, DOCTOR1);
         assertThat(UserService.getDoctorUsername(DOCTOR)).isEqualTo(DOCTOR);
@@ -168,7 +168,7 @@ class UserServiceTest {
 
     @Test
     @DisplayName("Username exists in database")
-    void testUsernameExists() throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException, UsernameDoesNotExistException {
+    void testUsernameExists() throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException, UsernameDoesNotExistException, InvalidPhoneNumberException {
         UserService.addDoctor(DOCTOR, DOCTOR, DOCTOR, DOCTOR, DOCTOR, PHONENUMBER, DOCTOR);
         UserService.addPatient(PATIENT, PATIENT, PATIENT, PHONENUMBER, PATIENT, PATIENT);
         assertThat(UserService.checkUserExist(PATIENT)).isEqualTo("patient");
@@ -178,9 +178,29 @@ class UserServiceTest {
 
     @Test
     @DisplayName("Check user credentials")
-    void testUserCredentials() throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException, UsernameDoesNotExistException, WrongPasswordException {
+    void testUserCredentials() throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException, UsernameDoesNotExistException, WrongPasswordException, InvalidPhoneNumberException {
         UserService.addPatient(PATIENT, PATIENT, PATIENT, PHONENUMBER, PATIENT, PATIENT);
         assertThat(UserService.checkUserCredentials(PATIENT, PATIENT)).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("Invalid phone number")
+    void testInvalidPhoneNumber() {
+        assertThrows(InvalidPhoneNumberException.class, () -> {
+            UserService.checkValidPhoneNumber("");
+        });
+        assertThrows(InvalidPhoneNumberException.class, () -> {
+            UserService.checkValidPhoneNumber("0123");
+        });
+        assertThrows(InvalidPhoneNumberException.class, () -> {
+            UserService.checkValidPhoneNumber("abcdefghij");
+        });
+        assertThrows(InvalidPhoneNumberException.class, () -> {
+            UserService.checkValidPhoneNumber("012345678");
+        });
+        assertThrows(InvalidPhoneNumberException.class, () -> {
+            UserService.checkValidPhoneNumber("01234567890");
+        });
     }
 
     @Test

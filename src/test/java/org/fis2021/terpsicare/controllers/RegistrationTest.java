@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.apache.commons.io.FileUtils;
 import org.fis2021.terpsicare.exceptions.EmptyTextfieldsException;
+import org.fis2021.terpsicare.exceptions.InvalidPhoneNumberException;
 import org.fis2021.terpsicare.exceptions.UsernameAlreadyExistsException;
 import org.fis2021.terpsicare.exceptions.WrongPasswordConfirmationException;
 import org.fis2021.terpsicare.services.FileSystemService;
@@ -20,8 +21,6 @@ import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
 import static org.testfx.assertions.api.Assertions.assertThat;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(ApplicationExtension.class)
 class RegistrationTest {
@@ -102,8 +101,55 @@ class RegistrationTest {
     }
 
     @Test
+    @DisplayName("Test attempt to register with invalid phone number")
+    void testInvalidPhoneNumberRegistration(FxRobot robot) {
+        assertThat(UserService.getAllPatients()).isEmpty();
+        robot.clickOn("#usernameField");
+        robot.write(USERNAME);
+        robot.clickOn("#passwordField");
+        robot.write(PASSWORD);
+        robot.clickOn("#phonenumberField");
+        robot.write("abc");
+        robot.clickOn("#nameField");
+        robot.write(USERNAME);
+        robot.clickOn("#passwordField2");
+        robot.write(PASSWORD);
+        robot.clickOn("#medicalrecordField");
+        robot.write("Good");
+        robot.clickOn("#registerButton");
+
+        assertThat(UserService.getAllPatients()).isEmpty();
+
+        assertThat(robot.lookup("#text").queryText()).hasText("You entered an invalid phone number!");
+
+        robot.clickOn("#OK");
+
+        robot.clickOn("#phonenumberField");
+        robot.eraseText(3);
+        robot.write("abcdefghij");
+        robot.clickOn("#registerButton");
+
+        assertThat(UserService.getAllPatients()).isEmpty();
+
+        assertThat(robot.lookup("#text").queryText()).hasText("You entered an invalid phone number!");
+
+        robot.clickOn("#OK");
+
+        robot.clickOn("#phonenumberField");
+        robot.eraseText(10);
+        robot.write("012345678");
+        robot.clickOn("#registerButton");
+
+        assertThat(UserService.getAllPatients()).isEmpty();
+
+        assertThat(robot.lookup("#text").queryText()).hasText("You entered an invalid phone number!");
+
+        robot.clickOn("#OK");
+    }
+
+    @Test
     @DisplayName("Test attempt to register with an username that already is registered")
-    void usernameAlreadyExistsRegistrationTest(FxRobot robot) throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException {
+    void usernameAlreadyExistsRegistrationTest(FxRobot robot) throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException, InvalidPhoneNumberException {
         UserService.addPatient(USERNAME, PASSWORD , USERNAME, PHONENUMBER, PASSWORD, "Good");
         assertThat(UserService.getAllPatients()).size().isEqualTo(1);
         robot.clickOn("#usernameField");
