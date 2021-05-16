@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.apache.commons.io.FileUtils;
 import org.fis2021.terpsicare.exceptions.EmptyTextfieldsException;
+import org.fis2021.terpsicare.exceptions.InvalidPhoneNumberException;
 import org.fis2021.terpsicare.exceptions.UsernameAlreadyExistsException;
 import org.fis2021.terpsicare.exceptions.WrongPasswordConfirmationException;
 import org.fis2021.terpsicare.services.FileSystemService;
@@ -67,7 +68,7 @@ class LogInTest {
 
     @Test
     @DisplayName("Test login attempt with wrong password")
-    void testWrongPasswordLogIn(FxRobot robot) throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException {
+    void testWrongPasswordLogIn(FxRobot robot) throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException, InvalidPhoneNumberException {
         UserService.addPatient(USERNAME, PASSWORD, USERNAME, PHONENUMBER, PASSWORD, "");
         assertThat(UserService.getAllPatients()).size().isEqualTo(1);
         robot.clickOn("#usernameFieldLogIn");
@@ -83,7 +84,7 @@ class LogInTest {
 
     @Test
     @DisplayName("Test if a patient can log in with the correct credentials and is redirected to the patient home page")
-    void testLogInPatient(FxRobot robot) throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException {
+    void testLogInPatient(FxRobot robot) throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException, InvalidPhoneNumberException {
         UserService.addPatient(USERNAME, PASSWORD, USERNAME, PHONENUMBER, PASSWORD, "");
         assertThat(UserService.getAllPatients()).size().isEqualTo(1);
         robot.clickOn("#usernameFieldLogIn");
@@ -96,7 +97,7 @@ class LogInTest {
 
     @Test
     @DisplayName("Test if a doctor can log in with the correct credentials and is redirected to the doctor home page")
-    void testLogInDoctor(FxRobot robot) throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException {
+    void testLogInDoctor(FxRobot robot) throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException, InvalidPhoneNumberException {
         UserService.addDoctor(USERNAME, PASSWORD, PASSWORD, USERNAME, "Cardiology", PHONENUMBER, "");
         assertThat(UserService.DoctorsList()).size().isEqualTo(1);
         robot.clickOn("#usernameFieldLogIn");

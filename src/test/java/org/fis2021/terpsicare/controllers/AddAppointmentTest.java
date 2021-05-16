@@ -7,6 +7,7 @@ import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import org.apache.commons.io.FileUtils;
 import org.fis2021.terpsicare.exceptions.EmptyTextfieldsException;
+import org.fis2021.terpsicare.exceptions.InvalidPhoneNumberException;
 import org.fis2021.terpsicare.exceptions.UsernameAlreadyExistsException;
 import org.fis2021.terpsicare.exceptions.WrongPasswordConfirmationException;
 import org.fis2021.terpsicare.services.FileSystemService;
@@ -55,7 +56,7 @@ class AddAppointmentTest {
 
     @Test
     @DisplayName("Test empty text fields")
-    void testEmptyTextFields(FxRobot robot) throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException {
+    void testEmptyTextFields(FxRobot robot) throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException, InvalidPhoneNumberException {
         UserService.addPatient(USERNAME, PASSWORD, USERNAME, PHONENUMBER, PASSWORD, "");
         UserService.addDoctor(DOCTORUSERNAME, PASSWORD, PASSWORD, DOCTORUSERNAME, "Cardiology", PHONENUMBER, "description");
         assertThat(UserService.getAllPatients()).size().isEqualTo(1);
@@ -106,7 +107,7 @@ class AddAppointmentTest {
 
     @Test
     @DisplayName("Test attempt to make appointment on a weekend")
-    void testWeekendDayError(FxRobot robot) throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException {
+    void testWeekendDayError(FxRobot robot) throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException, InvalidPhoneNumberException {
         UserService.addPatient(USERNAME, PASSWORD, USERNAME, PHONENUMBER, PASSWORD, "");
         UserService.addDoctor(DOCTORUSERNAME, PASSWORD, PASSWORD, DOCTORUSERNAME, "Cardiology", PHONENUMBER, "description");
         assertThat(UserService.getAllPatients()).size().isEqualTo(1);
@@ -137,7 +138,7 @@ class AddAppointmentTest {
 
     @Test
     @DisplayName("Check an appointment is added successfully to the database")
-    void testAppointmentIsMadeSuccessfully(FxRobot robot) throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException {
+    void testAppointmentIsMadeSuccessfully(FxRobot robot) throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException, InvalidPhoneNumberException {
         UserService.addPatient(USERNAME, PASSWORD, USERNAME, PHONENUMBER, PASSWORD, "");
         UserService.addDoctor(DOCTORUSERNAME, PASSWORD, PASSWORD, DOCTORUSERNAME, "Cardiology", PHONENUMBER, "description");
         assertThat(UserService.getAllPatients()).size().isEqualTo(1);

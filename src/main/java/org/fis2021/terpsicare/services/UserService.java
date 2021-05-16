@@ -43,17 +43,19 @@ public class UserService {
         }
     }
 
-    public static void addDoctor(String username, String password, String confirmedPassword, String name, String medicalSpecialty, String phoneNumber, String description) throws UsernameAlreadyExistsException, WrongPasswordConfirmationException, EmptyTextfieldsException {
+    public static void addDoctor(String username, String password, String confirmedPassword, String name, String medicalSpecialty, String phoneNumber, String description) throws UsernameAlreadyExistsException, WrongPasswordConfirmationException, EmptyTextfieldsException, InvalidPhoneNumberException {
         checkUserDoesNotAlreadyExist(username);
         checkEmptyTextFieldsDoctor(username, password, confirmedPassword, name, medicalSpecialty, phoneNumber);
         checkPasswordSameAsConfirmedPassword(password, confirmedPassword);
+        checkValidPhoneNumber(phoneNumber);
         doctorRepository.insert(new Doctor(username, encodePassword(username, password), name, medicalSpecialty, phoneNumber, description));
     }
 
-    public static void addPatient(String username, String password, String name, String phone, String password2, String medicalrecord) throws UsernameAlreadyExistsException, WrongPasswordConfirmationException, EmptyTextfieldsException {
+    public static void addPatient(String username, String password, String name, String phone, String password2, String medicalrecord) throws UsernameAlreadyExistsException, WrongPasswordConfirmationException, EmptyTextfieldsException, InvalidPhoneNumberException {
         checkEmptyTextfieldsPatient(username, password, name, phone, password2);
         checkUserDoesNotAlreadyExist(username);
         checkPasswordSameAsConfirmedPassword(password, password2);
+        checkValidPhoneNumber(phone);
         patientRepository.insert(new Patient(username, encodePassword(username, password), name, phone, medicalrecord));
     }
 
@@ -120,6 +122,15 @@ public class UserService {
             throw new EmptyTextfieldsException();
         else if( Objects.equals(password2,""))
             throw new EmptyTextfieldsException();
+    }
+
+    public static void checkValidPhoneNumber(String phoneNumber) throws InvalidPhoneNumberException {
+        if (phoneNumber.length() != 10) {
+            throw new InvalidPhoneNumberException();
+        }
+        if (!phoneNumber.matches("[0-9]+")) {
+            throw new InvalidPhoneNumberException();
+        }
     }
 
     public static void checkUserDoesNotAlreadyExist(String username) throws UsernameAlreadyExistsException {

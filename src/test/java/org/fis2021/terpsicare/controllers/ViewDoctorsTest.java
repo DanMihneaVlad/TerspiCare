@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.apache.commons.io.FileUtils;
 import org.fis2021.terpsicare.exceptions.EmptyTextfieldsException;
+import org.fis2021.terpsicare.exceptions.InvalidPhoneNumberException;
 import org.fis2021.terpsicare.exceptions.UsernameAlreadyExistsException;
 import org.fis2021.terpsicare.exceptions.WrongPasswordConfirmationException;
 import org.fis2021.terpsicare.services.FileSystemService;
@@ -53,7 +54,7 @@ class ViewDoctorsTest {
 
     @Test
     @DisplayName("All the doctors are shown in the table")
-    void testAllDoctorsShown(FxRobot robot) throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException {
+    void testAllDoctorsShown(FxRobot robot) throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException, InvalidPhoneNumberException {
         UserService.addPatient(USERNAME, PASSWORD, USERNAME, PHONENUMBER, PASSWORD, "");
         UserService.addDoctor(DOCTORUSERNAME, PASSWORD, PASSWORD, DOCTORUSERNAME, "Cardiology", PHONENUMBER, "description");
         UserService.addDoctor(DOCTORUSERNAME + "1", PASSWORD, PASSWORD, DOCTORUSERNAME + "1", "Family Medicine", PHONENUMBER, "");
