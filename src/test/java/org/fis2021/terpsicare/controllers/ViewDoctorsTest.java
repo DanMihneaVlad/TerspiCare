@@ -47,7 +47,7 @@ class ViewDoctorsTest {
     @Start
     void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/LogIn.fxml"));
-        primaryStage.setTitle("View Doctors");
+        primaryStage.setTitle("Log In");
         primaryStage.setScene(new Scene(root, 500, 500));
         primaryStage.show();
     }
