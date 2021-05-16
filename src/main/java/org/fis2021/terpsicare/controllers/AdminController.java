@@ -18,7 +18,7 @@ public class AdminController {
     public void handleAddDoctor(ActionEvent event) throws Exception {
         Node node = (Node) event.getSource();
         Stage currentStage = (Stage) node.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("addDoctor.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("AddDoctor.fxml"));
         currentStage.setTitle("Add Doctor");
         currentStage.setScene(new Scene(root, 500, 500));
         currentStage.show();
