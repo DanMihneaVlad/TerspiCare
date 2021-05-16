@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.fis2021.terpsicare.AlertBox;
 import org.fis2021.terpsicare.exceptions.EmptyTextfieldsException;
+import org.fis2021.terpsicare.exceptions.InvalidDateException;
 import org.fis2021.terpsicare.exceptions.NotAvailableException;
 import org.fis2021.terpsicare.exceptions.WeekendDayException;
 import org.fis2021.terpsicare.services.UserService;
@@ -63,12 +64,9 @@ public class AddAppointmentController {
         } catch (WeekendDayException e) {
             AlertBox.display("Error", "Doctors don't work on a weekend!");
         } catch (NotAvailableException e) {
-            LocalDate date = datePicker.getValue();
-            int year = date.getYear();
-            int month = date.getMonthValue();
-            int day = date.getDayOfMonth();
-            String message = "The doctor " + (String) doctor.getValue() + " is not available at the date " + day + "." + month + "." + year + ", at the hour " + (String) hour.getValue() + "!";
-            AlertBox.display("Error", message);
+            AlertBox.display("Error", "The doctor is not available!");
+        } catch(InvalidDateException e){
+            AlertBox.display("Error", "You choose an invalid date!");
         }
     }
 
