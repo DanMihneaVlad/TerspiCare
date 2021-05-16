@@ -22,6 +22,8 @@ import org.testfx.assertions.api.Assertions;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
+import java.time.LocalDate;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(ApplicationExtension.class)
@@ -123,7 +125,7 @@ class AddAppointmentTest {
         robot.clickOn("#datePicker");
         robot.dropBy(70,0);
         robot.clickOn();
-        robot.dropBy(60,150);
+        robot.dropBy(50,150);
         robot.clickOn();
         robot.clickOn("#hourChoice");
         robot.type(KeyCode.ENTER);
@@ -132,6 +134,39 @@ class AddAppointmentTest {
         assertThat(UserService.getAllAppointments()).isEmpty();
 
         Assertions.assertThat(robot.lookup("#text").queryText()).hasText("Doctors don't work on a weekend!");
+
+        robot.clickOn("#OK");
+    }
+
+    @Test
+    @DisplayName("Test attempt to make appointment before the current date")
+    void testInvalidDate(FxRobot robot) throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException, InvalidPhoneNumberException {
+        UserService.addPatient(USERNAME, PASSWORD, USERNAME, PHONENUMBER, PASSWORD, "");
+        UserService.addDoctor(DOCTORUSERNAME, PASSWORD, PASSWORD, DOCTORUSERNAME, "Cardiology", PHONENUMBER, "description");
+        assertThat(UserService.getAllPatients()).size().isEqualTo(1);
+        assertThat(UserService.DoctorsList()).size().isEqualTo(1);
+        robot.clickOn("#usernameFieldLogIn");
+        robot.write(USERNAME);
+        robot.clickOn("#passwordFieldLogIn");
+        robot.write(PASSWORD);
+        robot.clickOn("#loginButton");
+        robot.clickOn("#addAppointment");
+        robot.clickOn("#doctorChoice");
+        robot.type(KeyCode.ENTER);
+        robot.clickOn("#datePicker");
+        robot.dropBy(70,0);
+        robot.clickOn();
+        robot.dropBy(-140,30);
+        robot.clickOn();
+        robot.dropBy(40,70);
+        robot.clickOn();
+        robot.clickOn("#hourChoice");
+        robot.type(KeyCode.ENTER);
+        robot.clickOn("#submitAppointment");
+
+        assertThat(UserService.getAllAppointments()).isEmpty();
+
+        Assertions.assertThat(robot.lookup("#text").queryText()).hasText("You choose an invalid date!");
 
         robot.clickOn("#OK");
     }
@@ -154,7 +189,9 @@ class AddAppointmentTest {
         robot.clickOn("#datePicker");
         robot.dropBy(70,0);
         robot.clickOn();
-        robot.dropBy(0,150);
+        robot.dropBy(-60,30);
+        robot.clickOn();
+        robot.dropBy(20,60);
         robot.clickOn();
         robot.clickOn("#hourChoice");
         robot.type(KeyCode.ENTER);
@@ -165,5 +202,46 @@ class AddAppointmentTest {
         Assertions.assertThat(robot.lookup("#text").queryText()).hasText("Appointment was successfully created!");
 
         robot.clickOn("#OK");
+    }
+
+    @Test
+    @DisplayName("Check error if doctor is not available")
+    void testDoctorIsNotAvailable(FxRobot robot) throws EmptyTextfieldsException, WrongPasswordConfirmationException, UsernameAlreadyExistsException, InvalidPhoneNumberException {
+        UserService.addPatient(USERNAME, PASSWORD, USERNAME, PHONENUMBER, PASSWORD, "");
+        UserService.addDoctor(DOCTORUSERNAME, PASSWORD, PASSWORD, DOCTORUSERNAME, "Cardiology", PHONENUMBER, "description");
+        assertThat(UserService.getAllPatients()).size().isEqualTo(1);
+        assertThat(UserService.DoctorsList()).size().isEqualTo(1);
+        robot.clickOn("#usernameFieldLogIn");
+        robot.write(USERNAME);
+        robot.clickOn("#passwordFieldLogIn");
+        robot.write(PASSWORD);
+        robot.clickOn("#loginButton");
+        robot.clickOn("#addAppointment");
+        robot.clickOn("#doctorChoice");
+        robot.type(KeyCode.ENTER);
+        robot.clickOn("#datePicker");
+        robot.dropBy(70,0);
+        robot.clickOn();
+        robot.dropBy(-60,30);
+        robot.clickOn();
+        robot.dropBy(20,60);
+        robot.clickOn();
+        robot.clickOn("#hourChoice");
+        robot.type(KeyCode.ENTER);
+        robot.clickOn("#submitAppointment");
+
+        assertThat(UserService.getAllAppointments()).size().isEqualTo(1);
+
+        Assertions.assertThat(robot.lookup("#text").queryText()).hasText("Appointment was successfully created!");
+
+        robot.clickOn("#OK");
+
+        robot.clickOn("#submitAppointment");
+        assertThat(UserService.getAllAppointments()).size().isEqualTo(1);
+
+        Assertions.assertThat(robot.lookup("#text").queryText()).hasText("The doctor is not available!");
+
+        robot.clickOn("#OK");
+
     }
 }

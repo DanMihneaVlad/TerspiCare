@@ -49,7 +49,7 @@ class ViewAppointmentsDoctorTest {
 
     @Test
     @DisplayName("All appointments are shown in the table")
-    void testAllAppointmentsShown(FxRobot robot) throws InvalidPhoneNumberException, WrongPasswordConfirmationException, EmptyTextfieldsException, UsernameAlreadyExistsException, NotAvailableException, WeekendDayException {
+    void testAllAppointmentsShown(FxRobot robot) throws InvalidPhoneNumberException, WrongPasswordConfirmationException, EmptyTextfieldsException, UsernameAlreadyExistsException, NotAvailableException, WeekendDayException, InvalidDateException {
         UserService.addPatient(USERNAME, PASSWORD, USERNAME, PHONENUMBER, PASSWORD, "");
         UserService.addDoctor(DOCTORUSERNAME, PASSWORD, PASSWORD, DOCTORUSERNAME, "Cardiology", PHONENUMBER, "description");
         UserService.addAppointment(USERNAME, DOCTORUSERNAME, 9999, 12, 30, "Monday", "8:00", "message");

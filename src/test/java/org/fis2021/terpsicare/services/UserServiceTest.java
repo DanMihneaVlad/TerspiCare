@@ -18,7 +18,7 @@ class UserServiceTest {
     public static final String DOCTOR = "DOCTOR";
     public static final String DOCTOR1 = "DOCTOR1";
     public static final String PHONENUMBER = "0123456789";
-    public static final int DATE = 1;
+    public static final int DATE = 9999;
     public static final String DAY = "MONDAY";
     public static final String HOUR = "12:00";
     public static final String NEWHOUR = "13:00";
@@ -104,7 +104,7 @@ class UserServiceTest {
 
     @Test
     @DisplayName("Appointment is successfully added to the database")
-    void testAppointmentIsAddedToDatabase() throws EmptyTextfieldsException, NotAvailableException, WeekendDayException {
+    void testAppointmentIsAddedToDatabase() throws EmptyTextfieldsException, NotAvailableException, WeekendDayException, InvalidDateException {
         UserService.addAppointment(PATIENT, DOCTOR, DATE, DATE, DATE, DAY, HOUR, MESSAGE);
         assertThat(UserService.getAllAppointments()).isNotEmpty();
         assertThat(UserService.getAllAppointments()).size().isEqualTo(1);
@@ -122,7 +122,7 @@ class UserServiceTest {
 
     @Test
     @DisplayName("Appointment is successfully edited and saved in the database")
-    void testAppointmentIsEditedAndSaved() throws EmptyTextfieldsException, NotAvailableException, WeekendDayException {
+    void testAppointmentIsEditedAndSaved() throws EmptyTextfieldsException, NotAvailableException, WeekendDayException, InvalidDateException {
         UserService.addAppointment(PATIENT, DOCTOR, DATE, DATE, DATE, DAY, HOUR, MESSAGE);
         UserService.editAppointment(UserService.getAllAppointments().get(0), NEWHOUR);
         Appointment appointment = UserService.getAllAppointments().get(0);
@@ -140,7 +140,7 @@ class UserServiceTest {
 
     @Test
     @DisplayName("Reply is successfully added to the appointment")
-    void testReplyIsAddedToTheAppointment() throws EmptyTextfieldsException, NotAvailableException, WeekendDayException {
+    void testReplyIsAddedToTheAppointment() throws EmptyTextfieldsException, NotAvailableException, WeekendDayException, InvalidDateException {
         UserService.addAppointment(PATIENT, DOCTOR, DATE, DATE, DATE, DAY, HOUR, MESSAGE);
         UserService.replyAppointment(UserService.getAllAppointments().get(0), REPLY);
         Appointment appointment = UserService.getAllAppointments().get(0);

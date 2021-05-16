@@ -9,6 +9,7 @@ import org.fis2021.terpsicare.model.*;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -23,6 +24,12 @@ public class UserService {
     private static ObjectRepository<Appointment> appointmentRepository;
     private static String loggedInUsername = new String();
     private static Nitrite database;
+
+    private static LocalDate currentDate=LocalDate.now();
+    private static int currentDay=currentDate.getDayOfMonth();
+    private static int currentMonth=currentDate.getMonthValue();
+    private static int currentYear=currentDate.getYear();
+
     public static void initDatabase() {
         FileSystemService.initDirectory();
         database = Nitrite.builder().filePath(getPathToFile(".terpsicare-users.db").toFile()).openOrCreate("test", "test");
@@ -59,9 +66,10 @@ public class UserService {
         patientRepository.insert(new Patient(username, encodePassword(username, password), name, phone, medicalrecord));
     }
 
-    public static void addAppointment(String username, String doctorName, int year, int month, int day, String dayOfTheWeek, String hour, String message) throws EmptyTextfieldsException, NotAvailableException, WeekendDayException {
+    public static void addAppointment(String username, String doctorName, int year, int month, int day, String dayOfTheWeek, String hour, String message) throws EmptyTextfieldsException, NotAvailableException, WeekendDayException, InvalidDateException {
         checkEmptyTextfieldsAppointment(doctorName, year, hour);
         checkAvailability(doctorName, year, month, day, dayOfTheWeek, hour);
+        checkDateValid(day,month,year);
         String doctorUsername = getDoctorUsername(doctorName);
         String patientName = getPatientName();
         appointmentRepository.insert(new Appointment(username, patientName, doctorName, doctorUsername, year, month, day, dayOfTheWeek, hour, message));
@@ -434,6 +442,12 @@ public class UserService {
 
     public static Nitrite getDatabase() {
         return database;
+    }
+
+    public static void checkDateValid(int day, int month,int year) throws InvalidDateException {
+        if(year<currentYear)  throw new InvalidDateException();
+        else if(year==currentYear && month<currentMonth) throw new InvalidDateException();
+        else if(year==currentYear && month==currentMonth && day<currentDay) throw new InvalidDateException();
     }
 
 }
