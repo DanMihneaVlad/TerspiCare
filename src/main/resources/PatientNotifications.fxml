@@ -20,6 +20,6 @@
             </font>
         </Text>
         <Button layoutX="463.0" layoutY="44.0" mnemonicParsing="false" onAction="#handleHome" prefHeight="27.0" prefWidth="77.0" text="Home" />
-        <Button layoutX="338.0" layoutY="44.0" mnemonicParsing="false" onAction="#markAsViewed" text="Mark as viewed" />
+        <Button layoutX="338.0" layoutY="44.0" mnemonicParsing="false" onAction="#markAsViewed" id="markAsViewed" text="Mark as viewed" />
     </children>
 </AnchorPane>

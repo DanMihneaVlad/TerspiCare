@@ -13,9 +13,9 @@
                 <TableView fx:id="patientsTable" prefHeight="312.0" prefWidth="400.0" />
             </children>
         </VBox>
-        <Button layoutX="449.0" layoutY="32.0" mnemonicParsing="false" onAction="#handleHome" prefHeight="25.0" prefWidth="88.0" text="Home" />
-      <Button layoutX="280.0" layoutY="32.0" mnemonicParsing="false" onAction="#handleEditMedicalRecord" prefHeight="27.0" prefWidth="149.0" text="Edit Medical Record" />
-      <TextField fx:id="medicalField" layoutX="52.0" layoutY="400.0" visible="false" />
-      <Button fx:id="submit" layoutX="450.0" layoutY="400.0" mnemonicParsing="false" onAction="#submitEdit" prefHeight="25.0" prefWidth="88.0" text="Submit" visible="false" />
+        <Button layoutX="449.0" layoutY="32.0" mnemonicParsing="false" onAction="#handleHome" id="backViewPatients" prefHeight="25.0" prefWidth="88.0" text="Home" />
+      <Button layoutX="280.0" layoutY="32.0" mnemonicParsing="false" onAction="#handleEditMedicalRecord" id="editMedicalRecord" prefHeight="27.0" prefWidth="149.0" text="Edit Medical Record" />
+      <TextField fx:id="medicalField" id="medicalField" layoutX="52.0" layoutY="400.0" visible="false" />
+      <Button fx:id="submit" id="submitMedicalRecordEdit" layoutX="450.0" layoutY="400.0" mnemonicParsing="false" onAction="#submitEdit" prefHeight="25.0" prefWidth="88.0" text="Submit" visible="false" />
     </children>
 </AnchorPane>

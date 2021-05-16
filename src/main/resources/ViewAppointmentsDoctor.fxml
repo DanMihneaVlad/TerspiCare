@@ -19,19 +19,19 @@
                   <TableView fx:id="myTable" prefHeight="240.0" prefWidth="492.0" />
 
             </VBox>
-            <Button layoutX="448.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleHome" prefHeight="27.0" prefWidth="99.0" text="Home" />
-          <ChoiceBox fx:id="hourBox" layoutX="331.0" layoutY="363.0" prefHeight="26.0" prefWidth="99.0" visible="false" />
+            <Button layoutX="448.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleHome" id="handleHomeDoctor" prefHeight="27.0" prefWidth="99.0" text="Home" />
+          <ChoiceBox fx:id="hourBox" id="hourBox" layoutX="331.0" layoutY="363.0" prefHeight="26.0" prefWidth="99.0" visible="false" />
           <Label layoutX="51.0" layoutY="24.0" prefHeight="36.0" prefWidth="207.0" text="Appointments:" textFill="#008cba">
               <font>
                   <Font size="25.0" />
               </font>
           </Label>
-          <Button layoutX="338.0" layoutY="28.0" mnemonicParsing="false" onAction="#editAppointment" prefHeight="27.0" prefWidth="99.0" text="Edit" />
+          <Button layoutX="338.0" layoutY="28.0" mnemonicParsing="false" onAction="#editAppointment" id="editAppointment" prefHeight="27.0" prefWidth="99.0" text="Edit" />
 
-          <Button fx:id="submit" layoutX="450.0" layoutY="363.0" mnemonicParsing="false" onAction="#submitEdit" prefHeight="25.0" prefWidth="99.0" text="Submit" visible="false" />
-         <Button layoutX="229.0" layoutY="28.0" mnemonicParsing="false" onAction="#replyAppointment" prefHeight="25.0" prefWidth="99.0" text="Reply" />
-         <TextField fx:id="replyField" layoutX="114.0" layoutY="363.0" visible="false" />
-         <Button fx:id="submitreply" layoutX="448.0" layoutY="363.0" mnemonicParsing="false" onAction="#replySubmit" prefHeight="25.0" prefWidth="99.0" text="Submit" visible="false" />
+          <Button fx:id="submit" layoutX="450.0" layoutY="363.0" mnemonicParsing="false" onAction="#submitEdit" id="submitEdit" prefHeight="25.0" prefWidth="99.0" text="Submit" visible="false" />
+         <Button layoutX="229.0" layoutY="28.0" mnemonicParsing="false" onAction="#replyAppointment" id="reply" prefHeight="25.0" prefWidth="99.0" text="Reply" />
+         <TextField fx:id="replyField" id="replyField" layoutX="114.0" layoutY="363.0" visible="false" />
+         <Button fx:id="submitreply" id="submitReply" layoutX="448.0" layoutY="363.0" mnemonicParsing="false" onAction="#replySubmit" prefHeight="25.0" prefWidth="99.0" text="Submit" visible="false" />
       </AnchorPane>
    </children>
 </StackPane>

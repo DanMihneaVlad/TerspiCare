@@ -25,10 +25,10 @@ public class UserService {
     private static String loggedInUsername = new String();
     private static Nitrite database;
 
-    private static LocalDate currentDate=LocalDate.now();
-    private static int currentDay=currentDate.getDayOfMonth();
-    private static int currentMonth=currentDate.getMonthValue();
-    private static int currentYear=currentDate.getYear();
+    private static LocalDate currentDate = LocalDate.now();
+    private static int currentDay = currentDate.getDayOfMonth();
+    private static int currentMonth = currentDate.getMonthValue();
+    private static int currentYear = currentDate.getYear();
 
     public static void initDatabase() {
         FileSystemService.initDirectory();
@@ -445,9 +445,9 @@ public class UserService {
     }
 
     public static void checkDateValid(int day, int month,int year) throws InvalidDateException {
-        if(year<currentYear)  throw new InvalidDateException();
-        else if(year==currentYear && month<currentMonth) throw new InvalidDateException();
-        else if(year==currentYear && month==currentMonth && day<currentDay) throw new InvalidDateException();
+        if (year < currentYear)  throw new InvalidDateException();
+        else if (year == currentYear && month < currentMonth) throw new InvalidDateException();
+        else if (year == currentYear && month == currentMonth && day < currentDay) throw new InvalidDateException();
     }
 
 }

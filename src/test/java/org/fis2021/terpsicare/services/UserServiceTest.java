@@ -2,11 +2,10 @@ package org.fis2021.terpsicare.services;
 
 import org.apache.commons.io.FileUtils;
 import org.fis2021.terpsicare.exceptions.*;
-import org.fis2021.terpsicare.model.Admin;
-import org.fis2021.terpsicare.model.Appointment;
-import org.fis2021.terpsicare.model.Doctor;
-import org.fis2021.terpsicare.model.Patient;
+import org.fis2021.terpsicare.model.*;
 import org.junit.jupiter.api.*;
+
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.testfx.assertions.api.Assertions.assertThat;
@@ -148,6 +147,30 @@ class UserServiceTest {
     }
 
     @Test
+    @DisplayName("Notification is successfully send to the patient")
+    void testNotificationIsSaved() throws InvalidPhoneNumberException, WrongPasswordConfirmationException, EmptyTextfieldsException, UsernameAlreadyExistsException, InvalidDateException, NotAvailableException, WeekendDayException {
+        UserService.addDoctor(DOCTOR, DOCTOR, DOCTOR, DOCTOR, DOCTOR, PHONENUMBER, DOCTOR);
+        UserService.addPatient(PATIENT, PATIENT, PATIENT, PHONENUMBER, PATIENT, PATIENT);
+        UserService.addAppointment(PATIENT, DOCTOR, DATE, DATE, DATE, DAY, HOUR, MESSAGE);
+        Notification notification = new Notification(PATIENT, DOCTOR, DATE, DATE, DATE, DAY, "8:00", HOUR);
+        UserService.addPatientNotification(PATIENT, notification);
+        assertThat(UserService.getAllPatients().get(0).getNotifications()).isNotEmpty();
+        assertThat(UserService.getAllPatients().get(0).getNotifications().get(0).getNewHour()).isEqualTo("8:00");
+    }
+
+    @Test
+    @DisplayName("Notification is successfully send to the doctor")
+    void testNotificationIsSavedForDoctor() throws InvalidPhoneNumberException, WrongPasswordConfirmationException, EmptyTextfieldsException, UsernameAlreadyExistsException, InvalidDateException, NotAvailableException, WeekendDayException {
+        UserService.addDoctor(DOCTOR, DOCTOR, DOCTOR, DOCTOR, DOCTOR, PHONENUMBER, DOCTOR);
+        UserService.addPatient(PATIENT, PATIENT, PATIENT, PHONENUMBER, PATIENT, PATIENT);
+        UserService.addAppointment(PATIENT, DOCTOR, DATE, DATE, DATE, DAY, HOUR, MESSAGE);
+        Notification notification = new Notification(PATIENT, DOCTOR, DATE, DATE, DATE, DAY, "8:00", HOUR);
+        UserService.addDoctorNotification(DOCTOR, notification);
+        assertThat(UserService.DoctorsList().get(0).getNotifications()).isNotEmpty();
+        assertThat(UserService.DoctorsList().get(0).getNotifications().get(0).getNewHour()).isEqualTo("8:00");
+    }
+
+    @Test
     @DisplayName("Password is encoded")
     void testPasswordIsEncoded() {
         String encodedPassword = UserService.encodePassword(PATIENT, PATIENT);
@@ -164,6 +187,21 @@ class UserServiceTest {
         assertThat(UserService.getDoctorUsername(DOCTOR)).isNotEqualTo(DOCTOR1);
         assertThat(UserService.getDoctorUsername(DOCTOR1)).isNotEqualTo(DOCTOR);
         assertThat(UserService.getDoctorUsername(DOCTOR1)).isEqualTo(DOCTOR1);
+    }
+
+    @Test
+    @DisplayName("Test the correct doctors are returned for a specialty")
+    void testCorrectDoctorsForSpecialty() throws InvalidPhoneNumberException, WrongPasswordConfirmationException, EmptyTextfieldsException, UsernameAlreadyExistsException {
+        UserService.addDoctor(DOCTOR, DOCTOR, DOCTOR, DOCTOR, "Cardiology", PHONENUMBER, DOCTOR);
+        UserService.addDoctor(DOCTOR + "1", DOCTOR, DOCTOR, DOCTOR + "1", "Cardiology", PHONENUMBER, DOCTOR);
+        UserService.addDoctor(DOCTOR + "2", DOCTOR, DOCTOR, DOCTOR + "2", "Family Medicine", PHONENUMBER, DOCTOR);
+        UserService.addDoctor(DOCTOR + "3", DOCTOR, DOCTOR, DOCTOR + "3", "Pediatrics", PHONENUMBER, DOCTOR);
+        assertThat(UserService.DoctorsListSpec("Cardiology")).size().isEqualTo(2);
+        assertThat(UserService.DoctorsListSpec("Family Medicine")).size().isEqualTo(1);
+        assertThat(UserService.DoctorsListSpec("Pediatrics")).size().isEqualTo(1);
+        assertThat(UserService.DoctorsListSpec("Urology")).isEmpty();
+        assertThat(UserService.DoctorsListSpec("Dermatology")).isEmpty();
+        assertThat(UserService.DoctorsListSpec("Neurology")).isEmpty();
     }
 
     @Test
@@ -286,4 +324,23 @@ class UserServiceTest {
             UserService.checkEmptyTextFieldsDoctor(DOCTOR, DOCTOR, DOCTOR, DOCTOR, DOCTOR, "");
         });
     }
+
+    @Test
+    @DisplayName("Check error if doctor is not available")
+    void testNotAvailable() {
+        assertThrows(NotAvailableException.class, () -> {
+            UserService.addDoctor(DOCTOR, DOCTOR, DOCTOR, DOCTOR, DOCTOR, PHONENUMBER, DOCTOR);
+            UserService.addAppointment(PATIENT, DOCTOR, DATE, DATE, DATE, DAY, HOUR, MESSAGE);
+            UserService.addAppointment(PATIENT + "1", DOCTOR, DATE, DATE, DATE, DAY, HOUR, "");
+        });
+    }
+
+    @Test
+    @DisplayName("Check date is invalid")
+    void testDateIsInvalid() {
+        assertThrows(InvalidDateException.class, () -> {
+            UserService.checkDateValid(0,0, 0);
+        });
+    }
+
 }
